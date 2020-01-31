@@ -10,3 +10,12 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+
+// router.get("/:userId", async (req, res, next) => {
+//   try {
+//     const singleUser = await User.findOne({ _id: req.params.userId }).exec();
+//     res.json(singleUser);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
