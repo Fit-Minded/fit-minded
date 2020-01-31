@@ -36,20 +36,23 @@ const user = new mongoose.Schema({
     }
   },
   location: {
-    own: {
-      latitude: {
-        type: Number,
-        required: true
-      },
-      longitude: {
-        type: Number,
-        required: true
-      }
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
     },
-    preffered: {
-      type: Number,
+    coordinates: {
+      type: [Number],
       required: true
     }
+  },
+  radius: {
+    type: Number,
+    required: true
+  },
+  activities: {
+    type: [Object],
+    required: true
   },
   pool: {
     type: Map
@@ -67,6 +70,8 @@ const user = new mongoose.Schema({
     type: Map
   }
 })
+
+user.index({ location: '2dsphere' })
 
 const User = mongoose.model('user', user)
 

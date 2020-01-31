@@ -14,9 +14,28 @@ const negOrPos = {
   1: 1
 }
 
-for (let i = 0; i < 300; i++) {
-  let minAge = getRandomInt(20) + 18
-  let maxAge = minAge + getRandomInt(20) + 1
+const calcRandAct = () => {
+  let possibleActivites = ['running', 'lifting', 'yoga']
+  let activities = {}
+  let numOfActivites = getRandomInt(4)
+  for (let i = 0; i <= numOfActivites; i++) {
+    let activityName = possibleActivites[getRandomInt(3)]
+    activities[activityName] = true
+  }
+  return activities
+}
+
+for (let i = 0; i < 1000; i++) {
+  let minAge = getRandomInt(15) + 18
+  let maxAge = minAge + getRandomInt(15) + 1
+  let latitude = (
+    40.725 +
+    (getRandomInt(300) * negOrPos[getRandomInt(2)]) / 10000
+  ).toFixed(3)
+  let longitude = (
+    -73.995 +
+    (getRandomInt(300) * negOrPos[getRandomInt(2)]) / 10000
+  ).toFixed(3)
 
   let user = {
     firstName: 'Test',
@@ -26,21 +45,18 @@ for (let i = 0; i < 300; i++) {
       preferred: genders[getRandomInt(2)]
     },
     age: {
-      own: getRandomInt(60) + 18,
+      own: getRandomInt(30) + 18,
       preferred: {
         min: minAge,
         max: maxAge
       }
     },
     location: {
-      own: {
-        latitude:
-          40.725 + (getRandomInt(300) * negOrPos[getRandomInt(2)]) / 10000,
-        longitude:
-          73.995 + (getRandomInt(300) * negOrPos[getRandomInt(2)]) / 10000
-      },
-      preffered: getRandomInt(30) / 10
-    }
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    },
+    radius: (getRandomInt(50) + 10) / 10,
+    activities: calcRandAct()
   }
 
   randomUsers.push(user)
