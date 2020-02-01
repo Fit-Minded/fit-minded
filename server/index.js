@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const { db, connect } = require("./db");
 const PORT = process.env.PORT || 8080;
 const app = express();
+const passport = require("passport");
+
 
 connect()
   .then(async connect => {
@@ -23,16 +25,27 @@ const createApp = () => {
   // app.use(compression())
 
   // session middleware with passport
-  // app.use(
-  //   session({
-  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-  //     store: sessionStore,
-  //     resave: false,
-  //     saveUninitialized: false
-  //   })
-  // )
-  // app.use(passport.initialize())
-  // app.use(passport.session())
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false
+    })
+  )
+  passport.serializeUser((user, done) => done(null, user.id))
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await db.models.user.findByPk(id)
+      done(null, user)
+    } catch (err) {
+      done(err)
+    }
+  })
+
+  app.use(passport.initialize())
+  app.use(passport.session())
 
   // app.use(function(req, res, next) {
   //   if (!req.session.cart) {
