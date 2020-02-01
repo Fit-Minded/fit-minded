@@ -2,7 +2,7 @@ const User = require('../server/db/schemas/user')
 const { calcDistance } = require('./generalUtil')
 
 function getQueryData(user) {
-  let { gender, age, location, radius, activities } = user
+  let { gender, age, location, radius, activities, lastLogin } = user
   const ownGender = gender.own,
     prefGender = gender.preferred
   const ownAge = age.own,
@@ -17,7 +17,8 @@ function getQueryData(user) {
     prefAge,
     coordinates,
     radius,
-    activities
+    activities,
+    lastLogin
   }
   return queryData
 }
@@ -30,36 +31,72 @@ async function generatePool(queryData) {
     prefAge,
     coordinates,
     radius,
-    activities
+    activities,
+    lastLogin
   } = queryData
 
-  console.log(coordinates)
+  let pool
 
-  let pool = await User.find({
-    gender: {
-      own: prefGender,
-      preferred: ownGender
-    },
-    'age.own': {
-      $gte: prefAge[0],
-      $lte: prefAge[1]
-    },
-    'age.preferred.min': {
-      $lte: ownAge
-    },
-    'age.preferred.max': {
-      $gte: ownAge
-    },
-    location: {
-      $near: {
-        $maxDistance: radius,
-        $geometry: {
-          type: 'Point',
-          coordinates: coordinates
+  // if lastLogin is not null we are REFRESHING the pool
+  if (lastLogin) {
+    pool = await User.find({
+      createdAt: {
+        $gte: lastLogin
+      }
+    })
+      .find({
+        gender: {
+          own: prefGender,
+          preferred: ownGender
+        },
+        'age.own': {
+          $gte: prefAge[0],
+          $lte: prefAge[1]
+        },
+        'age.preferred.min': {
+          $lte: ownAge
+        },
+        'age.preferred.max': {
+          $gte: ownAge
+        },
+        location: {
+          $near: {
+            $maxDistance: radius,
+            $geometry: {
+              type: 'Point',
+              coordinates: coordinates
+            }
+          }
+        }
+      })
+      .exec()
+  } else {
+    pool = await User.find({
+      gender: {
+        own: prefGender,
+        preferred: ownGender
+      },
+      'age.own': {
+        $gte: prefAge[0],
+        $lte: prefAge[1]
+      },
+      'age.preferred.min': {
+        $lte: ownAge
+      },
+      'age.preferred.max': {
+        $gte: ownAge
+      },
+      location: {
+        $near: {
+          $maxDistance: radius,
+          $geometry: {
+            type: 'Point',
+            coordinates: coordinates
+          }
         }
       }
-    }
-  }).exec()
+    }).exec()
+  }
 
   pool = pool
     .filter(user => {
