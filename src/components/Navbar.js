@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-// import {logout} from '../store'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
 
 class Navbar extends Component {
   render() {
-    const { isLoggedIn } = this.props
+    const { isLoggedIn } = this.props;
 
     return (
       <div>
@@ -22,22 +22,22 @@ class Navbar extends Component {
           </nav>
         )}
       </div>
-    )
+    );
   }
 }
 
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     handleClick() {
-      dispatch(logout())
+      dispatch(logout());
     }
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);

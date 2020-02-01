@@ -1,7 +1,7 @@
-import React from 'react'
-import './App.css'
-import { Navbar } from './components'
-import Routes from './routes'
+import React from "react";
+import "./App.css";
+import { Navbar } from "./components";
+import Routes from "./Routes";
 
 const App = () => {
   return (
@@ -9,7 +9,7 @@ const App = () => {
       <Navbar />
       <Routes />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
