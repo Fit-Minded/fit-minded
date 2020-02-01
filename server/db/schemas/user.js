@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const user = new mongoose.Schema(
   {
@@ -39,7 +39,7 @@ const user = new mongoose.Schema(
     location: {
       type: {
         type: String,
-        enum: ["Point"],
+        enum: ['Point'],
         required: true
       },
       coordinates: {
@@ -52,30 +52,30 @@ const user = new mongoose.Schema(
       required: true
     },
     activities: {
-      type: [Object],
+      type: Object,
       required: true
     },
     pool: {
       type: Map
-    },
-    toJudge: {
-      type: Map
-    },
-    denied: {
-      type: Map
-    },
-    liked: {
-      type: Map
-    },
-    matched: {
-      type: Map
     }
+    // toJudge: {
+    //   type: Map
+    // },
+    // denied: {
+    //   type: Map
+    // },
+    // liked: {
+    //   type: Map
+    // },
+    // matched: {
+    //   type: Map
+    // }
   },
-  { timestamps: { createdAt: "created_at" } }
-);
+  { timestamps: { createdAt: 'created_at' } }
+)
 
-user.index({ location: "2dsphere" });
+user.index({ location: '2dsphere' })
 
-const User = mongoose.model("user", user);
+const User = mongoose.model('user', user)
 
-module.exports = User;
+module.exports = User
