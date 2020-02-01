@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const User = require('../db/schemas/user')
-const { getQueryData, generatePool } = require('../../script/routeUtil')
+// const { getQueryData, generatePool } = require('../../script/routeUtil')
 module.exports = router
 
 // router.post('/', async (req, res, next) => {
