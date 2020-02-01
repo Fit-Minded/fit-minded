@@ -24,14 +24,15 @@ const createApp = () => {
   // app.use(compression())
 
   // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-      store: sessionStore,
-      resave: false,
-      saveUninitialized: false
-    })
-  )
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+  //     store: sessionStore,
+  //     resave: false,
+  //     saveUninitialized: false
+  //   })
+  // )
+
   passport.serializeUser((user, done) => done(null, user.id))
 
   passport.deserializeUser(async (id, done) => {
@@ -61,8 +62,9 @@ const createApp = () => {
 
   //   next()
   // })
+
   // auth and api routes
-  // app.use('/auth', require('./auth'))
+  app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
   // static file-serving middleware

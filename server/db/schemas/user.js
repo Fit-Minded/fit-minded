@@ -10,6 +10,14 @@ const user = new mongoose.Schema(
       type: String,
       required: true
     },
+    email: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
     gender: {
       own: {
         type: String,
@@ -57,22 +65,18 @@ const user = new mongoose.Schema(
     },
     pool: {
       type: Map
+    },
+    lastLogin: {
+      type: Date
     }
-    // toJudge: {
-    //   type: Map
-    // },
-    // denied: {
-    //   type: Map
-    // },
-    // liked: {
-    //   type: Map
-    // },
-    // matched: {
-    //   type: Map
-    // }
   },
-  { timestamps: { createdAt: 'created_at' } }
+  { timestamps: true }
 )
+
+user.virtual('createdAtMs').get(function() {
+  console.log('in virtual')
+  return this.createdAt.getTime()
+})
 
 user.index({ location: '2dsphere' })
 

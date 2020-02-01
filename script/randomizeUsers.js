@@ -78,7 +78,7 @@ const calcRandAct = () => {
   return activities
 }
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 300; i++) {
   let minAge = getRandomInt(15) + 18
   let maxAge = minAge + getRandomInt(15) + 1
   let latitude = (
@@ -93,6 +93,8 @@ for (let i = 0; i < 10000; i++) {
   let user = {
     firstName: generateName()[0],
     lastName: generateName()[1],
+    email: `Xtest${i}@test.com`,
+    password: '123',
     gender: {
       own: genders[getRandomInt(2)],
       preferred: genders[getRandomInt(2)]
@@ -109,7 +111,8 @@ for (let i = 0; i < 10000; i++) {
       coordinates: [longitude, latitude]
     },
     radius: (getRandomInt(50) + 10) / 10,
-    activities: calcRandAct()
+    activities: calcRandAct(),
+    lastLogin: new Date()
   }
 
   randomUsers.push(user)
