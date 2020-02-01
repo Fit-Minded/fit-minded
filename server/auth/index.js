@@ -1,64 +1,66 @@
-const router = require('express').Router()
-const User = require('../db/schemas/user')
-const { getQueryData, generatePool } = require('../../script/routeUtil')
-module.exports = router
+const router = require("express").Router();
+const User = require("../db/schemas/user");
+const { getQueryData, generatePool } = require("../../script/routeUtil");
+module.exports = router;
 
-router.post('/login', async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
+  console.log("in post ");
   try {
-    let user = await User.findOne({ email: req.body.email })
+    let user = await User.findOne({ email: req.body.email });
+    console.log("here is user", user);
     if (!user) {
-      console.log('No such user found:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
+      console.log("No such user found:", req.body.email);
+      res.status(401).send("Wrong username and/or password");
     } else if (!user.password === req.body.password) {
-      console.log('Incorrect password for user:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
+      console.log("Incorrect password for user:", req.body.email);
+      res.status(401).send("Wrong username and/or password");
     } else {
-      console.log(user.createdAtMs)
-      const queryData = await getQueryData(user)
-      const pool = await generatePool(queryData)
+      console.log(user.createdAtMs);
+      const queryData = await getQueryData(user);
+      const pool = await generatePool(queryData);
 
-      user.lastLogin = new Date()
+      user.lastLogin = new Date();
 
       // console.log(user.pool, pool)
 
-      user.pool = { ...pool }
-      await user.save()
+      user.pool = { ...pool };
+      await user.save();
 
-      req.login(user, err => (err ? next(err) : res.json(user)))
+      req.login(user, err => (err ? next(err) : res.json(user)));
     }
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-router.post('/signup', async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
+    const user = await User.create(req.body);
 
-    const queryData = await getQueryData(user)
-    const pool = await generatePool(queryData)
-    user.lastLogin = new Date()
-    user.pool = pool
-    await user.save()
+    const queryData = await getQueryData(user);
+    const pool = await generatePool(queryData);
+    user.lastLogin = new Date();
+    user.pool = pool;
+    await user.save();
 
-    req.login(user, err => (err ? next(err) : res.json(user)))
+    req.login(user, err => (err ? next(err) : res.json(user)));
   } catch (err) {
-    if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
+    if (err.name === "SequelizeUniqueConstraintError") {
+      res.status(401).send("User already exists");
     } else {
-      next(err)
+      next(err);
     }
   }
-})
+});
 
-router.post('/logout', (req, res) => {
-  req.logout()
-  req.session.destroy()
-  res.redirect('/')
-})
+router.post("/logout", (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/");
+});
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
-})
+router.get("/me", (req, res) => {
+  res.json(req.user);
+});
 
 // router.use('/google', require('./google'))
