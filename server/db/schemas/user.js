@@ -67,10 +67,12 @@ const user = new mongoose.Schema(
       type: Map
     },
     liked: {
-      type: Map
+      type: Map,
+      default: {}
     },
     disliked: {
-      type: Map
+      type: Map,
+      default: {}
     },
     toJudge: {
       type: [String],

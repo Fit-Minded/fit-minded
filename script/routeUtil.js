@@ -133,13 +133,17 @@ async function getToJudgeFromPool(user) {
     usersToJudge = []
   let count = 0
   for (let [key, value] of user.pool) {
+    user.pool.delete(key)
     poolKeys.push(key)
     count++
     if (count === 10) {
       break
     }
   }
+
   user.toJudge = poolKeys
+  await user.save()
+
   for (let i = 0; i < 10; i++) {
     let currentUser = await User.findById(poolKeys[i], [
       'gender.own',
