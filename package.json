@@ -25,9 +25,9 @@
   },
   "scripts": {
     "build-client-watch": "webpack -w",
-    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
+    "start-server": "nodemon server",
     "start": "react-scripts start",
-    "start-dev": "NODE_ENV='development' node src/index.js & NODE_ENV='development' npm run start-server",
+    "start-dev": "NODE_ENV='development' node src/index.js & NODE_ENV='development' npm run start-server & npm run start",
     "seed": "node script/seed.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
