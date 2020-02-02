@@ -19,7 +19,6 @@ router.post('/login', async (req, res, next) => {
       user.pool = { ...pool }
       await user.save()
       req.login(user, err => (err ? next(err) : res.json(user)))
-      console.log('REQ USER', req.user)
     }
   } catch (err) {
     next(err)
@@ -51,7 +50,26 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  const {
+    age,
+    gender,
+    location,
+    _id,
+    firstName,
+    lastName,
+    activities
+  } = req.user
+
+  const reduxUser = {
+    age,
+    gender,
+    location,
+    _id,
+    firstName,
+    lastName,
+    activities
+  }
+  res.json(reduxUser)
 })
 
 // router.use('/google', require('./google'))

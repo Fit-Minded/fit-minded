@@ -5,6 +5,9 @@ const { db, connect } = require('./db')
 const PORT = process.env.PORT || 5000
 const app = express()
 const passport = require('passport')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const User = require('./db/schemas/user')
 
 connect()
   .then(async connect => {
@@ -24,20 +27,20 @@ const createApp = () => {
   // app.use(compression())
 
   // session middleware with passport
-  // app.use(
-  //   session({
-  //     secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-  //     store: sessionStore,
-  //     resave: false,
-  //     saveUninitialized: false
-  //   })
-  // )
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+      store: new MongoStore({ mongooseConnection: db }),
+      resave: false,
+      saveUninitialized: false
+    })
+  )
 
   passport.serializeUser((user, done) => done(null, user.id))
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await db.models.user.findByPk(id)
+      const user = await User.findById(id).exec()
       done(null, user)
     } catch (err) {
       done(err)
@@ -46,22 +49,6 @@ const createApp = () => {
 
   app.use(passport.initialize())
   app.use(passport.session())
-
-  // app.use(function(req, res, next) {
-  //   if (!req.session.cart) {
-  //     req.session.cart = []
-  //   }
-
-  //   // get the userId
-  //   const id = req.user.dataValues.id
-  //   // add products to cart
-  //   console.log('looking for the product', req)
-  //   console.log('this is the sessio in index', req.session)
-  //   req.session.cart.push(id)
-  //   // req.session.cart[id] = (req.session.cart[pathname] || 0) + 1
-
-  //   next()
-  // })
 
   // auth and api routes
   app.use('/auth', require('./auth'))

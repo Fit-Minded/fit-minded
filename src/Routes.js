@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
 import { DecisionPage } from './components'
-import { me } from './store'
+import { me, getToJudge } from './store'
 
 class Routes extends Component {
   componentDidMount() {
@@ -31,8 +31,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
-      dispatch(me())
+    async loadInitialData() {
+      await dispatch(me())
+      await dispatch(getToJudge())
     }
   }
 }
