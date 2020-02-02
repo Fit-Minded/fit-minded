@@ -66,6 +66,12 @@ const user = new mongoose.Schema(
     pool: {
       type: Map
     },
+    liked: {
+      type: Map
+    },
+    disliked: {
+      type: Map
+    },
     lastLogin: {
       type: Date
     }
@@ -74,7 +80,6 @@ const user = new mongoose.Schema(
 )
 
 user.virtual('createdAtMs').get(function() {
-  console.log('in virtual')
   return this.createdAt.getTime()
 })
 
