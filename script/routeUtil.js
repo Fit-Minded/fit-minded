@@ -128,7 +128,33 @@ async function generatePool(queryData) {
   return idMap
 }
 
+async function getToJudgeFromPool(user) {
+  let poolKeys = [],
+    usersToJudge = []
+  let count = 0
+  for (let [key, value] of user.pool) {
+    poolKeys.push(key)
+    count++
+    if (count === 10) {
+      break
+    }
+  }
+  user.toJudge = poolKeys
+  for (let i = 0; i < 10; i++) {
+    let currentUser = await User.findById(poolKeys[i], [
+      'gender.own',
+      'age.own',
+      'firstName',
+      'lastName',
+      'activities'
+    ]).exec()
+    usersToJudge.push(currentUser)
+  }
+  return usersToJudge
+}
+
 module.exports = {
   getQueryData,
-  generatePool
+  generatePool,
+  getToJudgeFromPool
 }

@@ -72,6 +72,11 @@ const user = new mongoose.Schema(
     disliked: {
       type: Map
     },
+    toJudge: {
+      type: [String],
+      required: true,
+      default: []
+    },
     lastLogin: {
       type: Date
     }
