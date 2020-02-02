@@ -93,7 +93,7 @@ for (let i = 0; i < 300; i++) {
   let user = {
     firstName: generateName()[0],
     lastName: generateName()[1],
-    email: `Xtest${i}@test.com`,
+    email: `test${i}@test.com`,
     password: '123',
     gender: {
       own: genders[getRandomInt(2)],

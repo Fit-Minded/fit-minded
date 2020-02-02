@@ -19,6 +19,7 @@ router.post('/login', async (req, res, next) => {
       user.pool = { ...pool }
       await user.save()
       req.login(user, err => (err ? next(err) : res.json(user)))
+      console.log('REQ USER', req.user)
     }
   } catch (err) {
     next(err)
