@@ -120,7 +120,6 @@ async function generatePool(queryData) {
     })
 
   console.log(`Number of results: ${pool.length}`)
-  console.log('Example User: ', pool[0])
 
   const idMap = {}
 
