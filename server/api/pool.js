@@ -29,3 +29,25 @@ router.get("/toJudge", async (req, res, next) => {
     next(err);
   }
 });
+
+router.get("/likedMe", async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId).exec();
+    let usersWhoLikedMe = [];
+    for (let [key, value] of user.likedMe) {
+      const currentUser = await User.findById(key, [
+        "gender.own",
+        "age.own",
+        "firstName",
+        "lastName",
+        "activities",
+        "image"
+      ]).exec();
+      usersWhoLikedMe.push(currentUser);
+    }
+    res.send(usersWhoLikedMe);
+  } catch (err) {
+    next(err);
+  }
+});

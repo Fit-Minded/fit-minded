@@ -74,7 +74,19 @@ const user = new mongoose.Schema(
       type: Map,
       default: {}
     },
+    likedMe: {
+      type: Map,
+      default: {}
+    },
     disliked: {
+      type: Map,
+      default: {}
+    },
+    dislikedMe: {
+      type: Map,
+      default: {}
+    },
+    matches: {
       type: Map,
       default: {}
     },

@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter, Route, Switch } from 'react-router-dom'
-import { Login, Signup } from './components/AuthForm'
-import { DecisionPage } from './components'
-import { me, getToJudge } from './store'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import { DecisionPage } from "./components";
+import { me, getToJudge } from "./store";
+import LikedMe from "./components/LikedMe";
 
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData()
+    this.props.loadInitialData();
   }
 
   render() {
@@ -18,24 +19,25 @@ class Routes extends Component {
         <Route exact path="/home" component={DecisionPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/likedMe" component={LikedMe} />
       </Switch>
-    )
+    );
   }
 }
 
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     async loadInitialData() {
-      await dispatch(me())
-      await dispatch(getToJudge())
+      await dispatch(me());
+      await dispatch(getToJudge());
     }
-  }
-}
+  };
+};
 
-export default withRouter(connect(mapState, mapDispatch)(Routes))
+export default withRouter(connect(mapState, mapDispatch)(Routes));

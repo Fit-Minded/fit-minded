@@ -120,7 +120,6 @@
 #navBar * {
   color: white;
   text-decoration: none;
-  display: contents;
 }
 
 button:active {
@@ -189,4 +188,10 @@ button:active {
 
 .chbx-btn {
   margin: 5px;
+}
+.no-likes {
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  background-color: #075e54;
 }
