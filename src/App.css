@@ -30,15 +30,6 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .profile-pic-toJudge-container {
   display: flex;
   justify-content: center;
@@ -47,12 +38,14 @@
   border-radius: 150px;
   margin-top: 20px;
 }
+
 .name-toJudge {
   color: white;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
+
 .decision-page-container {
   background-color: #2a475e;
 }
@@ -61,10 +54,12 @@
   display: flex;
   justify-content: center;
 }
+
 .button-container {
   display: flex;
   justify-content: center;
 }
+
 .single-btn-yes {
   font-size: 20px;
   color: black;
@@ -75,6 +70,7 @@
   background-color: #00b489;
   cursor: pointer;
 }
+
 .single-btn-no {
   font-size: 20px;
   color: black;
@@ -85,6 +81,7 @@
   border-radius: 150px;
   background-color: lightcoral;
 }
+
 .single-btn-no:hover {
   color: white;
   background-color: red;
@@ -93,35 +90,44 @@
   color: white;
   background-color: #64e687;
 }
+
 .activities-list {
   font-size: 30px;
   margin: 25px;
 }
+
 .activity-list-subcontainer {
   display: flex;
   flex-direction: row;
 }
+
 .workouts-h2 {
   text-align: center;
   width: 85%;
 }
+
 #navBar {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   background-color: #282c34;
   color: white;
   margin-bottom: 1px;
   margin-top: 0;
-  height: 35px;
+  height: 50px;
 }
-.navbar-h2 {
+
+#navBar * {
   color: white;
+  text-decoration: none;
   display: contents;
 }
+
 button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
 .decision-page {
   width: 600px;
   box-shadow: 0 5px 10px black;
@@ -129,12 +135,14 @@ button:active {
   margin: 0 auto;
   background-color: #075e54;
 }
+
 #authForm {
   background-color: #2a475e;
   display: flex;
   justify-content: center;
   height: 650px;
 }
+
 .login-form {
   width: 400px;
   height: 450px;
@@ -146,16 +154,19 @@ button:active {
   justify-content: center;
   margin-top: 100px;
 }
+
 .form-input {
   margin: 25px;
   color: white;
 }
+
 .form-input-box {
   width: 100%;
   height: 30px;
   background-color: lightgray;
   font-size: 17px;
 }
+
 .login-signup-btn {
   width: 100%;
   height: 42px;
@@ -170,10 +181,12 @@ button:active {
   justify-content: center;
   width: 65%;
 }
+
 .log-or-sign-head {
   text-align: center;
   margin-bottom: 50px;
 }
+
 .chbx-btn {
   margin: 5px;
 }

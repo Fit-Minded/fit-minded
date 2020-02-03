@@ -1,35 +1,36 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { makeDecision } from "../store";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { makeDecision, getToJudge } from '../store'
 
 class DecisionPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       toJudge: []
-    };
-    this.handleDecision = this.handleDecision.bind(this);
+    }
+    this.handleDecision = this.handleDecision.bind(this)
   }
 
   static getDerivedStateFromProps(props, state) {
+    if (props.pool.toJudge.length === 0) {
+      props.getToJudge()
+    }
     return {
       toJudge: props.pool.toJudge
-    };
+    }
   }
 
   handleDecision(e) {
-    const decisionType = e.target.name;
-    const otherUserId = this.state.toJudge[0]._id;
-    this.props.makeDecision(decisionType, otherUserId);
+    const decisionType = e.target.name
+    const otherUserId = this.state.toJudge[0]._id
+    this.props.makeDecision(decisionType, otherUserId)
   }
 
   render() {
-    const { toJudge } = this.state;
-    console.log(toJudge);
+    const { toJudge } = this.state
     if (toJudge.length > 0) {
-      console.log(this.state, "this is to judge");
-      let { firstName, lastName, age, gender, activities, image } = toJudge[0];
-      activities = Object.keys(activities);
+      let { firstName, lastName, age, gender, activities, image } = toJudge[0]
+      activities = Object.keys(activities)
       return (
         <div className="decision-page-container">
           <div className="decision-page">
@@ -54,10 +55,10 @@ class DecisionPage extends Component {
                 <div className="activity-list-subcontainer">
                   {activities.map((activity, index) => {
                     return (
-                      <li className="activities-list" key={index}>
+                      <h2 className="activities-list" key={index}>
                         {activity}
-                      </li>
-                    );
+                      </h2>
+                    )
                   })}
                 </div>
               </ul>
@@ -82,9 +83,9 @@ class DecisionPage extends Component {
             </div>
           </div>
         </div>
-      );
+      )
     } else {
-      return <div>loading...</div>;
+      return <div>loading...</div>
     }
   }
 }
@@ -92,14 +93,15 @@ class DecisionPage extends Component {
 const mapState = state => {
   return {
     pool: state.pool
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
     makeDecision: (decisionType, otherUserId) =>
-      dispatch(makeDecision(decisionType, otherUserId))
-  };
-};
+      dispatch(makeDecision(decisionType, otherUserId)),
+    getToJudge: () => dispatch(getToJudge())
+  }
+}
 
-export default connect(mapState, mapDispatch)(DecisionPage);
+export default connect(mapState, mapDispatch)(DecisionPage)
