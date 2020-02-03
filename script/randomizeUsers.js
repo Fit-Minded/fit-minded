@@ -68,7 +68,7 @@ const negOrPos = {
 };
 
 const calcRandAct = () => {
-  let possibleActivites = ["running 🏃", "lifting 🏋🏻‍♂️", "yoga 🧘‍♀️"];
+  let possibleActivites = ["Running 🏃", "Lifting 🏋🏻‍♂️", "Yoga 🧘‍♀️"];
   let activities = {};
   let numOfActivites = getRandomInt(4);
   for (let i = 0; i <= numOfActivites; i++) {
