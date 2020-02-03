@@ -23,6 +23,52 @@ function getQueryData(user) {
   return queryData
 }
 
+function configSignUpStateData(state) {
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    imageUrl,
+    ageOwn,
+    agePrefMin,
+    agePrefMax,
+    genderOwn,
+    genderPref,
+    longitude,
+    latitude,
+    radius,
+    activity
+  } = state
+  const newUserData = {
+    email,
+    password,
+    firstName,
+    lastName,
+    image: imageUrl,
+    age: {
+      own: Number(ageOwn),
+      preferred: {
+        min: Number(agePrefMin),
+        max: Number(agePrefMax)
+      }
+    },
+    gender: {
+      own: genderOwn,
+      preferred: genderPref
+    },
+    location: {
+      type: 'Point',
+      coordinates: [Number(longitude), Number(latitude)]
+    },
+    radius: Number(radius),
+    activities: {
+      [activity]: true
+    }
+  }
+  return newUserData
+}
+
 async function generatePool(queryData) {
   const {
     ownGender,
@@ -150,7 +196,8 @@ async function getToJudgeFromPool(user) {
       'age.own',
       'firstName',
       'lastName',
-      'activities'
+      'activities',
+      'image'
     ]).exec()
     usersToJudge.push(currentUser)
   }
@@ -160,5 +207,6 @@ async function getToJudgeFromPool(user) {
 module.exports = {
   getQueryData,
   generatePool,
-  getToJudgeFromPool
+  getToJudgeFromPool,
+  configSignUpStateData
 }
