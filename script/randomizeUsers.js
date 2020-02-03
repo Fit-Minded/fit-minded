@@ -5,48 +5,48 @@ function capFirst(string) {
 }
 function generateName() {
   let name1 = [
-    "Marquis",
-    "Samir",
-    "Adrien",
-    "Joyce",
-    "Pierce",
-    "Juliette",
-    "Kelton",
-    "Jacob",
-    "Isiah",
-    "Lindsay",
-    "Kian",
-    "Jordyn",
-    "Jaquan",
-    "Anya",
-    "Wayne",
-    "Khalil",
-    "Adel",
-    "Robert",
-    "Manami",
-    "Roy"
+    'Marquis',
+    'Samir',
+    'Adrien',
+    'Joyce',
+    'Pierce',
+    'Juliette',
+    'Kelton',
+    'Jacob',
+    'Isiah',
+    'Lindsay',
+    'Kian',
+    'Jordyn',
+    'Jaquan',
+    'Anya',
+    'Wayne',
+    'Khalil',
+    'Adel',
+    'Robert',
+    'Manami',
+    'Roy'
   ];
   let name2 = [
-    "Mills",
-    "Mercer",
-    "Reeves",
-    "Hines",
-    "Sanford",
-    "Irwin",
-    "Koch",
-    "Hinton",
-    "Estes",
-    "Jackson",
-    "Lowe",
-    "Guerra",
-    "Pineda",
-    "Franco",
-    "Cowan",
-    "Krause",
-    "Fox",
-    "Jabbar",
-    "Tessler",
-    "Ueda"
+    'Mills',
+    'Mercer',
+    'Reeves',
+    'Hines',
+    'Sanford',
+    'Irwin',
+    'Koch',
+    'Hinton',
+    'Estes',
+    'Jackson',
+    'Lowe',
+    'Guerra',
+    'Pineda',
+    'Franco',
+    'Cowan',
+    'Krause',
+    'Fox',
+    'Jabbar',
+    'Tessler',
+    'Ueda'
   ];
   let finalFirst = capFirst(name1[getRandomInt(name1.length)]);
   let finalLast = capFirst(name2[getRandomInt(name2.length)]);
@@ -58,8 +58,8 @@ function getRandomInt(max) {
 }
 
 const genders = {
-  0: "Male",
-  1: "Female"
+  0: 'Male',
+  1: 'Female'
 };
 
 const negOrPos = {
@@ -68,7 +68,7 @@ const negOrPos = {
 };
 
 const calcRandAct = () => {
-  let possibleActivites = ["Running 🏃", "Lifting 🏋🏻‍♂️", "Yoga 🧘‍♀️"];
+  let possibleActivites = ['Running 🏃', 'Lifting 🏋🏻‍♂️', 'Yoga 🧘‍♀️'];
   let activities = {};
   let numOfActivites = getRandomInt(4);
   for (let i = 0; i <= numOfActivites; i++) {
@@ -78,7 +78,7 @@ const calcRandAct = () => {
   return activities;
 };
 
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 1000; i++) {
   let minAge = getRandomInt(15) + 18;
   let maxAge = minAge + getRandomInt(15) + 1;
   let latitude = (
@@ -93,9 +93,9 @@ for (let i = 0; i < 10000; i++) {
   let user = {
     firstName: generateName()[0],
     lastName: generateName()[1],
-    image: "https://picsum.photos/300/300",
+    image: 'https://picsum.photos/300/300',
     email: `test${i}@test.com`,
-    password: "123",
+    password: '123',
     gender: {
       own: genders[getRandomInt(2)],
       preferred: genders[getRandomInt(2)]
@@ -108,7 +108,7 @@ for (let i = 0; i < 10000; i++) {
       }
     },
     location: {
-      type: "Point",
+      type: 'Point',
       coordinates: [longitude, latitude]
     },
     radius: (getRandomInt(50) + 10) / 10,
