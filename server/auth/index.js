@@ -1,6 +1,10 @@
 const router = require('express').Router()
 const User = require('../db/schemas/user')
-const { getQueryData, generatePool } = require('../../script/routeUtil')
+const {
+  getQueryData,
+  generatePool,
+  configSignUpStateData
+} = require('../../script/routeUtil')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -13,8 +17,10 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
+      console.log(`Logging in ${user.firstName} ${user.lastName}`)
       const queryData = await getQueryData(user)
       const pool = await generatePool(queryData)
+      console.log('Refreshed Pool: ', pool)
       user.lastLogin = new Date()
       user.pool = { ...pool }
       await user.save()
@@ -27,9 +33,12 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
+    const newUserData = configSignUpStateData(req.body)
+    const user = await User.create(newUserData)
+    console.log(`Created User ${user.firstName} ${user.lastName}`)
     const queryData = await getQueryData(user)
     const pool = await generatePool(queryData)
+    console.log('Generated Pool: ', pool)
     user.lastLogin = new Date()
     user.pool = pool
     await user.save()
