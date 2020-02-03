@@ -9,11 +9,11 @@ router.put('/', async (req, res, next) => {
     const user = await User.findById(userId).exec()
     if (decisionType === 'like') {
       user.toJudge.shift()
-      user.liked[otherUserId] = true
+      user.liked.set(otherUserId, true)
     }
     if (decisionType === 'dislike') {
       user.toJudge.shift()
-      user.disliked[otherUserId] = true
+      user.disliked.set(otherUserId, true)
     }
     await user.save()
     res.sendStatus(204)
