@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const user = new mongoose.Schema(
   {
@@ -7,6 +7,10 @@ const user = new mongoose.Schema(
       required: true
     },
     lastName: {
+      type: String,
+      required: true
+    },
+    image: {
       type: String,
       required: true
     },
@@ -47,7 +51,7 @@ const user = new mongoose.Schema(
     location: {
       type: {
         type: String,
-        enum: ['Point'],
+        enum: ["Point"],
         required: true
       },
       coordinates: {
@@ -84,14 +88,14 @@ const user = new mongoose.Schema(
     }
   },
   { timestamps: true }
-)
+);
 
-user.virtual('createdAtMs').get(function() {
-  return this.createdAt.getTime()
-})
+user.virtual("createdAtMs").get(function() {
+  return this.createdAt.getTime();
+});
 
-user.index({ location: '2dsphere' })
+user.index({ location: "2dsphere" });
 
-const User = mongoose.model('user', user)
+const User = mongoose.model("user", user);
 
-module.exports = User
+module.exports = User;

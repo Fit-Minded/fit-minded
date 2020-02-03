@@ -14,10 +14,10 @@ class Navbar extends Component {
         ) : (
           <nav id="navBar">
             <Link to="/login">
-              <h2>Login</h2>
+              <h2 className="navbar-h2">Login</h2>
             </Link>
             <Link to="/signup">
-              <h2>Sign Up</h2>
+              <h2 className="navbar-h2">Sign Up</h2>
             </Link>
           </nav>
         )}
