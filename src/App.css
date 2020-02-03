@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+* {
+  font-family: avenir;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +37,143 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.profile-pic-toJudge-container {
+  display: flex;
+  justify-content: center;
+}
+.profile-pic-toJudge {
+  border-radius: 150px;
+  margin-top: 20px;
+}
+.name-toJudge {
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.decision-page-container {
+  background-color: #2a475e;
+}
+.activity-list-container {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+.single-btn-yes {
+  font-size: 20px;
+  color: black;
+  margin: 50px;
+  height: 65px;
+  width: 65px;
+  border-radius: 150px;
+  background-color: #00b489;
+  cursor: pointer;
+}
+.single-btn-no {
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+  margin: 50px;
+  height: 65px;
+  width: 65px;
+  border-radius: 150px;
+  background-color: lightcoral;
+}
+.single-btn-no:hover {
+  color: white;
+  background-color: red;
+}
+.single-btn-yes:hover {
+  color: white;
+  background-color: #64e687;
+}
+.activities-list {
+  font-size: 30px;
+  margin: 25px;
+}
+.activity-list-subcontainer {
+  display: flex;
+  flex-direction: row;
+}
+.workouts-h2 {
+  text-align: center;
+  width: 85%;
+}
+#navBar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #282c34;
+  color: white;
+  margin-bottom: 1px;
+  margin-top: 0;
+  height: 35px;
+}
+.navbar-h2 {
+  color: white;
+  display: contents;
+}
+button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.decision-page {
+  width: 600px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 35px;
+  margin: 0 auto;
+  background-color: #075e54;
+}
+#authForm {
+  background-color: #2a475e;
+  display: flex;
+  justify-content: center;
+  height: 650px;
+}
+.login-form {
+  width: 400px;
+  height: 450px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 35px;
+  margin: 0 auto;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+.form-input {
+  margin: 25px;
+  color: white;
+}
+.form-input-box {
+  width: 100%;
+  height: 30px;
+  background-color: lightgray;
+  font-size: 17px;
+}
+.login-signup-btn {
+  width: 100%;
+  height: 42px;
+  margin-top: 35px;
+  background-color: #1877f2;
+  color: white;
+  font-size: 18px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 65%;
+}
+.log-or-sign-head {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.chbx-btn {
+  margin: 5px;
 }
