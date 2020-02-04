@@ -195,3 +195,7 @@ button:active {
   justify-content: center;
   background-color: #075e54;
 }
+.single-match-container {
+  display: flex;
+  justify-content: space-between;
+}
