@@ -27,6 +27,36 @@
     <title>React App</title>
   </head>
   <body>
+    <script src="https://unpkg.com/@pusher/chatkit-client@1/dist/web/chatkit.js"></script>
+    <script>
+      const tokenProvider = new Chatkit.TokenProvider({
+        url:
+          "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/fb89b76a-014b-425c-9996-f0d8dbc1e571/token"
+      });
+
+      const chatManager = new Chatkit.ChatManager({
+        instanceLocator: "v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571",
+        userId: "12",
+        tokenProvider: tokenProvider
+      });
+
+      console.log("HI", chatManager)
+
+      chatManager.connect()
+        .then(currentUser => {
+          currentUser.subscribeToRoomMultipart({
+            roomId: currentUser.rooms[0].id,
+            hooks: {
+              onMessage: message => {
+                console.log("Received message:", message);
+              }
+            } //can add a Message Limit if needed
+          });
+        }).then(res => res.event)
+        .catch(error => {
+          console.error("error:", error);
+        });
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
