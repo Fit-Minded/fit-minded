@@ -4,11 +4,11 @@ import SendMessageForm from "./SendMessageForm";
 import Title from "./Title";
 import Chatkit from "@pusher/chatkit-client";
 
-const instanceLocator = "v1:us1:e45d7daa-545e-450f-bf52-00fff9c517d0";
+const instanceLocator = "v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571";
 const testToken =
-  "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e45d7daa-545e-450f-bf52-00fff9c517d0/token";
-const username = "Cody";
-const roomId = 1;
+  "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/fb89b76a-014b-425c-9996-f0d8dbc1e571/token";
+const username = "Harry Potter";
+const roomId = "7b31bc3d-311d-4af4-be10-f272c9cbfed8";
 
 const DUMMY_DATA = [
   {
@@ -27,9 +27,11 @@ class ChatApp extends React.Component {
     this.state = {
       messages: DUMMY_DATA
     };
+    this.sendMessage = this.sendMessage.bind(this)
   }
 
   componentDidMount() {
+    console.log("roomId", roomId)
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
       userId: username,
@@ -38,7 +40,11 @@ class ChatApp extends React.Component {
       })
     });
 
+    console.log("chatManager", chatManager)
+    
     chatManager.connect().then(currentUser => {
+      console.log("HELLO from connect")
+      this.currentUser = currentUser;
       currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
@@ -49,16 +55,19 @@ class ChatApp extends React.Component {
           }
         }
       });
+      
     });
   }
   sendMessage(text) {
+    console.log("SEND MESSAGE", this.currentUser)
     this.currentUser.sendMessage({
-      text,
+      text: text,
       roomId: roomId
     });
   }
 
   render() {
+    console.log("render", this.currentUser)
     return (
       <div className="chat-app">
         <Title />

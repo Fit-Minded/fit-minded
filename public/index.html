@@ -28,74 +28,12 @@
     <title>React   App</title>
   </head>
   <body>
-<<<<<<< HEAD
-    <!-- <ul id="message-list"></ul>
-    <form id="message-form">
-      <input type="text" id="message-text" />
-      <input type="submit" />
-    </form> -->
-    <script src="https://unpkg.com/@pusher/chatkit-client@1/dist/web/chatkit.js"></script>
-    <script>
-      const tokenProvider = new Chatkit.TokenProvider({
-        url:
-          "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/fb89b76a-014b-425c-9996-f0d8dbc1e571/token"
-      });
-
-      const chatManager = new Chatkit.ChatManager({
-        instanceLocator: "v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571",
-        userId: "12",
-        tokenProvider: tokenProvider
-      });
-
-      chatManager
-        .connect()
-        .then(currentUser => {
-          currentUser.subscribeToRoomMultipart({
-            roomId: currentUser.rooms[0].id,
-            hooks: {
-              onMessage: message => {
-                const ul = document.getElementById("message-list");
-                const li = document.createElement("li");
-                li.appendChild(
-                  document.createTextNode(
-                    `${message.senderId}: ${
-                      // We know our message will have a single part with
-                      // a plain text content because we used
-                      // sendSimpleMessage. In general we'd have to check
-                      // the partType here.
-                      message.parts[0].payload.content
-                    }`
-                  )
-                );
-                ul.appendChild(li);
-              }
-            }
-          });
-
-          const form = document.getElementById("message-form");
-          form.addEventListener("submit", e => {
-            e.preventDefault();
-            const input = document.getElementById("message-text");
-            currentUser.sendSimpleMessage({
-              text: input.value,
-              roomId: currentUser.rooms[0].id
-            });
-            input.value = "";
-          });
-        })
-        .catch(error => {
-          console.error("error:", error);
-        });
-    </script>
-    
-=======
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@pusher/chatkit"></script>
     <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
     <script src="index.js" type="text/babel"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
->>>>>>> c77af903cbba671bcfa27a6a8b3de54f8a378132
     <div id="root"></div>
     <!--
       This HTML file is a template.
