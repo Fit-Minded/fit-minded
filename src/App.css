@@ -32,6 +32,13 @@ body {
   box-shadow: rgba(167, 167, 167, 0.605) 2px 2px 5px;
 }
 
+#map {
+  height: 150px;
+  padding: 10px;
+  margin: 30px;
+  border-radius: 10px;
+}
+
 .profile-pic-toJudge-container {
   display: flex;
   justify-content: center;
@@ -119,6 +126,8 @@ body {
   filter: var(--white-to-highlight-blue);
 }
 
+/*USER PROFILE*/
+
 #userProfile {
   display: flex;
   flex-direction: column;
@@ -126,6 +135,41 @@ body {
 }
 
 #userProfile img {
+  border-radius: 10px;
+}
+
+/* SIGN UP FORM*/
+
+#sign-up-page {
+  display: flex;
+  flex-direction: column;
+}
+
+#sign-up-page h2 {
+  margin-left: 7.5vw;
+  margin-bottom: 0px;
+}
+
+#sign-up-page div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--dark-gray);
+  padding: 10px;
+}
+
+#sign-up-page input {
+  background: var(--medium-gray);
+  border: none;
+}
+
+#sign-up-pictures {
+  width: 95vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#sign-up-pictures img {
+  width: 30vw;
   border-radius: 10px;
 }
 

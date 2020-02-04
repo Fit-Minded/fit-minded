@@ -17,6 +17,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-session-mongo": "^0.1.0",
+    "file-upload-with-preview": "^4.0.8",
+    "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "mongoose": "^5.8.10",
     "morgan": "^1.9.1",
