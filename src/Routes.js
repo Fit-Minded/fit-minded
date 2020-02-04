@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import { DecisionPage, SignUpPage } from './components';
 import { me } from './store';
 import LikedMe from './components/LikedMe';
+import Matches from './components/Matches';
 
 class Routes extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path='/home' component={DecisionPage} />
             <Route exact path='/likedMe' component={LikedMe} />
+            <Route exact path='/matches' component={Matches} />
           </Switch>
         ) : (
           <Switch>
