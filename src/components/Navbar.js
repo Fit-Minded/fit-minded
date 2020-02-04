@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
 class Navbar extends Component {
   render() {
@@ -10,23 +10,26 @@ class Navbar extends Component {
     return (
       <div>
         {isLoggedIn ? (
-          <nav id="navBar">
-            <Link to="/home">
+          <nav id='navBar'>
+            <Link to='/matches'>
+              <h1>Matches</h1>
+            </Link>
+            <Link to='/home'>
               <h1>FitMinded</h1>
             </Link>
-            <Link to="/likedMe">
+            <Link to='/likedMe'>
               <h1>Liked Me</h1>
             </Link>
           </nav>
         ) : (
-          <nav id="navBar">
-            <Link to="/login">
+          <nav id='navBar'>
+            <Link to='/login'>
               <h2>Login</h2>
             </Link>
-            <Link to="/home">
+            <Link to='/home'>
               <h1>FitMinded</h1>
             </Link>
-            <Link to="/signup">
+            <Link to='/signup'>
               <h2>Sign Up</h2>
             </Link>
           </nav>
