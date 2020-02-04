@@ -22,9 +22,9 @@ class SendMessageForm extends React.Component {
     console.log("THIS.STATE", this.state)
     console.log("currentUser", this.currentUser)
     this.props.sendMessage(this.state.message);
-    // this.setState({
-    //   message: ""
-    // });
+    this.setState({
+      message: ""
+    });
   }
 
   render() {

@@ -7,7 +7,7 @@ import Chatkit from "@pusher/chatkit-client";
 const instanceLocator = "v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571";
 const testToken =
   "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/fb89b76a-014b-425c-9996-f0d8dbc1e571/token";
-const username = "Harry Potter";
+const userId = "12";
 const roomId = "7b31bc3d-311d-4af4-be10-f272c9cbfed8";
 
 const DUMMY_DATA = [
@@ -32,14 +32,15 @@ class ChatApp extends React.Component {
 
   componentDidMount() {
     console.log("roomId", roomId)
+    
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
-      userId: username,
+      userId: userId,
       tokenProvider: new Chatkit.TokenProvider({
         url: testToken
       })
+      
     });
-
     console.log("chatManager", chatManager)
     
     chatManager.connect().then(currentUser => {
