@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import { DecisionPage, SignUpPage } from './components';
 import { me } from './store';
 import LikedMe from './components/LikedMe';
+import Chat from './components/Chat'
 
 class Routes extends Component {
   componentDidMount() {
@@ -22,12 +23,14 @@ class Routes extends Component {
           <Switch>
             <Route exact path='/home' component={DecisionPage} />
             <Route exact path='/likedMe' component={LikedMe} />
+            
           </Switch>
         ) : (
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
             <Route exact path='/signUpPage' component={SignUpPage} />
+            <Route exact path='/chat' component={Chat}/>
           </Switch>
         )}
       </Switch>
