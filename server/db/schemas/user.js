@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const user = new mongoose.Schema(
   {
@@ -51,7 +51,7 @@ const user = new mongoose.Schema(
     location: {
       type: {
         type: String,
-        enum: ["Point"],
+        enum: ['Point'],
         required: true
       },
       coordinates: {
@@ -68,7 +68,8 @@ const user = new mongoose.Schema(
       required: true
     },
     pool: {
-      type: Map
+      type: Map,
+      default: {}
     },
     liked: {
       type: Map,
@@ -100,14 +101,14 @@ const user = new mongoose.Schema(
     }
   },
   { timestamps: true }
-);
+)
 
-user.virtual("createdAtMs").get(function() {
-  return this.createdAt.getTime();
-});
+user.virtual('createdAtMs').get(function() {
+  return this.createdAt.getTime()
+})
 
-user.index({ location: "2dsphere" });
+user.index({ location: '2dsphere' })
 
-const User = mongoose.model("user", user);
+const User = mongoose.model('user', user)
 
-module.exports = User;
+module.exports = User

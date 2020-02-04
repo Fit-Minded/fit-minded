@@ -18,7 +18,7 @@ router.post('/login', async (req, res, next) => {
       res.status(401).send('Wrong username and/or password')
     } else {
       console.log(`Logging in ${user.firstName} ${user.lastName}`)
-      const queryData = await getQueryData(user)
+      const queryData = getQueryData(user)
       const pool = await generatePool(queryData)
       console.log('Refreshed Pool: ', pool)
       user.lastLogin = new Date()
@@ -36,7 +36,7 @@ router.post('/signup', async (req, res, next) => {
     const newUserData = configSignUpStateData(req.body)
     const user = await User.create(newUserData)
     console.log(`Created User ${user.firstName} ${user.lastName}`)
-    const queryData = await getQueryData(user)
+    const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
     console.log('Generated Pool: ', pool)
     user.lastLogin = new Date()
