@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { auth } from '../store';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { auth } from '../store'
 
 class SignUpPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       email: '',
@@ -21,20 +21,20 @@ class SignUpPage extends Component {
       latitude: 0,
       radius: 0.0,
       activity: ''
-    };
+    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
     if (this.props.location.state) {
-      const { email, password } = this.props.location.state;
+      const { email, password } = this.props.location.state
       this.setState({
         ...this.state,
         email,
         password
-      });
+      })
     }
   }
 
@@ -42,131 +42,136 @@ class SignUpPage extends Component {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value
-    });
+    })
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
-    const formName = evt.target.name;
-    const state = this.state;
-    this.props.auth(state, formName);
+    evt.preventDefault()
+    const formName = evt.target.name
+    const state = this.state
+    this.props.auth(state, formName)
   }
 
   render() {
     return (
-      <div id='sign-up-page'>
-        <form name='signup' onSubmit={this.handleSubmit}>
-          <label htmlFor='firstName'>First Name</label>
+      <div id="sign-up-page">
+        <form name="signup" onSubmit={this.handleSubmit}>
           <input
-            type='text'
-            name='firstName'
+            type="file"
+            accept="image/x-png,image/jpeg,image/gif"
+            onChange={() => this.upload()}
+          />
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            name="firstName"
             value={this.state.firstName}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='lastName'>Last Name</label>
+          <label htmlFor="lastName">Last Name</label>
           <input
-            type='text'
-            name='lastName'
+            type="text"
+            name="lastName"
             value={this.state.lastName}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='imageUrl'>Image URL</label>
+          <label htmlFor="imageUrl">Image URL</label>
           <input
-            type='text'
-            name='imageUrl'
+            type="text"
+            name="imageUrl"
             value={this.state.imageUrl}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='genderOwn'>Gender</label>
+          <label htmlFor="genderOwn">Gender</label>
           <input
-            type='text'
-            name='genderOwn'
+            type="text"
+            name="genderOwn"
             value={this.state.genderOwn}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='genderPref'>Gender Preference</label>
+          <label htmlFor="genderPref">Gender Preference</label>
           <input
-            type='text'
-            name='genderPref'
+            type="text"
+            name="genderPref"
             value={this.state.genderPref}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='ageOwn'>Age</label>
+          <label htmlFor="ageOwn">Age</label>
           <input
-            type='text'
-            name='ageOwn'
+            type="text"
+            name="ageOwn"
             value={this.state.ageOwn}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='agePrefMin'>Age Pref Min</label>
+          <label htmlFor="agePrefMin">Age Pref Min</label>
           <input
-            type='text'
-            name='agePrefMin'
+            type="text"
+            name="agePrefMin"
             value={this.state.agePrefMin}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='agePrefMax'>Age Pref Max</label>
+          <label htmlFor="agePrefMax">Age Pref Max</label>
           <input
-            type='text'
-            name='agePrefMax'
+            type="text"
+            name="agePrefMax"
             value={this.state.agePrefMax}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='longitude'>Longitude</label>
+          <label htmlFor="longitude">Longitude</label>
           <input
-            type='text'
-            name='longitude'
+            type="text"
+            name="longitude"
             value={this.state.longitude}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='latitude'>Latitude</label>
+          <label htmlFor="latitude">Latitude</label>
           <input
-            type='text'
-            name='latitude'
+            type="text"
+            name="latitude"
             value={this.state.latitude}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='radius'>Radius in Miles</label>
+          <label htmlFor="radius">Radius in Miles</label>
           <input
-            type='text'
-            name='radius'
+            type="text"
+            name="radius"
             value={this.state.radius}
             onChange={this.handleChange}
           />
           <br />
-          <label htmlFor='activity'>Activity</label>
+          <label htmlFor="activity">Activity</label>
           <input
-            type='text'
-            name='activity'
+            type="text"
+            name="activity"
             value={this.state.activity}
             onChange={this.handleChange}
           />
           <br />
-          <button type='submit'>Create Profile</button>
+          <button type="submit">Create Profile</button>
         </form>
       </div>
-    );
+    )
   }
 }
 
 const mapState = state => {
-  return {};
-};
+  return {}
+}
 
 const mapDispatch = dispatch => {
   return {
     auth: (state, formName) => dispatch(auth(state, formName))
-  };
-};
+  }
+}
 
-export default connect(mapState, mapDispatch)(SignUpPage);
+export default connect(mapState, mapDispatch)(SignUpPage)

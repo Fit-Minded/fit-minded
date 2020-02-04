@@ -1,4 +1,5 @@
 export { default as Navbar } from './Navbar'
 export { default as DecisionPage } from './DecisionPage'
 export { default as SignUpPage } from './SignUpPage'
+export { default as UserProfile } from './UserProfile'
 export { Login, Signup } from './AuthForm'
