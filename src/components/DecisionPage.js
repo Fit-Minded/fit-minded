@@ -28,59 +28,48 @@ class DecisionPage extends Component {
 
   render() {
     const { toJudge } = this.state
-    if (toJudge.length > 0) {
+    if (toJudge.length > 0 && toJudge[0] !== null) {
+      console.log(toJudge)
       let { firstName, lastName, age, gender, activities, image } = toJudge[0]
       activities = Object.keys(activities)
       return (
-        <div className="decision-page-container">
-          <div className="decision-page">
-            <div className="profile-pic-toJudge-container">
-              <img
-                src={image}
-                alt="profile-pic"
-                className="profile-pic-toJudge"
-              />
-            </div>
-            <div className="name-toJudge">
-              <h1>
-                {firstName} {lastName}
-              </h1>
-              <h2>
-                {gender.own}, {age.own}
-              </h2>
-            </div>
-            <div className="activity-list-container">
-              <ul>
-                <h2 className="workouts-h2">My Workouts</h2>
-                <div className="activity-list-subcontainer">
-                  {activities.map((activity, index) => {
-                    return (
-                      <h2 className="activities-list" key={index}>
-                        {activity}
-                      </h2>
-                    )
-                  })}
-                </div>
-              </ul>
-            </div>
-            <div className="button-container">
-              <button
-                className="single-btn-no"
-                type="button"
-                name="dislike"
-                onClick={this.handleDecision}
-              >
-                X
-              </button>
-              <button
-                className="single-btn-yes"
-                type="button"
-                name="like"
-                onClick={this.handleDecision}
-              >
-                √
-              </button>
-            </div>
+        <div className="decision-page">
+          <div className="name-toJudge">
+            <h1>
+              {firstName} {lastName.slice(0, 1)}.
+            </h1>
+          </div>
+          <div className="profile-pic-toJudge-container">
+            <img
+              src={image}
+              alt="profile-pic"
+              className="profile-pic-toJudge"
+            />
+          </div>
+          {activities.map((activity, index) => {
+            return (
+              <div className="activity-cont" key={index}>
+                {activity}
+              </div>
+            )
+          })}
+          <div className="button-container">
+            <button
+              // className="single-btn-no"
+              type="button"
+              name="dislike"
+              onClick={this.handleDecision}
+            >
+              <i className="fas fa-thumbs-down"></i>
+            </button>
+            <button
+              // className="single-btn-yes"
+              type="button"
+              name="like"
+              onClick={this.handleDecision}
+            >
+              <i className="fas fa-thumbs-up"></i>
+            </button>
           </div>
         </div>
       )
