@@ -27,6 +27,7 @@ class ChatApp extends React.Component {
     this.state = {
       messages: DUMMY_DATA
     };
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   componentDidMount() {
@@ -37,20 +38,30 @@ class ChatApp extends React.Component {
         url: testToken
       })
     });
+    console.log(chatManager);
 
-    chatManager.connect().then(currentUser => {
-      currentUser.subscribeToRoom({
-        roomId: roomId,
-        hooks: {
-          onNewMessage: message => {
-            this.setState({
-              messages: [...this.state.messages, message]
-            });
+    chatManager
+      .connect()
+      .then(currentUser => {
+        console.log(currentUser);
+        this.currentUser = currentUser;
+
+        currentUser.subscribeToRoom({
+          roomId: roomId,
+          hooks: {
+            onNewMessage: message => {
+              this.setState({
+                messages: [...this.state.messages, message]
+              });
+            }
           }
-        }
+        });
+      })
+      .catch(error => {
+        console.error(error);
       });
-    });
   }
+
   sendMessage(text) {
     this.currentUser.sendMessage({
       text,
