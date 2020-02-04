@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { auth } from '../store'
+import { MapContainer } from './index'
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -11,7 +12,13 @@ class SignUpPage extends Component {
       password: '',
       firstName: '',
       lastName: '',
-      imageUrl: '',
+      imageUrl1:
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      // imageUrl2:
+      //   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      // imageUrl3:
+      //   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      imageFile: null,
       ageOwn: 0,
       agePrefMin: 0,
       agePrefMax: 0,
@@ -24,6 +31,7 @@ class SignUpPage extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleMapMove = this.handleMapMove.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -36,11 +44,21 @@ class SignUpPage extends Component {
         password
       })
     }
+
+    this.handleImageUpload = this.handleImageUpload.bind(this)
+  }
+
+  handleImageUpload(evt) {
+    const file = evt.target.files[0]
+    const imageUrl = `imageUrl${evt.target.name}`
+    this.setState({
+      [imageUrl]: URL.createObjectURL(file),
+      imageFile: file
+    })
   }
 
   handleChange(e) {
     this.setState({
-      ...this.state,
       [e.target.name]: e.target.value
     })
   }
@@ -52,111 +70,142 @@ class SignUpPage extends Component {
     this.props.auth(state, formName)
   }
 
+  handleMapMove(longitude, latitude) {
+    this.setState({
+      longitude,
+      latitude
+    })
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
-          <input
-            type="file"
-            accept="image/x-png,image/jpeg,image/gif"
-            onChange={() => this.upload()}
-          />
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="imageUrl">Image URL</label>
-          <input
-            type="text"
-            name="imageUrl"
-            value={this.state.imageUrl}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="genderOwn">Gender</label>
-          <input
-            type="text"
-            name="genderOwn"
-            value={this.state.genderOwn}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="genderPref">Gender Preference</label>
-          <input
-            type="text"
-            name="genderPref"
-            value={this.state.genderPref}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="ageOwn">Age</label>
-          <input
-            type="text"
-            name="ageOwn"
-            value={this.state.ageOwn}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="agePrefMin">Age Pref Min</label>
-          <input
-            type="text"
-            name="agePrefMin"
-            value={this.state.agePrefMin}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="agePrefMax">Age Pref Max</label>
-          <input
-            type="text"
-            name="agePrefMax"
-            value={this.state.agePrefMax}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="longitude">Longitude</label>
-          <input
-            type="text"
-            name="longitude"
-            value={this.state.longitude}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="latitude">Latitude</label>
-          <input
-            type="text"
-            name="latitude"
-            value={this.state.latitude}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="radius">Radius in Miles</label>
-          <input
-            type="text"
-            name="radius"
-            value={this.state.radius}
-            onChange={this.handleChange}
-          />
-          <br />
-          <label htmlFor="activity">Activity</label>
-          <input
-            type="text"
-            name="activity"
-            value={this.state.activity}
-            onChange={this.handleChange}
-          />
-          <br />
+          <h2>My Photos</h2>
+          <div id="sign-up-pictures">
+            <label htmlFor="picture-input1">
+              <img src={this.state.imageUrl1} alt="userPic" />
+            </label>
+            <input
+              type="file"
+              id="picture-input1"
+              name="1"
+              accept="image/x-png,image/jpeg,image/gif"
+              onChange={this.handleImageUpload}
+              style={{ display: 'none' }}
+            />
+            {/* <label htmlFor="picture-input2">
+              <img src={this.state.imageUrl2} alt="userPic" />
+            </label>
+            <input
+              type="file"
+              id="picture-input2"
+              name="2"
+              accept="image/x-png,image/jpeg,image/gif"
+              onChange={() => this.upload()}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="picture-input3">
+              <img src={this.state.imageUrl3} alt="userPic" />
+            </label>
+            <input
+              type="file"
+              id="picture-input3"
+              name="3"
+              accept="image/x-png,image/jpeg,image/gif"
+              onChange={() => this.upload()}
+              style={{ display: 'none' }}
+            /> */}
+          </div>
+          <h2>My Info</h2>
+          <div>
+            <label htmlFor="firstName">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="genderOwn">Gender</label>
+            <input
+              type="text"
+              name="genderOwn"
+              value={this.state.genderOwn}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="ageOwn">Age</label>
+            <input
+              type="text"
+              name="ageOwn"
+              value={this.state.ageOwn}
+              onChange={this.handleChange}
+            />
+          </div>
+          <h2>My Location</h2>
+          <div id="map">
+            <MapContainer handleMapMove={this.handleMapMove} />
+          </div>
+          <h2>My Preferences</h2>
+          <div>
+            <label htmlFor="genderPref">Gender Preference</label>
+            <input
+              type="text"
+              name="genderPref"
+              value={this.state.genderPref}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="agePrefMin">Age Pref Min</label>
+            <input
+              type="text"
+              name="agePrefMin"
+              value={this.state.agePrefMin}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="agePrefMax">Age Pref Max</label>
+            <input
+              type="text"
+              name="agePrefMax"
+              value={this.state.agePrefMax}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="radius">Radius in Miles</label>
+            <input
+              type="text"
+              name="radius"
+              value={this.state.radius}
+              onChange={this.handleChange}
+            />
+          </div>
+          <h2>My Activities</h2>
+          <div>
+            <label htmlFor="activity">Activity</label>
+            <input
+              type="text"
+              name="activity"
+              value={this.state.activity}
+              onChange={this.handleChange}
+            />
+          </div>
           <button type="submit">Create Profile</button>
         </form>
       </div>
