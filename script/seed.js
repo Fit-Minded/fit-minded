@@ -6,6 +6,7 @@ const {
   generatePool,
   getToJudgeFromPool
 } = require('./routeUtil')
+const { createPusherUser } = require('./chatUtil.js')
 
 async function seed() {
   await connect()
@@ -15,11 +16,10 @@ async function seed() {
   const users = await User.create(randomUsers)
   console.log(`Seeded ${users.length} users.`)
   for (let i = 0; i < users.length; i++) {
-    if (i % 100 === 0) {
-      console.log(i)
-    }
     const user = users[i]
-    console.log(user)
+    const userId = String(user._id),
+      userName = `${user.firstName} ${user.lastName}`
+    createPusherUser(userId, userName)
     const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
     user.lastLogin = new Date()
