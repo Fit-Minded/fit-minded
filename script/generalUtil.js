@@ -15,13 +15,15 @@ function calcDistance(lat1, lon1, lat2, lon2) {
 
 function getBase64(file) {
   var reader = new FileReader()
+  var result
   reader.readAsDataURL(file)
   reader.onload = function() {
-    console.log(reader.result)
+    result = reader.result
   }
   reader.onerror = function(error) {
     console.log('Error: ', error)
   }
+  return result
 }
 
 module.exports = {

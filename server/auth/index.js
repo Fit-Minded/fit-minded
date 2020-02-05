@@ -60,8 +60,10 @@ router.post('/logout', (req, res) => {
 
 router.get('/me', (req, res) => {
   if (!req.user) {
-    res.sendStatus(200)
+    console.log('hello')
+    res.send({})
   } else {
+    console.log('Goodbye')
     const {
       age,
       gender,
@@ -86,5 +88,3 @@ router.get('/me', (req, res) => {
     res.json(reduxUser)
   }
 })
-
-// router.use('/google', require('./google'))
