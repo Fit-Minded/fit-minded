@@ -19,6 +19,7 @@ class SignUpPage extends Component {
       // imageUrl3:
       //   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
       imageFile: null,
+      imageBinaryString: '',
       ageOwn: 0,
       agePrefMin: 0,
       agePrefMax: 0,
@@ -49,12 +50,16 @@ class SignUpPage extends Component {
   }
 
   handleImageUpload(evt) {
-    const file = evt.target.files[0]
+    var file = evt.target.files[0]
     const imageUrl = `imageUrl${evt.target.name}`
     this.setState({
       [imageUrl]: URL.createObjectURL(file),
       imageFile: file
     })
+    console.log(file.toDataURL())
+
+    // const backToUrl = dataURLtoFile(result, 'Name.jpg')
+    // console.log(backToUrl)
   }
 
   handleChange(e) {
@@ -78,7 +83,6 @@ class SignUpPage extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
