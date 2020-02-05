@@ -4,7 +4,6 @@ import { auth } from '../store';
 import { MapContainer } from './index';
 import Slider from 'react-input-slider';
 import { firestore, storage } from '../fierbase';
-import { MyDropzone } from './dropZone';
 
 var sliderStyles = {
   track: {
@@ -27,6 +26,7 @@ class SignUpPage extends Component {
     super(props);
 
     this.state = {
+      imageInput: null,
       email: '',
       password: '',
       firstName: '',
@@ -44,17 +44,15 @@ class SignUpPage extends Component {
       radius: 0.0,
       activity: ''
     };
-    console.log('this is the user...', this.state);
-
     this.handleRadiusChange = this.handleRadiusChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleMapMove = this.handleMapMove.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
+    this.setImagePreview = this.setImagePreview.bind(this);
   }
-  // get file() {
-  //   return this.imageInput && this.imageInput.files[0];
-  // }
+  get file() {
+    return this.state.imageInput && this.state.imageInput.files[0];
+  }
   componentDidMount() {
     if (this.props.location.state) {
       const { email, password } = this.props.location.state;
@@ -64,36 +62,14 @@ class SignUpPage extends Component {
         password
       });
     }
-
-    // this.handleImageUpload = this.handleImageUpload.bind(this);
   }
 
-  storePictures = (pictures, picture) => {
-    pictures.forEach(picture => {
-      console.log('for line 80, picture.name', picture.name);
-      storage
-        .ref()
-        .child(this.state.email)
-        .child(picture.name)
-        .put(picture)
-        .then(response => response.ref.getDownloadURL())
-        .then(photoUrl => this.userRef.update({ photoUrl }));
-    });
-  };
-  handleFileChange = (file, picture) => {
+  setImagePreview(evt) {
+    var file = evt.target.files[0];
     this.setState({
-      pictures: [...this.state.pictures, file],
-      imageUrl: URL.createObjectURL(picture)
+      imageUrl: URL.createObjectURL(file)
     });
-  };
-  // handleImageUpload(evt) {
-  //   var file = evt.target.files[0];
-  //   const imageUrl = `imageUrl${evt.target.name}`;
-  //   this.setState({
-  //     [imageUrl]: URL.createObjectURL(file),
-  //     imageFile: file
-  //   });
-  // }
+  }
 
   handleRadiusChange(evt) {
     console.log(evt);
@@ -112,9 +88,14 @@ class SignUpPage extends Component {
     evt.preventDefault();
     const formName = evt.target.name;
     const state = this.state;
-    const pictures = this.state.pictures;
-    if (pictures.length > 0) {
-      this.storePictures(pictures);
+    const pictures = this.imageInput.files;
+    if (this.imageInput.files) {
+      storage
+        .ref()
+        .child(this.state.email)
+        .child(pictures[0].name)
+        .put(pictures[0])
+        .then(response => response.ref.getDownloadURL());
     }
     this.props.auth(state, formName);
   }
@@ -134,11 +115,11 @@ class SignUpPage extends Component {
             <label htmlFor='picture-input1'>
               <img src={this.state.imageUrl} alt='userPic' />
             </label>
-            <MyDropzone
+            <input
+              onChange={this.setImagePreview}
               id='picture-input1'
-              multiple={true}
-              handleFileChange={this.handleFileChange}
-              state={this.state}
+              type='file'
+              ref={ref => (this.imageInput = ref)}
               style={{ display: 'none' }}
             />
           </div>
@@ -238,14 +219,10 @@ class SignUpPage extends Component {
   }
 }
 
-const mapState = state => {
-  return {};
-};
-
 const mapDispatch = dispatch => {
   return {
     auth: (state, formName) => dispatch(auth(state, formName))
   };
 };
 
-export default connect(mapState, mapDispatch)(SignUpPage);
+export default connect(null, mapDispatch)(SignUpPage);
