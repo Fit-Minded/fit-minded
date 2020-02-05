@@ -1,37 +1,37 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { makeDecision, getToJudge } from '../store'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { makeDecision, getToJudge } from "../store";
 
 class DecisionPage extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       toJudge: []
-    }
-    this.handleDecision = this.handleDecision.bind(this)
+    };
+    this.handleDecision = this.handleDecision.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
     if (props.pool.toJudge.length === 0) {
-      props.getToJudge()
+      props.getToJudge();
     }
     return {
       toJudge: props.pool.toJudge
-    }
+    };
   }
 
   handleDecision(e) {
-    const decisionType = e.target.name
-    const otherUserId = this.state.toJudge[0]._id
-    this.props.makeDecision(decisionType, otherUserId)
+    const decisionType = e.target.name;
+    const otherUserId = this.state.toJudge[0]._id;
+    this.props.makeDecision(decisionType, otherUserId);
   }
 
   render() {
-    const { toJudge } = this.state
+    const { toJudge } = this.state;
     if (toJudge.length > 0 && toJudge[0] !== null) {
-      console.log(toJudge)
-      let { firstName, lastName, age, gender, activities, image } = toJudge[0]
-      activities = Object.keys(activities)
+      console.log(toJudge);
+      let { firstName, lastName, age, gender, activities, image } = toJudge[0];
+      activities = Object.keys(activities);
       return (
         <div className="decision-page">
           <div className="name-toJudge">
@@ -51,8 +51,13 @@ class DecisionPage extends Component {
               <div className="activity-cont" key={index}>
                 {activity}
               </div>
-            )
+            );
           })}
+          <div className="decisionStats">
+            <p>Age: {age.own}</p>
+            <p>Gender: {gender.own}</p>
+          </div>
+
           <div className="button-container">
             <button
               // className="single-btn-no"
@@ -72,9 +77,9 @@ class DecisionPage extends Component {
             </button>
           </div>
         </div>
-      )
+      );
     } else {
-      return <div>loading...</div>
+      return <div>loading...</div>;
     }
   }
 }
@@ -82,15 +87,15 @@ class DecisionPage extends Component {
 const mapState = state => {
   return {
     pool: state.pool
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     makeDecision: (decisionType, otherUserId) =>
       dispatch(makeDecision(decisionType, otherUserId)),
     getToJudge: () => dispatch(getToJudge())
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(DecisionPage)
+export default connect(mapState, mapDispatch)(DecisionPage);
