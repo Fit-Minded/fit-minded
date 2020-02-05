@@ -46,6 +46,11 @@ button:active {
   box-shadow: rgba(167, 167, 167, 0.605) 2px 2px 5px;
 }
 
+.decisionStats {
+  box-shadow: none;
+  margin: 10px 0px 0px 0px;
+}
+
 .profile-pic-toJudge-container {
   display: flex;
   justify-content: center;
@@ -146,8 +151,26 @@ button:active {
   align-items: center;
 }
 
+#userProfile > * {
+  margin: 10px 0px 0px 0px;
+}
+
 #userProfile img {
   border-radius: 10px;
+}
+
+.logout-btn {
+  /* height: 400px; */
+  font-size: 25px;
+  background-color: var(--highlight-blue);
+  color: white;
+  border-radius: 15px;
+  position: fixed;
+  bottom: 65px;
+}
+
+.logout-btn:hover {
+  background-color: red;
 }
 
 /* SIGN UP FORM*/
