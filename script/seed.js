@@ -1,6 +1,6 @@
 const User = require('../server/db/schemas/user')
 const randomUsers = require('./randomizeUsers')
-const { connect, db } = require('../server/db/index')
+const { connect } = require('../server/db/index')
 const {
   getQueryData,
   generatePool,
@@ -15,13 +15,16 @@ async function seed() {
   const users = await User.create(randomUsers)
   console.log(`Seeded ${users.length} users.`)
   for (let i = 0; i < users.length; i++) {
+    if (i % 100 === 0) {
+      console.log(i)
+    }
     const user = users[i]
+    console.log(user)
     const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
     user.lastLogin = new Date()
     user.pool = pool
     getToJudgeFromPool(user)
-    // console.log(user)
   }
   console.log('Created pools and toJudges for all users')
 }

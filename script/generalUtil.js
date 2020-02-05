@@ -13,20 +13,6 @@ function calcDistance(lat1, lon1, lat2, lon2) {
   return d.toFixed(2)
 }
 
-function getBase64(file) {
-  var reader = new FileReader()
-  var result
-  reader.readAsDataURL(file)
-  reader.onload = function() {
-    result = reader.result
-  }
-  reader.onerror = function(error) {
-    console.log('Error: ', error)
-  }
-  return result
-}
-
 module.exports = {
-  calcDistance,
-  getBase64
+  calcDistance
 }

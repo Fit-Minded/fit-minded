@@ -2,6 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { auth } from '../store'
 import { MapContainer } from './index'
+import Slider from 'react-input-slider'
+
+var sliderStyles = {
+  track: {
+    backgroundColor: 'var(--medium-gray)'
+  },
+  active: {
+    backgroundColor: 'var(--highlight-blue)'
+  },
+  thumb: {
+    width: 10,
+    height: 10
+  },
+  disabled: {
+    opacity: 0.5
+  }
+}
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -31,6 +48,7 @@ class SignUpPage extends Component {
       activity: ''
     }
 
+    this.handleRadiusChange = this.handleRadiusChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleMapMove = this.handleMapMove.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -56,10 +74,13 @@ class SignUpPage extends Component {
       [imageUrl]: URL.createObjectURL(file),
       imageFile: file
     })
-    console.log(file.toDataURL())
+  }
 
-    // const backToUrl = dataURLtoFile(result, 'Name.jpg')
-    // console.log(backToUrl)
+  handleRadiusChange(evt) {
+    console.log(evt)
+    this.setState({
+      radius: evt.x
+    })
   }
 
   handleChange(e) {
@@ -193,11 +214,11 @@ class SignUpPage extends Component {
           </div>
           <div>
             <label htmlFor="radius">Radius in Miles</label>
-            <input
-              type="text"
-              name="radius"
-              value={this.state.radius}
-              onChange={this.handleChange}
+            <Slider
+              axis="x"
+              x={this.state.radius}
+              styles={sliderStyles}
+              onChange={this.handleRadiusChange}
             />
           </div>
           <h2>My Activities</h2>
