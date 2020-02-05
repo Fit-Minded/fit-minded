@@ -2,8 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
-import { DecisionPage } from './components'
-import { me, getToJudge } from './store'
+import {
+  DecisionPage,
+  LikedMe,
+  Matches,
+  SignUpPage,
+  UserProfile,
+  ChatApp
+} from './components'
+import { me } from './store'
 
 class Routes extends Component {
   componentDidMount() {
@@ -11,13 +18,25 @@ class Routes extends Component {
   }
 
   render() {
-    // const { isLoggedIn } = this.props;
+    const { isLoggedIn } = this.props
 
     return (
       <Switch>
-        <Route exact path="/home" component={DecisionPage} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
+        {isLoggedIn ? (
+          <Switch>
+            <Route exact path="/home" component={DecisionPage} />
+            <Route exact path="/likedMe" component={LikedMe} />
+            <Route exact path="/matches" component={Matches} />
+            <Route exact path="/profile" component={UserProfile} />
+            <Route exact path="/chat" component={ChatApp} />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/signUpPage" component={SignUpPage} />
+          </Switch>
+        )}
       </Switch>
     )
   }
@@ -25,15 +44,14 @@ class Routes extends Component {
 
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user._id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    async loadInitialData() {
-      await dispatch(me())
-      await dispatch(getToJudge())
+    loadInitialData() {
+      dispatch(me())
     }
   }
 }

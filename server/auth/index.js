@@ -1,6 +1,10 @@
 const router = require('express').Router()
 const User = require('../db/schemas/user')
-const { getQueryData, generatePool } = require('../../script/routeUtil')
+const {
+  getQueryData,
+  generatePool,
+  configSignUpStateData
+} = require('../../script/routeUtil')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -13,8 +17,10 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      const queryData = await getQueryData(user)
+      console.log(`Logging in ${user.firstName} ${user.lastName}`)
+      const queryData = getQueryData(user)
       const pool = await generatePool(queryData)
+
       user.lastLogin = new Date()
       user.pool = { ...pool }
       await user.save()
@@ -27,9 +33,12 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
-    const queryData = await getQueryData(user)
+    const newUserData = configSignUpStateData(req.body)
+    const user = await User.create(newUserData)
+    console.log(`Created User ${user.firstName} ${user.lastName}`)
+    const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
+    console.log('Generated Pool: ', pool)
     user.lastLogin = new Date()
     user.pool = pool
     await user.save()
@@ -50,28 +59,32 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  const {
-    age,
-    gender,
-    location,
-    _id,
-    firstName,
-    lastName,
-    activities,
-    image
-  } = req.user
+  if (!req.user) {
+    console.log('hello')
+    res.send({})
+  } else {
+    console.log('Goodbye')
+    const {
+      age,
+      gender,
+      location,
+      _id,
+      firstName,
+      lastName,
+      activities,
+      image
+    } = req.user
 
-  const reduxUser = {
-    age,
-    gender,
-    location,
-    _id,
-    firstName,
-    lastName,
-    activities,
-    image
+    const reduxUser = {
+      age,
+      gender,
+      location,
+      _id,
+      firstName,
+      lastName,
+      activities,
+      image
+    }
+    res.json(reduxUser)
   }
-  res.json(reduxUser)
 })
-
-// router.use('/google', require('./google'))

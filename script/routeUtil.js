@@ -2,7 +2,21 @@ const User = require('../server/db/schemas/user')
 const { calcDistance } = require('./generalUtil')
 
 function getQueryData(user) {
-  let { gender, age, location, radius, activities, lastLogin } = user
+  let {
+    gender,
+    age,
+    location,
+    radius,
+    activities,
+    lastLogin,
+    liked,
+    disliked,
+    likedMe,
+    dislikedMe,
+    matches,
+    toJudge,
+    _id
+  } = user
   const ownGender = gender.own,
     prefGender = gender.preferred
   const ownAge = age.own,
@@ -18,9 +32,62 @@ function getQueryData(user) {
     coordinates,
     radius,
     activities,
-    lastLogin
+    lastLogin,
+    liked,
+    disliked,
+    likedMe,
+    dislikedMe,
+    matches,
+    toJudge,
+    _id
   }
   return queryData
+}
+
+function configSignUpStateData(state) {
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    imageUrl,
+    ageOwn,
+    agePrefMin,
+    agePrefMax,
+    genderOwn,
+    genderPref,
+    longitude,
+    latitude,
+    radius,
+    activity
+  } = state
+  const newUserData = {
+    email,
+    password,
+    firstName,
+    lastName,
+    image: imageUrl,
+    age: {
+      own: Number(ageOwn),
+      preferred: {
+        min: Number(agePrefMin),
+        max: Number(agePrefMax)
+      }
+    },
+    gender: {
+      own: genderOwn,
+      preferred: genderPref
+    },
+    location: {
+      type: 'Point',
+      coordinates: [Number(longitude), Number(latitude)]
+    },
+    radius: Number(radius),
+    activities: {
+      [activity]: true
+    }
+  }
+  return newUserData
 }
 
 async function generatePool(queryData) {
@@ -32,7 +99,14 @@ async function generatePool(queryData) {
     coordinates,
     radius,
     activities,
-    lastLogin
+    lastLogin,
+    liked,
+    disliked,
+    likedMe,
+    dislikedMe,
+    matches,
+    toJudge,
+    _id
   } = queryData
 
   let pool
@@ -45,6 +119,9 @@ async function generatePool(queryData) {
       }
     })
       .find({
+        _id: {
+          $ne: _id
+        },
         gender: {
           own: prefGender,
           preferred: ownGender
@@ -70,8 +147,27 @@ async function generatePool(queryData) {
         }
       })
       .exec()
+
+    pool = pool.filter(user => {
+      let userId = user._id
+      if (
+        toJudge.includes(userId) ||
+        liked.get(userId) ||
+        disliked.get(userId) ||
+        likedMe.get(userId) ||
+        dislikedMe.get(userId) ||
+        matches.get(userId)
+      ) {
+        return false
+      } else {
+        return true
+      }
+    })
   } else {
     pool = await User.find({
+      _id: {
+        $ne: _id
+      },
       gender: {
         own: prefGender,
         preferred: ownGender
@@ -119,7 +215,7 @@ async function generatePool(queryData) {
       return false
     })
 
-  console.log(`Number of results: ${pool.length}`)
+  // console.log(`Number of results: ${pool.length}`)
 
   const idMap = {}
 
@@ -150,7 +246,8 @@ async function getToJudgeFromPool(user) {
       'age.own',
       'firstName',
       'lastName',
-      'activities'
+      'activities',
+      'image'
     ]).exec()
     usersToJudge.push(currentUser)
   }
@@ -160,5 +257,6 @@ async function getToJudgeFromPool(user) {
 module.exports = {
   getQueryData,
   generatePool,
-  getToJudgeFromPool
+  getToJudgeFromPool,
+  configSignUpStateData
 }
