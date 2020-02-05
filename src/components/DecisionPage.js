@@ -58,6 +58,11 @@ class DecisionPage extends Component {
               </div>
             )
           })}
+          <div className="decisionStats">
+            <p>Age: {age.own}</p>
+            <p>Gender: {gender.own}</p>
+          </div>
+
           <div className="button-container">
             <button type="button" name="dislike" onClick={this.handleDislike}>
               <i className="fas fa-thumbs-down" name="dislike"></i>

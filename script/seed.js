@@ -16,14 +16,10 @@ async function seed() {
   const users = await User.create(randomUsers)
   console.log(`Seeded ${users.length} users.`)
   for (let i = 0; i < users.length; i++) {
-    if (i % 100 === 0) {
-      console.log(i)
-    }
     const user = users[i]
     const userId = String(user._id),
       userName = `${user.firstName} ${user.lastName}`
-    const pusherResponse = createPusherUser(userId, userName)
-    console.log('created pusher user', pusherResponse)
+    createPusherUser(userId, userName)
     const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
     user.lastLogin = new Date()
