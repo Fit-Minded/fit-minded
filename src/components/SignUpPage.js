@@ -7,10 +7,14 @@ import { firestore, storage } from '../fierbase';
 
 var sliderStyles = {
   track: {
-    backgroundColor: 'var(--medium-gray)'
+    backgroundColor: 'var(--medium-gray)',
+    width: 130,
+    padding: 0
   },
   active: {
-    backgroundColor: 'var(--highlight-blue)'
+    backgroundColor: 'var(--highlight-blue)',
+    padding: 0,
+    marginLeft: -10
   },
   thumb: {
     width: 10,

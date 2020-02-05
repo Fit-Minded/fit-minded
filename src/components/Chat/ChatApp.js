@@ -1,7 +1,6 @@
 import React from 'react'
 import MessageList from './MessageList'
 import SendMessageForm from './SendMessageForm'
-import Title from '../Title'
 import Chatkit from '@pusher/chatkit-client'
 
 const instanceLocator = 'v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571'
@@ -69,7 +68,6 @@ class ChatApp extends React.Component {
     console.log('render', this.currentUser)
     return (
       <div className="chat-app">
-        <Title />
         <MessageList messages={this.state.messages} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>
