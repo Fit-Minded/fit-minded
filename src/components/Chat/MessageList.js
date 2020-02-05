@@ -1,20 +1,21 @@
-import React from "react";
+import React from 'react'
 
 class MessageList extends React.Component {
   render() {
     return (
-      <ul className="message-list">
+      <div className="message-list">
         {this.props.messages.map(message => {
+          const senderName = message.userStore.users[message.senderId].name
           return (
-            <li key={message.id}>
-              <div>{message.senderId}</div>
-              <div>{message.text}</div>
-            </li>
-          );
+            <div key={message.id} className="single-message">
+              <div className="message-sender">{senderName}</div>
+              <div className="message-text">{message.text}</div>
+            </div>
+          )
         })}
-      </ul>
-    );
+      </div>
+    )
   }
 }
 
-export default MessageList;
+export default MessageList
