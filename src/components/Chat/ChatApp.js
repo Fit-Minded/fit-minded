@@ -2,10 +2,7 @@ import React from 'react'
 import { MessageList, SendMessageForm } from '../index'
 import Chatkit from '@pusher/chatkit-client'
 import { connect } from 'react-redux'
-
-const instanceLocator = 'v1:us1:e45d7daa-545e-450f-bf52-00fff9c517d0'
-const testToken =
-  'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e45d7daa-545e-450f-bf52-00fff9c517d0/token'
+import { instanceLocator, testToken } from '../../pusherCredentials'
 
 class ChatApp extends React.Component {
   constructor() {
@@ -19,6 +16,7 @@ class ChatApp extends React.Component {
 
   componentDidMount() {
     const userId = this.props.user._id
+
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
       userId: userId,
@@ -35,7 +33,7 @@ class ChatApp extends React.Component {
       currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
-          onNewMessage: message => {
+          onMessage: message => {
             this.setState({
               messages: [...this.state.messages, message]
             })
@@ -46,21 +44,19 @@ class ChatApp extends React.Component {
   }
 
   sendMessage(text) {
-    console.log(this.currentUser)
     const { roomId } = this.props.match.params
     this.currentUser.sendMessage({
       text: text,
       roomId: roomId
-    })
-    this.setState({
-      messages: [...this.state.messages, text]
     })
   }
 
   render() {
     return (
       <div className="chat-app">
-        <h1>CHATROOM</h1>
+        <div className="chat-app-title">
+          <h1>CHATROOM</h1>
+        </div>
         <MessageList messages={this.state.messages} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>

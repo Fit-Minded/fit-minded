@@ -282,3 +282,49 @@ input.chbx-btn {
   width: 75vw;
   justify-content: space-between;
 }
+
+/* CHAT */
+.chat-app {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-app-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: var(--dark-gray);
+  width: 100vw;
+  height: 60px;
+}
+
+.message-list {
+  background: var(--light-gray);
+  margin-top: 60px;
+  margin-bottom: 120px;
+  overflow: auto;
+}
+
+.single-message {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.message-sender {
+  font-weight: 900;
+}
+
+.message-text {
+  padding-left: 20px;
+}
+
+.send-message-form input {
+  width: 100vw;
+  height: 60px;
+  position: fixed;
+  bottom: 60px;
+  background: lightblue;
+  font-size: 20px;
+  padding-left: 20px;
+}

@@ -8,7 +8,8 @@ class DecisionPage extends Component {
     this.state = {
       toJudge: []
     }
-    this.handleDecision = this.handleDecision.bind(this)
+    this.handleLike = this.handleLike.bind(this)
+    this.handleDisike = this.handleDislike.bind(this)
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -20,10 +21,14 @@ class DecisionPage extends Component {
     }
   }
 
-  handleDecision(e) {
-    const decisionType = e.target.name
+  handleLike() {
     const otherUserId = this.state.toJudge[0]._id
-    this.props.makeDecision(decisionType, otherUserId)
+    this.props.makeDecision('like', otherUserId)
+  }
+
+  handleDislike() {
+    const otherUserId = this.state.toJudge[0]._id
+    this.props.makeDecision('dislike', otherUserId)
   }
 
   render() {
@@ -54,21 +59,11 @@ class DecisionPage extends Component {
             )
           })}
           <div className="button-container">
-            <button
-              // className="single-btn-no"
-              type="button"
-              name="dislike"
-              onClick={this.handleDecision}
-            >
-              <i className="fas fa-thumbs-down"></i>
+            <button type="button" name="dislike" onClick={this.handleDislike}>
+              <i className="fas fa-thumbs-down" name="dislike"></i>
             </button>
-            <button
-              // className="single-btn-yes"
-              type="button"
-              name="like"
-              onClick={this.handleDecision}
-            >
-              <i className="fas fa-thumbs-up"></i>
+            <button type="button" name="like" onClick={this.handleLike}>
+              <i className="fas fa-thumbs-up" name="like"></i>
             </button>
           </div>
         </div>
