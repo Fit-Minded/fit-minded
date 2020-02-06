@@ -5,6 +5,7 @@ import { logout } from '../store'
 class UserProfile extends Component {
   render() {
     const { logout } = this.props
+
     let {
       imageURLs,
       firstName,
@@ -13,6 +14,7 @@ class UserProfile extends Component {
       age,
       gender
     } = this.props.user
+
     console.log(this.props.user)
     activities = Object.keys(activities)
     return (
