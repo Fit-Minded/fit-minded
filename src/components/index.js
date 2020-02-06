@@ -1,5 +1,6 @@
 export { default as Navbar } from './Navbar'
 export { default as DecisionPage } from './DecisionPage'
+export { default as ProfileView } from './ProfileView'
 export { default as LikedMe } from './LikedMe'
 export { default as Matches } from './Matches'
 export { default as SignUpPage } from './SignUpPage'
