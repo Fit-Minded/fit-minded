@@ -30,8 +30,9 @@ class LikedList extends Component {
         <div>
           {likes.map(like => {
             let activities = Object.keys(like.activities);
+            console.log(like);
             return (
-              <Link to={`/LikedMe`}>
+              <Link to={`/LikedMe/`}>
                 <img
                   className="profile-pic-matches"
                   src={like.image}
