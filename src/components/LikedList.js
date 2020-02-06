@@ -27,25 +27,28 @@ class LikedList extends Component {
 
     if (likes.length > 0) {
       return (
-        <div>
-          {likes.map(like => {
+        <div className="decision-page-container">
+          {likes.map((like, index) => {
             let activities = Object.keys(like.activities);
             console.log(like);
             return (
-              <Link to={`/LikedMe/`}>
-                <img
-                  className="profile-pic-matches"
-                  src={like.image}
-                  alt="user-pic"
-                />
+              <Link to={`/LikedMe/${like._id}`}>
+                <div key={index} className="single-match-container">
+                  <img
+                    className="profile-pic-matches"
+                    src={like.image}
+                    alt="user-pic"
+                  />
+                  <div className="match-info">
+                    <p>
+                      {like.firstName} {like.lastName}
+                    </p>
 
-                <p>
-                  {like.firstName} {like.lastName}
-                </p>
-
-                {activities.map((activity, index) => {
-                  return <p key={index}>{activity}</p>;
-                })}
+                    {activities.map((activity, index) => {
+                      return <p key={index}>{activity}</p>;
+                    })}
+                  </div>
+                </div>
               </Link>
             );
           })}
