@@ -7,6 +7,7 @@ const {
 } = require('../../script/routeUtil')
 const { createPusherUser } = require('../../script/chatUtil.js')
 module.exports = router
+router.use('/google', require('./google'))
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -63,7 +64,6 @@ router.post('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/')
 })
-
 router.get('/me', (req, res) => {
   if (!req.user) {
     res.send({})
