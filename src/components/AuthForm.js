@@ -22,7 +22,7 @@ class AuthForm extends Component {
   }
 
   render() {
-    const { name, displayName, handleSubmit, error } = this.props;
+    const { name, displayName, handleSubmit, error, handleGoogle } = this.props;
     return (
       <div id='authForm'>
         <h1 className='title'>
@@ -71,7 +71,7 @@ class AuthForm extends Component {
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
-        <a href='/auth/google'>{displayName} with Google</a>
+        <a href='http://localhost:5000/auth/google'>Login with Google</a>
       </div>
     );
   }
