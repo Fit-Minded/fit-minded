@@ -1,7 +1,7 @@
 const passport = require('passport');
 const router = require('express').Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const { User } = require('../db/schemas/user');
+const User = require('../db/schemas/user');
 const secrets = require('../../secrets');
 module.exports = router;
 
@@ -27,7 +27,6 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK
   };
-
   const strategy = new GoogleStrategy(
     googleConfig,
     (token, refreshToken, profile, done) => {
@@ -38,10 +37,8 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       const address = 'default';
       const phoneNumber = 'default';
 
-      User.findOrCreate({
-        where: { googleId },
-        defaults: { email, firstName, lastName, address, phoneNumber }
-      })
+      User.find({ email: email })
+        .exec()
         .then(([user]) => done(null, user))
         .catch(done);
     }
@@ -57,7 +54,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   router.get(
     '/callback',
     passport.authenticate('google', {
-      successRedirect: '/home',
+      successRedirect: 'http://localhost:3000/home',
       failureRedirect: '/login'
     })
   );
