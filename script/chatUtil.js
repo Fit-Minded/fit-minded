@@ -12,6 +12,14 @@ const createPusherUser = async (id, name) => {
     .catch(err => console.error(err))
 }
 
+const deleteAllPusherUsers = async () => {
+  const allUsers = await chatKit.getUsers({ limit: 100 })
+  await allUsers.forEach(user => {
+    const { id } = user
+    chatKit.asyncDeleteUser({ userId: id })
+  })
+}
+
 const createPusherRoom = async (roomId, creatorId, otherUserId) => {
   await chatKit
     .createRoom({
@@ -27,5 +35,6 @@ const createPusherRoom = async (roomId, creatorId, otherUserId) => {
 
 module.exports = {
   createPusherUser,
-  createPusherRoom
+  createPusherRoom,
+  deleteAllPusherUsers
 }
