@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { auth } from "../store";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { auth } from '../store';
 
 class AuthForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
+      email: '',
       password: '""'
     };
     this.handleChange = this.handleChange.bind(this);
@@ -24,53 +24,54 @@ class AuthForm extends Component {
   render() {
     const { name, displayName, handleSubmit, error } = this.props;
     return (
-      <div id="authForm">
-        <h1 className="title">
+      <div id='authForm'>
+        <h1 className='title'>
           Fit<span>Minded</span>
         </h1>
-        <form onSubmit={handleSubmit} name={name} className="login-form">
+        <form onSubmit={handleSubmit} name={name} className='login-form'>
           <h1>{name.toUpperCase()}</h1>
           <div>
             <input
-              name="email"
-              type="text"
-              placeholder="✉️  Email"
+              name='email'
+              type='text'
+              placeholder='✉️  Email'
               onChange={this.handleChange}
             />
           </div>
           <br />
           <div>
             <input
-              name="password"
-              type="password"
-              placeholder="🔒 *******"
+              name='password'
+              type='password'
+              placeholder='🔒 *******'
               onChange={this.handleChange}
             />
           </div>
-          <div className="remember-chbx">
-            <input type="checkbox" name="remember-me" className="chbx-btn" />
+          <div className='remember-chbx'>
+            <input type='checkbox' name='remember-me' className='chbx-btn' />
             Remember Me
           </div>
           <br />
-          <div id="authSubmit">
-            {displayName === "Sign Up" ? (
+          <div id='authSubmit'>
+            {displayName === 'Sign Up' ? (
               <Link
                 to={{
-                  pathname: "/signUpPage",
+                  pathname: '/signUpPage',
                   state: {
                     email: this.state.email,
                     password: this.state.password
                   }
                 }}
               >
-                <button type="button">SIGN UP</button>
+                <button type='button'>SIGN UP</button>
               </Link>
             ) : (
-              <button type="submit">LOGIN</button>
+              <button type='submit'>LOGIN</button>
             )}
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
+        <a href='/auth/google'>{displayName} with Google</a>
       </div>
     );
   }
@@ -78,16 +79,16 @@ class AuthForm extends Component {
 
 const mapLogin = state => {
   return {
-    name: "login",
-    displayName: "Login",
+    name: 'login',
+    displayName: 'Login',
     error: state.user.error
   };
 };
 
 const mapSignup = state => {
   return {
-    name: "signup",
-    displayName: "Sign Up",
+    name: 'signup',
+    displayName: 'Sign Up',
     error: state.user.error
   };
 };
