@@ -18,6 +18,11 @@ body {
   color: var(--black);
 }
 
+button {
+  background: var(--highlight-blue);
+  border-radius: 10px;
+}
+
 button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
@@ -126,6 +131,7 @@ button:active {
   height: 60px;
   bottom: 0px;
   width: 100vw;
+  z-index: 1;
 }
 
 #navBar * {
@@ -157,6 +163,8 @@ button:active {
 
 #userProfile img {
   border-radius: 10px;
+  height: 50vw;
+  width: 50vw;
 }
 
 .logout-btn {
@@ -178,6 +186,7 @@ button:active {
 #sign-up-page {
   display: flex;
   flex-direction: column;
+  margin-bottom: 70px;
 }
 
 #sign-up-page h2 {
@@ -189,7 +198,7 @@ button:active {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--dark-gray);
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
 }
 
 #sign-up-page input {
@@ -198,14 +207,27 @@ button:active {
 }
 
 #sign-up-pictures {
-  width: 95vw;
   display: flex;
   justify-content: space-evenly;
 }
 
 #sign-up-pictures img {
-  width: 30vw;
+  width: 25vw;
+  height: 25vw;
   border-radius: 10px;
+}
+
+#sign-up-page .sign-up-submit {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up-submit button {
+  justify-self: center;
+  height: 40px;
+  width: 180px;
+  font-size: 20px;
+  margin: 20px;
 }
 
 /* LOGIN - SIGNUP */

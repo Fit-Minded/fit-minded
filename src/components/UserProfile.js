@@ -6,7 +6,7 @@ class UserProfile extends Component {
   render() {
     const { logout } = this.props
     let {
-      image,
+      imageURLs,
       firstName,
       lastName,
       activities,
@@ -20,7 +20,12 @@ class UserProfile extends Component {
         <h1>
           {firstName} {lastName}
         </h1>
-        <img src={image} alt="userPic" />
+        <img src={imageURLs[0]} alt="userPic" />
+        <div className="profile-info">
+          <h3>Age: {age.own}</h3>
+          <h3>Gender: {gender.own}</h3>
+        </div>
+
         {activities.map((activity, index) => {
           return (
             <div className="activity-cont" key={index}>
@@ -28,8 +33,6 @@ class UserProfile extends Component {
             </div>
           )
         })}
-        <div>Age: {age.own}</div>
-        <div>Gender: {gender.own}</div>
 
         <button className="logout-btn" type="button" onClick={logout}>
           LOGOUT

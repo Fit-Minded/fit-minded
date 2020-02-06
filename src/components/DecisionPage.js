@@ -51,6 +51,10 @@ class DecisionPage extends Component {
               className="profile-pic-toJudge"
             />
           </div>
+          <div className="profile-info">
+            <h3>Age: {age.own}</h3>
+            <h3>Gender: {gender.own}</h3>
+          </div>
           {activities.map((activity, index) => {
             return (
               <div className="activity-cont" key={index}>
@@ -58,10 +62,6 @@ class DecisionPage extends Component {
               </div>
             )
           })}
-          <div className="decisionStats">
-            <p>Age: {age.own}</p>
-            <p>Gender: {gender.own}</p>
-          </div>
 
           <div className="button-container">
             <button type="button" name="dislike" onClick={this.handleDislike}>
