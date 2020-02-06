@@ -4,7 +4,7 @@
   --highlight-blue: #1da1f2;
   --black: #14171a;
   --dark-gray: #aab8c2;
-  --medium-gray: #e1e8ed;
+  --medium-gray: #c7cdd2;
   --light-gray: #f5f8fa;
   --white-to-highlight-blue: invert(48%) sepia(25%) saturate(1800%)
     hue-rotate(150deg) brightness(125%) contrast(80%);
@@ -27,6 +27,10 @@ button {
 button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+a {
+  text-decoration: none;
 }
 
 /* GOOGLE MAP */
@@ -60,7 +64,7 @@ button:active {
 }
 
 #navBar i {
-  filter: var(--white-to-highlight-blue);
+  color: var(--highlight-blue);
 }
 
 #navBar h2 {
@@ -76,8 +80,24 @@ button:active {
   margin-bottom: 70px;
 }
 
+.sign-up-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sign-up-header i {
+  margin-bottom: 0px;
+  font-size: 30px;
+  padding-right: 10px;
+  color: var(--highlight-blue);
+}
+
+#sign-up-page h1 {
+  margin-bottom: 0px;
+}
+
 #sign-up-page h2 {
-  margin-left: 7.5vw;
   margin-bottom: 0px;
 }
 
@@ -85,7 +105,7 @@ button:active {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--dark-gray);
-  padding: 10px 20px 10px 20px;
+  padding: 10px 40px 10px 40px;
 }
 
 #sign-up-page input {
@@ -188,12 +208,14 @@ input.chbx-btn {
 }
 
 /* PROFILE VIEW */
+
 .profile-view {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--medium-gray);
-  max-width: 500px;
+  background: var(--dark-gray);
+  width: 100vw;
+  height: 100vh;
   margin-bottom: 60px;
 }
 
@@ -203,8 +225,14 @@ input.chbx-btn {
   padding: 0px;
   margin-bottom: -20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 80vw;
+}
+
+.profile-name i {
+  font-size: 30px;
+  padding-right: 10px;
+  color: var(--highlight-blue);
 }
 
 .profile-view img {
@@ -235,13 +263,75 @@ input.chbx-btn {
   margin-bottom: 30px;
 }
 
+.profile-view .button-container {
+  background: transparent;
+  box-shadow: none;
+  width: 80vw;
+}
+
+.profile-view .button-container button {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.profile-view .button-container i {
+  font-size: 25px;
+  color: white;
+}
+
 .profile-view .logout-buttons button {
   height: 40px;
   width: 35vw;
-  font-weight: 500;
+  font-weight: 900;
   font-size: 18px;
+  color: white;
 }
 
+/* MATCH LIST*/
+
+.no-likes {
+  height: 650px;
+  display: flex;
+  justify-content: center;
+}
+
+.match-list h1 {
+  border-bottom: 1px solid grey;
+  padding: 0px 0px 10px 20px;
+  margin-bottom: 0px;
+}
+
+.single-match {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  border-bottom: 1px solid grey;
+  padding: 10px;
+}
+
+.match-list-picture {
+  height: 70px;
+  border-radius: 50%;
+}
+
+.match-info {
+  display: flex;
+  flex-direction: column;
+  color: var(--black);
+  width: 63vw;
+  justify-content: center;
+}
+
+.match-info h3,
+.match-info p {
+  margin: 3px;
+}
+
+.match-list i {
+  font-size: 25px;
+  color: var(--highlight-blue);
+}
 /* CHAT */
 
 .chat-app {
@@ -374,32 +464,6 @@ input.chbx-btn {
 } */
 
 /* MATCHES PAGE */
-
-/* .no-likes {
-  height: 650px;
-  display: flex;
-  justify-content: center;
-  background-color: #075e54;
-}
-
-.single-match-container {
-  display: flex;
-  height: 70px;
-  border: 5px solid var(--highlight-blue);
-}
-
-.profile-pic-matches {
-  height: 70px;
-  border-radius: 15px;
-}
-
-.match-info {
-  display: flex;
-  font-size: 20px;
-  color: var(--black);
-  width: 75vw;
-  justify-content: space-between;
-} */
 
 /* USER PROFILE */
 

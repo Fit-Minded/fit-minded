@@ -1,46 +1,59 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { logout, makeDecision, getToJudge, getLikedMe } from "../store";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { logout, makeDecision, getToJudge, getLikedMe } from '../store'
+import { Link } from 'react-router-dom'
 
 class ProfileView extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       user: {}
-    };
+    }
+    this.handleMatch = this.handleMatch.bind(this)
+    this.handleDontMatch = this.handleDontMatch.bind(this)
     this.handleLike = this.handleLike.bind(this)
-    this.handleDisike = this.handleDislike.bind(this)
+    this.handleDislike = this.handleDislike.bind(this)
   }
 
   static getDerivedStateFromProps(props, state) {
-    const viewType = props.match.path;
+    const viewType = props.match.path
 
-    if (viewType === "/home") {
+    if (viewType === '/home') {
       if (!props.toJudge.length) {
-        props.getToJudge();
+        props.getToJudge()
       }
       return {
         user: props.toJudge[0]
-      };
+      }
     }
 
-    if (viewType === "/likedMe") {
+    if (viewType === '/likedMe') {
       if (!props.likedMe.length && state.user) {
-        props.getLikedMe();
+        props.getLikedMe()
       }
 
       return {
         user: props.likedMe[0]
-      };
+      }
     }
 
-    if (viewType === "/profile") {
+    if (viewType === '/profile') {
       return {
         user: props.user
-      };
+      }
     }
 
-    return null;
+    return null
+  }
+
+  handleMatch() {
+    const otherUserId = this.state.user._id
+    this.props.makeDecision('match', otherUserId)
+  }
+
+  handleDontMatch() {
+    const otherUserId = this.state.user._id
+    this.props.makeDecision('dontMatch', otherUserId)
   }
 
   handleLike() {
@@ -54,14 +67,14 @@ class ProfileView extends Component {
   }
 
   render() {
-    const { user } = this.state;
-    const { logout } = this.props;
-    const viewType = this.props.match.path;
+    const { user } = this.state
+    const { logout } = this.props
+    const viewType = this.props.match.path
     console.log(this.state)
 
     if (user) {
-      var { firstName, lastName, age, gender, activities, imageURLs } = user;
-      activities = Object.keys(activities);
+      var { firstName, lastName, age, gender, activities, imageURLs } = user
+      activities = Object.keys(activities)
 
       return (
         <div className="profile-view">
@@ -69,7 +82,12 @@ class ProfileView extends Component {
             <h1>
               {firstName} {lastName.slice(0, 1)}.
             </h1>
-            {viewType === "/profile" && <i className="fas fa-link"></i>}
+
+            {viewType === '/profile' && (
+              <Link to="/profile/update">
+                <i className="fas fa-user"></i>
+              </Link>
+            )}
           </div>
 
           <img src={imageURLs[0]} alt="profile-pic" />
@@ -84,40 +102,32 @@ class ProfileView extends Component {
                 <h3>{activity}</h3>
                 <p>Experience Level: Medium</p>
               </div>
-            );
+            )
           })}
 
-          {/* <div className="button-container">
-            <button
-              className="single-btn-no"
-              type="button"
-              name="dontMatch"
-              onClick={this.handleDecision}
-            >
-              No
-            </button>
-            <button
-              className="single-btn-yes"
-              type="button"
-              name="match"
-              onClick={this.handleDecision}
-            >
-              Yes
-            </button>
-          </div> */}
-
-          {viewType === "/home" && (
+          {viewType === '/likedMe' && (
             <div className="button-container">
-              <button type="button" name="dislike" onClick={this.handleDislike}>
-                <i className="fas fa-thumbs-down" name="dislike"></i>
+              <button type="button" onClick={this.handleDontMatch}>
+                <i className="fas fa-thumbs-down"></i>
               </button>
-              <button type="button" name="like" onClick={this.handleLike}>
-                <i className="fas fa-thumbs-up" name="like"></i>
+              <button type="button" onClick={this.handleMatch}>
+                <i className="fas fa-thumbs-up"></i>
               </button>
             </div>
           )}
 
-          {viewType === "/profile" && (
+          {viewType === '/home' && (
+            <div className="button-container">
+              <button type="button" onClick={this.handleDislike}>
+                <i className="fas fa-thumbs-down"></i>
+              </button>
+              <button type="button" onClick={this.handleLike}>
+                <i className="fas fa-thumbs-up"></i>
+              </button>
+            </div>
+          )}
+
+          {viewType === '/profile' && (
             <div className="logout-buttons">
               <button type="button" onClick={logout}>
                 LOGOUT
@@ -126,9 +136,9 @@ class ProfileView extends Component {
             </div>
           )}
         </div>
-      );
+      )
     } else {
-      return <h1>Loading...</h1>;
+      return <h1>Loading...</h1>
     }
   }
 }
@@ -138,8 +148,8 @@ const mapState = state => {
     user: state.user,
     likedMe: state.pool.usersWhoLikedMe,
     toJudge: state.pool.toJudge
-  };
-};
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
@@ -148,7 +158,7 @@ const mapDispatch = dispatch => {
     getToJudge: () => dispatch(getToJudge()),
     logout: () => dispatch(logout()),
     getLikedMe: () => dispatch(getLikedMe())
-  };
-};
+  }
+}
 
-export default connect(mapState, mapDispatch)(ProfileView);
+export default connect(mapState, mapDispatch)(ProfileView)

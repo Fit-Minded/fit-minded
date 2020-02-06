@@ -27,11 +27,12 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={ProfileView} />
-            <Route exact path="/likedMe/:id" component={ProfileView} />
+            <Route exact path="/likedMe" component={ProfileView} />
             <Route exact path="/matches" component={Matches} />
             <Route exact path="/profile" component={ProfileView} />
             <Route exact path="/chat/:roomId" component={ChatApp} />
             <Route exact path="/likedList" component={LikedList} />
+            <Route exact path="/profile/update" component={SignUpPage} />
           </Switch>
         ) : (
           <Switch>
