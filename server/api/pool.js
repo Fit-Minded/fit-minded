@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const User = require('../db/schemas/user');
 const { getToJudgeFromPool } = require('../../script/routeUtil');
+const { protect } = require('./securityUtils');
+
 module.exports = router;
 
-router.get('/toJudge', async (req, res, next) => {
+router.get('/toJudge', protect, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId).exec();
@@ -30,7 +32,7 @@ router.get('/toJudge', async (req, res, next) => {
   }
 });
 
-router.get('/likedMe', async (req, res, next) => {
+router.get('/likedMe', protect, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId).exec();
@@ -52,7 +54,7 @@ router.get('/likedMe', async (req, res, next) => {
   }
 });
 
-router.get('/matches', async (req, res, next) => {
+router.get('/matches', protect, async (req, res, next) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId).exec();
