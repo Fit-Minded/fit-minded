@@ -15,6 +15,7 @@ router.put('/', protect, async (req, res, next) => {
     const { decisionType, otherUserId } = req.body
     const user = await User.findById(userId).exec()
     const otherUser = await User.findById(otherUserId).exec()
+
     if (decisionType === 'like') {
       user.toJudge.shift()
       user.liked.set(otherUserId, true)
@@ -27,6 +28,7 @@ router.put('/', protect, async (req, res, next) => {
         otherUser.toJudge.splice(index, 1)
       }
     }
+
     if (decisionType === 'dislike') {
       user.toJudge.shift()
       user.disliked.set(otherUserId, true)
@@ -39,13 +41,14 @@ router.put('/', protect, async (req, res, next) => {
         otherUser.toJudge.splice(index, 1)
       }
     }
+
     if (decisionType === 'match') {
       const roomId = makeId(8)
       const userName = `${user.firstName} ${user.lastName}`
       const otherUserName = `${otherUser.firstName} ${otherUser.lastName}`
-      createPusherUser(userId, userName)
-      createPusherUser(otherUserId, otherUserName)
-      createPusherRoom(roomId, userId, otherUserId)
+      await createPusherUser(userId, userName)
+      await createPusherUser(otherUserId, otherUserName)
+      await createPusherRoom(roomId, userId, otherUserId)
       user.likedMe.delete(otherUserId)
       user.matches.set(otherUserId, roomId)
       otherUser.liked.delete(userId)

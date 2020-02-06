@@ -77,7 +77,8 @@ router.get('/me', (req, res) => {
       lastName,
       activities,
       imageURLs,
-      matches
+      matches,
+      radius
     } = req.user
 
     const reduxUser = {
@@ -89,7 +90,8 @@ router.get('/me', (req, res) => {
       lastName,
       activities,
       imageURLs,
-      matches
+      matches,
+      radius
     }
     res.json(reduxUser)
   }
