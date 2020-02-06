@@ -8,7 +8,8 @@ import {
   Matches,
   SignUpPage,
   UserProfile,
-  ChatApp
+  ChatApp,
+  LikedList
 } from "./components";
 import { me } from "./store";
 
@@ -25,10 +26,11 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={DecisionPage} />
-            <Route exact path="/likedMe" component={LikedMe} />
+            <Route exact path="/likedMe/:id" component={LikedMe} />
             <Route exact path="/matches" component={Matches} />
             <Route exact path="/profile" component={UserProfile} />
             <Route exact path="/chat/:roomId" component={ChatApp} />
+            <Route exact path="/likedList" component={LikedList} />
           </Switch>
         ) : (
           <Switch>
