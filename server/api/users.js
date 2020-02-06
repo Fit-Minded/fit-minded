@@ -1,8 +1,9 @@
-const router = require("express").Router();
-const User = require("../db/schemas/user");
+const router = require('express').Router();
+const User = require('../db/schemas/user');
+const { protect, protectById } = require('./securityUtils');
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
+router.get('/', protect, async (req, res, next) => {
   try {
     const users = await User.find({}).exec();
     res.json(users);
