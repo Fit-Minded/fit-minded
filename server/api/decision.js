@@ -5,9 +5,11 @@ const {
   createPusherUser
 } = require('../../script/chatUtil.js')
 const { makeId } = require('../../script/generalUtil')
+const { protect } = require('./securityUtils')
+
 module.exports = router
 
-router.put('/', async (req, res, next) => {
+router.put('/', protect, async (req, res, next) => {
   try {
     const userId = req.user._id.toString()
     const { decisionType, otherUserId } = req.body
