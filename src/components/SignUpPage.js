@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { auth } from '../store';
-import { MapContainer } from './index';
-import Slider from 'react-input-slider';
-import { firestore, storage } from '../fierbase';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { auth } from '../store'
+import { MapContainer } from './index'
+import Slider from 'react-input-slider'
+import { firestore, storage } from '../fierbase'
+
+const defaultProfPic =
+  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
 
 var sliderStyles = {
   track: {
@@ -23,11 +26,11 @@ var sliderStyles = {
   disabled: {
     opacity: 0.5
   }
-};
+}
 
 class SignUpPage extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       imageInput: null,
@@ -35,9 +38,11 @@ class SignUpPage extends Component {
       password: '',
       firstName: '',
       lastName: '',
-      imageUrl:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
-      pictures: [],
+      prevImg1: defaultProfPic,
+      prevImg2: defaultProfPic,
+      prevImg3: defaultProfPic,
+      imageFiles: [],
+      imageURLs: [],
       ageOwn: 0,
       agePrefMin: 0,
       agePrefMax: 0,
@@ -47,160 +52,178 @@ class SignUpPage extends Component {
       latitude: 0,
       radius: 0.0,
       activity: ''
-    };
-    this.handleRadiusChange = this.handleRadiusChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleMapMove = this.handleMapMove.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setImagePreview = this.setImagePreview.bind(this);
+    }
+    this.handleRadiusChange = this.handleRadiusChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleMapMove = this.handleMapMove.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.setImagePreview = this.setImagePreview.bind(this)
   }
-  get file() {
-    return this.state.imageInput && this.state.imageInput.files[0];
-  }
+
   componentDidMount() {
     if (this.props.location.state) {
-      const { email, password } = this.props.location.state;
+      const { email, password } = this.props.location.state
       this.setState({
         ...this.state,
         email,
         password
-      });
+      })
     }
   }
 
   setImagePreview(evt) {
-    var file = evt.target.files[0];
+    const file = evt.target.files[0]
+    const state = this.state
+    const number = evt.target.name
     this.setState({
-      imageUrl: URL.createObjectURL(file)
-    });
+      [`prevImg${number}`]: URL.createObjectURL(file)
+      // imageFiles: [...this.state.imageFiles, file]
+    })
+
+    // const pictures = this.state.imageFiles
+    // if (pictures.length > 0) {
+    // pictures.forEach(picture => {
+    if (file) {
+      storage
+        .ref()
+        .child(this.state.email)
+        .child(file.name)
+        .put(file)
+        .then(response => response.ref.getDownloadURL())
+        .then(url => state.imageURLs.push({ url }))
+    }
   }
 
   handleRadiusChange(evt) {
-    console.log(evt);
     this.setState({
       radius: evt.x
-    });
+    })
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
-    });
+    })
   }
 
   handleSubmit(evt) {
-    evt.preventDefault();
-    const formName = evt.target.name;
-    const state = this.state;
-    const pictures = this.imageInput.files;
-    if (this.imageInput.files) {
-      storage
-        .ref()
-        .child(this.state.email)
-        .child(pictures[0].name)
-        .put(pictures[0])
-        .then(response => response.ref.getDownloadURL());
-    }
-    this.props.auth(state, formName);
+    evt.preventDefault()
+    const formName = evt.target.name
+    const state = this.state
+    this.props.auth(state, formName)
   }
+
   handleMapMove(longitude, latitude) {
     this.setState({
       longitude,
       latitude
-    });
+    })
   }
 
   render() {
+    console.log(this.state)
     return (
-      <div id='sign-up-page'>
-        <form name='signup' onSubmit={this.handleSubmit}>
+      <div id="sign-up-page">
+        <form name="signup" onSubmit={this.handleSubmit}>
           <h2>My Photos</h2>
-          <div id='sign-up-pictures'>
-            <label htmlFor='picture-input1'>
-              <img src={this.state.imageUrl} alt='userPic' />
+          <div id="sign-up-pictures">
+            <label htmlFor="picture-input1">
+              <img src={this.state.prevImg1} alt="userPic" />
             </label>
             <input
               onChange={this.setImagePreview}
-              id='picture-input1'
-              type='file'
-              ref={ref => (this.imageInput = ref)}
+              id="picture-input1"
+              type="file"
+              name="1"
+              // ref={ref => (this.imageInput = ref)}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="picture-input2">
+              <img src={this.state.prevImg2} alt="userPic" />
+            </label>
+            <input
+              onChange={this.setImagePreview}
+              id="picture-input2"
+              type="file"
+              name="2"
+              // ref={ref => (this.imageInput = ref)}
               style={{ display: 'none' }}
             />
           </div>
           <h2>My Info</h2>
           <div>
-            <label htmlFor='firstName'>First Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input
-              type='text'
-              name='firstName'
+              type="text"
+              name="firstName"
               value={this.state.firstName}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label htmlFor='lastName'>Last Name</label>
+            <label htmlFor="lastName">Last Name</label>
             <input
-              type='text'
-              name='lastName'
+              type="text"
+              name="lastName"
               value={this.state.lastName}
               onChange={this.handleChange}
             />
           </div>
 
           <div>
-            <label htmlFor='genderOwn'>Gender</label>
+            <label htmlFor="genderOwn">Gender</label>
             <input
-              type='text'
-              name='genderOwn'
+              type="text"
+              name="genderOwn"
               value={this.state.genderOwn}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label htmlFor='ageOwn'>Age</label>
+            <label htmlFor="ageOwn">Age</label>
             <input
-              type='text'
-              name='ageOwn'
+              type="text"
+              name="ageOwn"
               value={this.state.ageOwn}
               onChange={this.handleChange}
             />
           </div>
           <h2>My Location</h2>
-          <div id='map'>
+          <div id="map">
             <MapContainer handleMapMove={this.handleMapMove} />
           </div>
           <h2>My Preferences</h2>
           <div>
-            <label htmlFor='genderPref'>Gender Preference</label>
+            <label htmlFor="genderPref">Gender Preference</label>
             <input
-              type='text'
-              name='genderPref'
+              type="text"
+              name="genderPref"
               value={this.state.genderPref}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label htmlFor='agePrefMin'>Age Pref Min</label>
+            <label htmlFor="agePrefMin">Age Pref Min</label>
             <input
-              type='text'
-              name='agePrefMin'
+              type="text"
+              name="agePrefMin"
               value={this.state.agePrefMin}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label htmlFor='agePrefMax'>Age Pref Max</label>
+            <label htmlFor="agePrefMax">Age Pref Max</label>
             <input
-              type='text'
-              name='agePrefMax'
+              type="text"
+              name="agePrefMax"
               value={this.state.agePrefMax}
               onChange={this.handleChange}
             />
           </div>
           <div>
-            <label htmlFor='radius'>Radius in Miles</label>
+            <label htmlFor="radius">Radius in Miles</label>
             <Slider
-              axis='x'
+              axis="x"
               x={this.state.radius}
               styles={sliderStyles}
               onChange={this.handleRadiusChange}
@@ -208,25 +231,25 @@ class SignUpPage extends Component {
           </div>
           <h2>My Activities</h2>
           <div>
-            <label htmlFor='activity'>Activity</label>
+            <label htmlFor="activity">Activity</label>
             <input
-              type='text'
-              name='activity'
+              type="text"
+              name="activity"
               value={this.state.activity}
               onChange={this.handleChange}
             />
           </div>
-          <button type='submit'>Create Profile</button>
+          <button type="submit">Create Profile</button>
         </form>
       </div>
-    );
+    )
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     auth: (state, formName) => dispatch(auth(state, formName))
-  };
-};
+  }
+}
 
-export default connect(null, mapDispatch)(SignUpPage);
+export default connect(null, mapDispatch)(SignUpPage)

@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import { logout } from '../store'
 
 class UserProfile extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { logout } = this.props
-    let { image, firstName, lastName, activities, age, gender } = this.props.user
+    let {
+      image,
+      firstName,
+      lastName,
+      activities,
+      age,
+      gender
+    } = this.props.user
     console.log(this.props.user)
     activities = Object.keys(activities)
     return (
