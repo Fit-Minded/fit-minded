@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import { logout } from '../store'
 
 class UserProfile extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const { logout } = this.props
-    let { image, firstName, lastName, activities, age, gender } = this.props.user
+    let {
+      imageURLs,
+      firstName,
+      lastName,
+      activities,
+      age,
+      gender
+    } = this.props.user
     console.log(this.props.user)
     activities = Object.keys(activities)
     return (
@@ -17,7 +20,12 @@ class UserProfile extends Component {
         <h1>
           {firstName} {lastName}
         </h1>
-        <img src={image} alt="userPic" />
+        <img src={imageURLs[0]} alt="userPic" />
+        <div className="profile-info">
+          <h3>Age: {age.own}</h3>
+          <h3>Gender: {gender.own}</h3>
+        </div>
+
         {activities.map((activity, index) => {
           return (
             <div className="activity-cont" key={index}>
@@ -25,8 +33,6 @@ class UserProfile extends Component {
             </div>
           )
         })}
-        <div>Age: {age.own}</div>
-        <div>Gender: {gender.own}</div>
 
         <button className="logout-btn" type="button" onClick={logout}>
           LOGOUT
