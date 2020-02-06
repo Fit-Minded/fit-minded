@@ -22,7 +22,6 @@ class LikedList extends Component {
   }
 
   render() {
-    console.log("this.state", this.state);
     const { likes } = this.state;
 
     if (likes.length > 0) {
@@ -30,7 +29,7 @@ class LikedList extends Component {
         <div className="decision-page-container">
           {likes.map((like, index) => {
             let activities = Object.keys(like.activities);
-            console.log(like);
+
             return (
               <Link to={`/LikedMe/${like._id}`}>
                 <div key={index} className="single-match-container">
