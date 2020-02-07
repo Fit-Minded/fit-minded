@@ -9,11 +9,11 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const User = require('./db/schemas/user')
 
-connect()
-  .then(async connect => {
-    console.log('Connected to DB!')
-  })
-  .catch(e => console.error(e))
+// connect()
+//   .then(async connect => {
+//     console.log('Connected to DB!')
+//   })
+//   .catch(e => console.error(e))
 
 const createApp = () => {
   // logging middleware
@@ -55,14 +55,7 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'src/build')))
-
-  // if (process.env.NODE_ENV === 'production') {
-  //   app.use(express.static(path.join(__dirname, '..', 'public'))) //
-  //   app.get('*', (req, res) => {
-  //     res.sendfile(path.join(((__dirname = '..', 'public/index.html')))
-  //   })
-  // }
+  app.use(express.static(path.join(__dirname, '..', 'public')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -97,8 +90,8 @@ const startListening = () => {
 
 async function bootApp() {
   await connect()
-  await createApp()
-  await startListening()
+  createApp()
+  startListening()
 }
 
 // This evaluates as true when this file is run directly from the command line,
