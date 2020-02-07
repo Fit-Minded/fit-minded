@@ -9,12 +9,6 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const User = require('./db/schemas/user')
 
-connect()
-  .then(async connect => {
-    console.log('Connected to DB!')
-  })
-  .catch(e => console.error(e))
-
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
