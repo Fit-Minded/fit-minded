@@ -57,11 +57,23 @@ const createApp = () => {
   // static file-serving middleware
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '..', 'build')))
+
+    app.use((req, res, next) => {
+      if (path.extname(req.path).length) {
+        const err = new Error('Not found')
+        err.status = 404
+        next(err)
+      } else {
+        next()
+      }
+    })
+
     app.use('*', (req, res) => {
       res.sendFile(path.join(__dirname, '..', 'build/index.html'))
     })
   } else {
     app.use(express.static(path.join(__dirname, '..', 'public')))
+
     app.use('*', (req, res) => {
       res.sendFile(path.join(__dirname, '..', 'public/index.html'))
     })
