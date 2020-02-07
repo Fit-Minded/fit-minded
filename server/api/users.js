@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../db/schemas/user');
-const { protect, protectById } = require('./securityUtils');
+const { protect } = require('./securityUtils');
 module.exports = router;
 
 router.get('/', protect, async (req, res, next) => {
@@ -11,12 +11,3 @@ router.get('/', protect, async (req, res, next) => {
     next(err);
   }
 });
-
-// router.get("/:userId", async (req, res, next) => {
-//   try {
-//     const singleUser = await User.findOne({ _id: req.params.userId }).exec();
-//     res.json(singleUser);
-//   } catch (err) {
-//     next(err);
-//   }
-// });

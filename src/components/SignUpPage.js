@@ -4,6 +4,7 @@ import { auth } from '../store'
 import { MapContainer } from './index'
 import Slider from 'react-input-slider'
 import { firestore, storage } from '../fierbase'
+import { Link } from 'react-router-dom'
 
 const defaultProfPic =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
@@ -63,12 +64,51 @@ class SignUpPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state) {
-      const { email, password } = this.props.location.state
+    const viewType = this.props.match.path
+    console.log(viewType)
+
+    if (viewType === '/signUpPage') {
+      if (this.props.location.state) {
+        const { email, password } = this.props.location.state
+        this.setState({
+          ...this.state,
+          email,
+          password
+        })
+      }
+    }
+
+    if (viewType === '/profile/update') {
+      const { user } = this.props
+      let {
+        firstName,
+        lastName,
+        age,
+        gender,
+        location,
+        activities,
+        imageURLs,
+        radius
+      } = user
+      activities = Object.keys(activities)
       this.setState({
-        ...this.state,
-        email,
-        password
+        firstName: firstName,
+        lastName: lastName,
+        prevImg1: imageURLs[0],
+        prevImg2: imageURLs[1],
+        prevImg3: imageURLs[2],
+        imageFiles: [],
+        imageURLs: imageURLs,
+        ageOwn: age.own,
+        agePrefMin: age.preferred.min,
+        agePrefMax: age.preferred.max,
+        genderOwn: gender.own,
+        genderPref: gender.preferred,
+        longitude: location.coordinates[0],
+        latitude: location.coordinates[1],
+        radius: radius,
+        currentActivity: '',
+        activities: activities
       })
     }
   }
@@ -127,11 +167,19 @@ class SignUpPage extends Component {
   }
 
   render() {
-    console.log(this.state)
+    const viewType = this.props.match.path
+
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
-          <h2>My Photos</h2>
+          <div className="sign-up-header">
+            <h2>My Photos</h2>
+            {viewType === '/profile/update' && (
+              <Link to="/profile">
+                <i className="fas fa-user"></i>
+              </Link>
+            )}
+          </div>
           <div id="sign-up-pictures">
             <label htmlFor="picture-input1">
               <img src={this.state.prevImg1} alt="userPic" />
@@ -164,7 +212,9 @@ class SignUpPage extends Component {
               style={{ display: 'none' }}
             />
           </div>
-          <h2>My Info</h2>
+          <div>
+            <h2>My Info</h2>
+          </div>
           <div>
             <label htmlFor="firstName">First Name</label>
             <input
@@ -206,7 +256,9 @@ class SignUpPage extends Component {
           <div id="map">
             <MapContainer handleMapMove={this.handleMapMove} />
           </div> */}
-          <h2>My Preferences</h2>
+          <div>
+            <h2>My Preferences</h2>
+          </div>
           <div>
             <label htmlFor="genderPref">Gender Preference</label>
             <input
@@ -245,7 +297,10 @@ class SignUpPage extends Component {
               onChange={this.handleRadiusChange}
             />
           </div>
-          <h2>My Activities</h2>
+          <div>
+            <h2>My Activities</h2>
+          </div>
+
           {this.state.activities.map((activity, index) => {
             return (
               <div key={index}>
@@ -267,11 +322,22 @@ class SignUpPage extends Component {
             </button>
           </div>
           <div className="sign-up-submit">
-            <button type="submit">Create Profile</button>
+            {viewType === '/signUpPage' && (
+              <button type="submit">Create Profile</button>
+            )}
+            {viewType === '/profile/update' && (
+              <button type="submit">Update Profile</button>
+            )}
           </div>
         </form>
       </div>
     )
+  }
+}
+
+const mapState = state => {
+  return {
+    user: state.user
   }
 }
 
@@ -281,4 +347,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(SignUpPage)
+export default connect(mapState, mapDispatch)(SignUpPage)

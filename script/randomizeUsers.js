@@ -78,7 +78,7 @@ const calcRandAct = () => {
   return activities
 }
 
-for (let i = 0; i < 99; i++) {
+for (let i = 0; i < 1000; i++) {
   let minAge = getRandomInt(15) + 18
   let maxAge = minAge + getRandomInt(15) + 1
   let latitude = (
@@ -93,7 +93,11 @@ for (let i = 0; i < 99; i++) {
   let user = {
     firstName: generateName()[0],
     lastName: generateName()[1],
-    image: 'https://picsum.photos/300/300',
+    imageURLs: [
+      'https://picsum.photos/300/300',
+      'https://picsum.photos/300/300',
+      'https://picsum.photos/300/300'
+    ],
     email: `test${i}@test.com`,
     password: '123',
     gender: {
