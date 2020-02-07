@@ -60,7 +60,7 @@ class Matches extends Component {
         </div>
       )
     } else {
-      return <div>No Matches Yet</div>
+      return <h3>No matches yet!</h3>
     }
   }
 }

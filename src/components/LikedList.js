@@ -30,9 +30,10 @@ class LikedList extends Component {
         <div className="match-list">
           <h1>Likes</h1>
           {likes.map((like, index) => {
+
             // let activities = Object.keys(like.activities);
             return (
-              <Link to={`/likedMe/${like._id}`}>
+              <Link to={`/likedMe/${index}`}>
                 <div key={index} className="single-match">
                   <img
                     className="match-list-picture"
@@ -40,9 +41,9 @@ class LikedList extends Component {
                     alt="user-pic"
                   />
                   <div className="match-info">
-                    <p>
-                      {like.firstName} {like.lastName.slice(0, 1)}
-                    </p>
+                    <h3>
+                      {like.firstName} {like.lastName.slice(0, 1)}.
+                    </h3>
 
                     {/* {activities.map((activity, index) => {
                       return <p key={index}>{activity}</p>;
@@ -55,7 +56,7 @@ class LikedList extends Component {
         </div>
       );
     } else {
-      return <div>No lovin yet!</div>;
+      return <h3>No lovin yet!</h3>;
     }
   }
 }
