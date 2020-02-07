@@ -68,7 +68,7 @@ const negOrPos = {
 }
 
 const calcRandAct = () => {
-  let possibleActivites = ['Running 🏃', 'Lifting 🏋🏻', 'Yoga 🧘‍']
+  let possibleActivites = ['Running', 'Lifting', 'Yoga']
   let activities = {}
   let numOfActivites = getRandomInt(4)
   for (let i = 0; i <= numOfActivites; i++) {
@@ -93,11 +93,7 @@ for (let i = 0; i < 1000; i++) {
   let user = {
     firstName: generateName()[0],
     lastName: generateName()[1],
-    imageURLs: [
-      'https://picsum.photos/300/300',
-      'https://picsum.photos/300/300',
-      'https://picsum.photos/300/300'
-    ],
+    imageURLs: [],
     email: `test${i}@test.com`,
     password: '123',
     gender: {
@@ -118,6 +114,14 @@ for (let i = 0; i < 1000; i++) {
     radius: (getRandomInt(50) + 10) / 10,
     activities: calcRandAct()
     // lastLogin: new Date()
+  }
+
+  if (user.gender.own === 'Male') {
+    user.imageURLs = [`/userPhotos/male/0${getRandomInt(5) + 1}.jpg`]
+  }
+
+  if (user.gender.own === 'Female') {
+    user.imageURLs = [`/userPhotos/female/0${getRandomInt(5) + 1}.jpg`]
   }
 
   randomUsers.push(user)
