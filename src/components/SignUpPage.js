@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { auth } from '../store'
 import { MapContainer } from './index'
 import Slider from 'react-input-slider'
-import { firestore, storage } from '../fierbase'
+import { firestore, storage } from '../firebase'
 import { Link } from 'react-router-dom'
 
 const defaultProfPic =
