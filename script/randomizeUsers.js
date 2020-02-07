@@ -117,11 +117,19 @@ for (let i = 0; i < 1000; i++) {
   }
 
   if (user.gender.own === 'Male') {
-    user.imageURLs = [`/userPhotos/male/0${getRandomInt(5) + 1}.jpg`]
+    user.imageURLs = [
+      `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`,
+      `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`,
+      `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`
+    ]
   }
 
   if (user.gender.own === 'Female') {
-    user.imageURLs = [`/userPhotos/female/0${getRandomInt(5) + 1}.jpg`]
+    user.imageURLs = [
+      `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`,
+      `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`,
+      `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`
+    ]
   }
 
   randomUsers.push(user)

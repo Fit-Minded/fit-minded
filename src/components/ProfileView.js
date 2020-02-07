@@ -18,7 +18,7 @@ class ProfileView extends Component {
   static getDerivedStateFromProps(props, state) {
     const viewType = props.match.path
 
-    if (viewType === '/home') {
+    if (viewType === '/') {
       if (!props.toJudge.length) {
         props.getToJudge()
       }
@@ -116,7 +116,7 @@ class ProfileView extends Component {
             </div>
           )}
 
-          {viewType === '/home' && (
+          {viewType === '/' && (
             <div className="button-container">
               <button type="button" onClick={this.handleDislike}>
                 <i className="fas fa-thumbs-down"></i>

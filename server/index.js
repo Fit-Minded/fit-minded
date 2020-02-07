@@ -44,34 +44,17 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  // static file-serving middleware
+  app.use(express.static(path.join(__dirname, '..', 'public')))
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
-  // static file-serving middleware
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '..', 'build')))
-
-    app.use((req, res, next) => {
-      if (path.extname(req.path).length) {
-        const err = new Error('Not found')
-        err.status = 404
-        next(err)
-      } else {
-        next()
-      }
-    })
-
-    app.use('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '..', 'build/index.html'))
-    })
-  } else {
-    app.use(express.static(path.join(__dirname, '..', 'public')))
-
-    app.use('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-    })
-  }
+  // sends index.html
+  // app.use('*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  // })
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -83,8 +66,6 @@ const createApp = () => {
       next()
     }
   })
-
-  // sends index.html
 
   // error handling endware
   app.use((err, req, res, next) => {

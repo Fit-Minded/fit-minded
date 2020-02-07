@@ -26,7 +26,7 @@ class Routes extends Component {
       <Switch>
         {isLoggedIn ? (
           <Switch>
-            <Route exact path="/home" component={ProfileView} />
+            <Route exact path="/" component={ProfileView} />
             <Route exact path="/likedMe" component={ProfileView} />
             <Route exact path="/matches" component={Matches} />
             <Route exact path="/profile" component={ProfileView} />
@@ -36,7 +36,7 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/signUpPage" component={SignUpPage} />
           </Switch>
