@@ -118,8 +118,10 @@ async function bootApp() {
 // if we wanted to require our app in a test spec
 
 if (require.main === module) {
+  console.log('BOOTING APP')
   bootApp()
 } else {
+  console.log('CREATING APP')
   createApp()
 }
 
