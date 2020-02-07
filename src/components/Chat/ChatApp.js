@@ -2,7 +2,7 @@ import React from 'react'
 import { MessageList, SendMessageForm } from '../index'
 import Chatkit from '@pusher/chatkit-client'
 import { connect } from 'react-redux'
-import { instanceLocator, testToken } from '../../pusherCredentials'
+import { instanceLocator, testToken } from '../../herokuPusherCredentials'
 
 class ChatApp extends React.Component {
   constructor() {

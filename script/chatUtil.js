@@ -1,5 +1,5 @@
 const ChatKit = require('@pusher/chatkit-server')
-const { instanceLocator, key } = require('../src/pusherCredentials')
+const { instanceLocator, key } = require('../src/herokuPusherCredentials')
 
 const chatKit = new ChatKit.default({ instanceLocator, key })
 
