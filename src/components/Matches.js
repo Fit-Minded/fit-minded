@@ -32,7 +32,6 @@ class Matches extends Component {
             // let activities = Object.keys(user.activities)
             let otherUserId = user._id
             let roomId = me.matches[otherUserId]
-            console.log(roomId)
             return (
               <Link to={`/chat/${roomId}`}>
                 <div key={index} className="single-match">
