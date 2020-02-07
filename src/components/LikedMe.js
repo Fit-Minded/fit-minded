@@ -29,6 +29,7 @@ class LikedMe extends Component {
 
   render() {
     const { usersWhoLikedMe } = this.state
+    console.log("state",this.state)
 
     if (usersWhoLikedMe.length > 0) {
       let {
@@ -41,7 +42,6 @@ class LikedMe extends Component {
       } = usersWhoLikedMe[0]
 
       activities = Object.keys(activities)
-
       return (
         <div className="decision-page-container">
           <div className="decision-page">

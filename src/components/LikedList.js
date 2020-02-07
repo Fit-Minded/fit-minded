@@ -23,29 +23,31 @@ class LikedList extends Component {
 
   render() {
     const { likes } = this.state;
+    const { me } = this.props;
 
     if (likes.length > 0) {
       return (
-        <div className="decision-page-container">
+        <div className="match-list">
+          <h1>Likes</h1>
           {likes.map((like, index) => {
-            let activities = Object.keys(like.activities);
 
+            // let activities = Object.keys(like.activities);
             return (
-              <Link to={`/LikedMe/${like._id}`}>
-                <div key={index} className="single-match-container">
+              <Link to={`/likedMe/${index}`}>
+                <div key={index} className="single-match">
                   <img
-                    className="profile-pic-matches"
-                    src={like.image}
+                    className="match-list-picture"
+                    src={like.imageURLs[0]}
                     alt="user-pic"
                   />
                   <div className="match-info">
-                    <p>
-                      {like.firstName} {like.lastName}
-                    </p>
+                    <h3>
+                      {like.firstName} {like.lastName.slice(0, 1)}.
+                    </h3>
 
-                    {activities.map((activity, index) => {
+                    {/* {activities.map((activity, index) => {
                       return <p key={index}>{activity}</p>;
-                    })}
+                    })} */}
                   </div>
                 </div>
               </Link>
@@ -54,14 +56,15 @@ class LikedList extends Component {
         </div>
       );
     } else {
-      return <div>You do not go here</div>;
+      return <h3>No lovin yet!</h3>;
     }
   }
 }
 
 const mapState = state => {
   return {
-    likes: state.pool.usersWhoLikedMe
+    likes: state.pool.usersWhoLikedMe,
+    me: state.user
   };
 };
 

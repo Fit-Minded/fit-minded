@@ -27,13 +27,18 @@ class ProfileView extends Component {
       }
     }
 
-    if (viewType === '/likedMe') {
+    if (viewType.split('/')[0] === '/likedMe') {
+      const {index} = this.props.match.params
       if (!props.likedMe.length && state.user) {
         props.getLikedMe()
       }
 
+      if (props.likedMe) {
+        console.log(props.likedMe)
+      }
+
       return {
-        user: props.likedMe[0]
+        user: props.likedMe[index]
       }
     }
 
