@@ -213,10 +213,10 @@ input.chbx-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--dark-gray);
+  background-image: linear-gradient(var(--dark-gray), var(--light-gray));
   width: 100vw;
-  height: 100vh;
-  margin-bottom: 60px;
+  height: auto;
+  padding-bottom: 130px;
 }
 
 .profile-view .profile-name {
@@ -259,20 +259,25 @@ input.chbx-btn {
   background: transparent;
   box-shadow: none;
   width: 80vw;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: -40px;
 }
 
 .profile-view .button-container {
   background: transparent;
   box-shadow: none;
   width: 80vw;
+  position: fixed;
+  bottom: 75px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .profile-view .button-container button {
   border-radius: 50%;
   height: 50px;
   width: 50px;
+  box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
 
 .profile-view .button-container i {
@@ -286,7 +291,17 @@ input.chbx-btn {
   font-weight: 900;
   font-size: 18px;
   color: white;
+  box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
+
+/* .profile-animation {
+  position: fixed;
+  height: 90vh;
+  width: 120vw;
+  animation-name: decision;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+} */
 
 /* MATCH LIST*/
 
@@ -379,119 +394,14 @@ input.chbx-btn {
   padding-left: 20px;
 }
 
-/*DECISION PAGE*/
-
-/* .decision-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--medium-gray);
-  max-width: 500px;
-  height: 100vh;
+@keyframes decision {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 100;
+  }
+  100% {
+    opacity: 0;
+  }
 }
-
-.decision-page > * {
-  margin: 10px 0px 10px 0px;
-  box-shadow: rgba(167, 167, 167, 0.605) 2px 2px 5px;
-}
-
-.decisionStats {
-  box-shadow: none;
-  margin: 10px 0px 0px 0px;
-}
-
-.profile-pic-toJudge-container {
-  display: flex;
-  justify-content: center;
-  border-radius: 15px;
-}
-
-.profile-pic-toJudge {
-  border-radius: 15px;
-  width: 75vw;
-}
-
-.name-toJudge {
-  color: var(--black);
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 75vw;
-  border-radius: 15px;
-  margin-bottom: 0px;
-  box-shadow: none;
-}
-
-.name-toJudge h1 {
-  margin: 0px;
-  padding: 0px;
-}
-
-.activity-cont {
-  width: 75vw;
-  height: 50px;
-  background: var(--light-gray);
-  border-radius: 15px;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  position: fixed;
-  bottom: 75px;
-  width: 85vw;
-  box-shadow: none;
-}
-
-.button-container button {
-  font-size: 20px;
-  color: black;
-  height: 55px;
-  width: 55px;
-  border-radius: 150px;
-  background-color: var(--highlight-blue);
-  cursor: pointer;
-}
-
-.single-btn-no:hover {
-  color: white;
-  background-color: red;
-}
-
-.single-btn-yes:hover {
-  color: white;
-  background-color: #64e687;
-} */
-
-/* MATCHES PAGE */
-
-/* USER PROFILE */
-
-/* #userProfile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#userProfile > * {
-  margin: 10px 0px 0px 0px;
-}
-
-#userProfile img {
-  border-radius: 10px;
-  height: 50vw;
-  width: 50vw;
-} */
-
-/* .logout-btn {
-  font-size: 25px;
-  background-color: var(--highlight-blue);
-  color: white;
-  border-radius: 15px;
-  position: fixed;
-  bottom: 65px;
-}
-
-.logout-btn:hover {
-  background-color: red;
-} */
