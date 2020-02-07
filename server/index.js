@@ -9,11 +9,11 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const User = require('./db/schemas/user')
 
-// connect()
-//   .then(async connect => {
-//     console.log('Connected to DB!')
-//   })
-//   .catch(e => console.error(e))
+connect()
+  .then(async connect => {
+    console.log('Connected to DB!')
+  })
+  .catch(e => console.error(e))
 
 const createApp = () => {
   // logging middleware
@@ -55,7 +55,17 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '..', 'build')))
+    app.use('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '..', 'build/index.html'))
+    })
+  } else {
+    app.use(express.static(path.join(__dirname, '..', 'public')))
+    app.use('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    })
+  }
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -69,9 +79,6 @@ const createApp = () => {
   })
 
   // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
 
   // error handling endware
   app.use((err, req, res, next) => {
@@ -82,7 +89,6 @@ const createApp = () => {
 }
 
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
@@ -98,6 +104,7 @@ async function bootApp() {
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
+
 if (require.main === module) {
   bootApp()
 } else {
