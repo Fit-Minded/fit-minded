@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { auth } from '../store'
 import { MapContainer } from './index'
-import Slider from 'react-input-slider'
 import { firestore, storage } from '../firebase'
 import { Link } from 'react-router-dom'
 
@@ -18,11 +17,11 @@ var sliderStyles = {
   active: {
     backgroundColor: 'var(--highlight-blue)',
     padding: 0,
-    marginLeft: -10
+    marginLeft: -35
   },
   thumb: {
-    width: 10,
-    height: 10
+    width: 20,
+    height: 20
   },
   disabled: {
     opacity: 0.5
@@ -133,9 +132,9 @@ class SignUpPage extends Component {
   }
 
   handleRadiusChange(evt) {
-    let miles = evt.x / 10
+    // let miles = evt.x / 10
     this.setState({
-      radius: miles
+      radius: evt.x
     })
   }
 
@@ -168,7 +167,7 @@ class SignUpPage extends Component {
 
   render() {
     const viewType = this.props.match.path
-
+    console.log(this.state.radius)
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
@@ -288,13 +287,14 @@ class SignUpPage extends Component {
           </div>
           <div>
             <label htmlFor="radius">Radius: {this.state.radius} Miles</label>
-            <Slider
-              axis="x"
-              x={this.state.radius}
-              xmin={10}
-              xmax={100}
-              styles={sliderStyles}
-              onChange={this.handleRadiusChange}
+            <input
+              className="slider-input"
+              type="range"
+              min="0"
+              max="5"
+              value={this.state.radius}
+              onChange={this.handleChange}
+              step="1"
             />
           </div>
           <div>

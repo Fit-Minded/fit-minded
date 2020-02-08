@@ -120,6 +120,10 @@ a {
   padding-right: 10px;
 }
 
+#sign-up-page input .input-slider {
+  background: pink;
+}
+
 #sign-up-pictures {
   display: flex;
   justify-content: space-evenly;
@@ -221,8 +225,9 @@ input.chbx-btn {
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: auto;
-  padding-bottom: 130px;
+  position: fixed;
+  /* height: auto;
+  padding-bottom: 130px; */
 }
 
 .profile-view .profile-name {
@@ -261,37 +266,44 @@ input.chbx-btn {
   padding: 0px 20px 0px 20px;
 }
 
-.profile-view .logout-buttons {
-  background: transparent;
-  box-shadow: none;
-  width: 80vw;
-  margin-top: 15px;
-  margin-bottom: -40px;
-}
+/* PROFILE BUTTONS */
 
-.profile-view .button-container {
+.button-container {
+  display: flex;
+  justify-content: space-between;
   background: transparent;
   box-shadow: none;
   width: 80vw;
   position: fixed;
   bottom: 75px;
   margin: 0px;
-  padding: 0px;
+  padding: 0px 10vw 0px 10vw;
 }
 
-.profile-view .button-container button {
+.button-container button {
   border-radius: 50%;
   height: 50px;
   width: 50px;
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
 
-.profile-view .button-container i {
+.button-container i {
   font-size: 25px;
   color: white;
 }
 
-.profile-view .logout-buttons button {
+.logout-buttons {
+  display: flex;
+  justify-content: space-between;
+  background: transparent;
+  box-shadow: none;
+  width: 80vw;
+  padding: 15px 10vw 0px 10vw;
+  position: fixed;
+  bottom: 85px;
+}
+
+.logout-buttons button {
   height: 40px;
   width: 35vw;
   font-weight: 900;
@@ -391,14 +403,57 @@ input.chbx-btn {
   padding-left: 20px;
 }
 
-@keyframes decision {
-  0% {
-    opacity: 0;
+/* ANIMATIONS */
+
+.fade-appear {
+  opacity: 0;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 250ms linear;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms linear 250ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transition: opacity 250ms linear;
+}
+
+.loading-spinner {
+  position: fixed;
+  font-size: 100px;
+  margin: 20px;
+  top: 30%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  color: var(--highlight-blue);
+  opacity: 0.5;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-  50% {
-    opacity: 100;
-  }
-  100% {
-    opacity: 0;
+  to {
+    transform: rotate(360deg);
   }
 }

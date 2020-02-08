@@ -3,13 +3,10 @@ import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
 import {
-  DecisionPage,
-  LikedMe,
-  Matches,
+  ListView,
   SignUpPage,
-  UserProfile,
-  ChatApp,
   ProfileView,
+  ChatApp,
   LikedList
 } from './components'
 import { me } from './store'
@@ -27,11 +24,11 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={ProfileView} />
-            <Route exact path="/likedMe" component={ProfileView} />
-            <Route exact path="/matches" component={Matches} />
-            <Route exact path="/profile" component={ProfileView} />
+            <Route exact path="/matches" component={ListView} />
             <Route exact path="/chat/:roomId" component={ChatApp} />
-            <Route exact path="/likedList" component={LikedList} />
+            <Route exact path="/likedMe" component={ListView} />
+            <Route exact path="/likedMe/:index" component={ProfileView} />
+            <Route exact path="/profile" component={ProfileView} />
             <Route exact path="/profile/update" component={SignUpPage} />
           </Switch>
         ) : (

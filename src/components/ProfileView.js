@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import { ProfileInfo, ProfileButtons } from './'
 import { logout, makeDecision, getToJudge, getLikedMe } from '../store'
-import { Link } from 'react-router-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 class ProfileView extends Component {
   constructor(props) {
@@ -27,13 +28,13 @@ class ProfileView extends Component {
       }
     }
 
-    if (viewType === '/likedMe') {
+    if (viewType === '/likedMe/:index') {
+      const index = props.match.params.index
       if (!props.likedMe.length && state.user) {
         props.getLikedMe()
       }
-
       return {
-        user: props.likedMe[0]
+        user: props.likedMe[index]
       }
     }
 
@@ -72,74 +73,33 @@ class ProfileView extends Component {
     const viewType = this.props.match.path
     console.log(this.state)
 
-    if (user) {
-      var { firstName, lastName, age, gender, activities, imageURLs } = user
-      activities = Object.keys(activities)
-
-      return (
-        <div className="profile-view">
-          <div className="profile-name">
-            <h1>
-              {firstName} {lastName.slice(0, 1)}.
-            </h1>
-
-            {viewType === '/profile' && (
-              <Link to="/profile/update">
-                <i className="fas fa-user"></i>
-              </Link>
-            )}
-          </div>
-
-          <img src={imageURLs[0]} alt="profile-pic" />
-
-          <div className="profile-info">
-            <h3>{age.own}</h3> |<h3>{gender.own}</h3> |<h3>Union Square</h3>
-          </div>
-
-          {activities.map((activity, index) => {
-            return (
-              <div className="activity" key={index}>
-                <h3>{activity}</h3>
-                <p>Experience Level: Medium</p>
-              </div>
-            )
-          })}
-
-          {viewType === '/likedMe' && (
-            <div className="button-container">
-              <button type="button" onClick={this.handleDontMatch}>
-                <i className="fas fa-thumbs-down"></i>
-              </button>
-              <button type="button" onClick={this.handleMatch}>
-                <i className="fas fa-thumbs-up"></i>
-              </button>
+    return (
+      <div>
+        {user && (
+          <TransitionGroup>
+            <div className="loading-spinner">
+              <i className="fas fa-spinner"></i>
             </div>
-          )}
-
-          {viewType === '/' && (
-            <div className="button-container">
-              <button type="button" onClick={this.handleDislike}>
-                <i className="fas fa-thumbs-down"></i>
-              </button>
-              <button type="button" onClick={this.handleLike}>
-                <i className="fas fa-thumbs-up"></i>
-              </button>
-            </div>
-          )}
-
-          {viewType === '/profile' && (
-            <div className="logout-buttons">
-              <button type="button" onClick={logout}>
-                LOGOUT
-              </button>
-              <button type="button">PAUSE</button>
-            </div>
-          )}
-        </div>
-      )
-    } else {
-      return <h1>Loading...</h1>
-    }
+            <CSSTransition
+              key={user._id}
+              appear={true}
+              timeout={500}
+              classNames="fade"
+            >
+              <ProfileInfo user={user} viewType={viewType} />
+            </CSSTransition>
+          </TransitionGroup>
+        )}
+        <ProfileButtons
+          handleDislike={this.handleDislike}
+          handleLike={this.handleLike}
+          handleDontMatch={this.handleDontMatch}
+          handleMatch={this.handleMatch}
+          logout={logout}
+          viewType={viewType}
+        />
+      </div>
+    )
   }
 }
 
