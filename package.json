@@ -77,7 +77,8 @@
     "react-start": "node scripts/start.js",
     "start": "npm run start-server",
     "dev": "NODE_ENV='development' npm run start-dev-server & NODE_ENV='development' npm run build-client-watch",
-    "seed": "node script/seed.js"
+    "seed": "node script/seed.js",
+    "build": "webpack -w"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
