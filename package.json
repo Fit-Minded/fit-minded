@@ -64,6 +64,10 @@
     "url-loader": "2.3.0",
     "workbox-webpack-plugin": "4.3.1"
   },
+  "engines": {
+    "node": "10.x",
+    "npm": "6.x"
+  },
   "scripts": {
     "build-client-watch": "webpack -w",
     "start-dev-server": "nodemon server",
