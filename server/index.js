@@ -9,12 +9,6 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const User = require('./db/schemas/user')
 
-connect()
-  .then(async connect => {
-    console.log('Connected to DB!')
-  })
-  .catch(e => console.error(e))
-
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
@@ -50,12 +44,17 @@ const createApp = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  // static file-serving middleware
+  app.use(express.static(path.join(__dirname, '..', 'public')))
+
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
-  // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  // sends index.html
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  })
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
@@ -68,11 +67,6 @@ const createApp = () => {
     }
   })
 
-  // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
-
   // error handling endware
   app.use((err, req, res, next) => {
     console.error(err)
@@ -82,7 +76,6 @@ const createApp = () => {
 }
 
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
@@ -90,17 +83,20 @@ const startListening = () => {
 
 async function bootApp() {
   await connect()
-  await createApp()
-  await startListening()
+  createApp()
+  startListening()
 }
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
+
 if (require.main === module) {
+  console.log('BOOTING APP')
   bootApp()
 } else {
+  console.log('CREATING APP')
   createApp()
 }
 

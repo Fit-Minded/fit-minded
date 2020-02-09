@@ -1,6 +1,56 @@
 const User = require('../server/db/schemas/user')
 const { calcDistance } = require('./generalUtil')
 
+function configSignUpStateData(state) {
+  const {
+    email,
+    password,
+    firstName,
+    lastName,
+    imageURLs,
+    ageOwn,
+    agePrefMin,
+    agePrefMax,
+    genderOwn,
+    genderPref,
+    longitude,
+    latitude,
+    radius,
+    activities
+  } = state
+
+  const activitiesObj = {}
+  activities.forEach(activity => (activitiesObj[activity] = true))
+
+  const imageURLsStrings = imageURLs.map(object => object.url)
+
+  const newUserData = {
+    email,
+    password,
+    firstName,
+    lastName,
+    imageURLs: imageURLsStrings,
+    age: {
+      own: Number(ageOwn),
+      preferred: {
+        min: Number(agePrefMin),
+        max: Number(agePrefMax)
+      }
+    },
+    gender: {
+      own: genderOwn,
+      preferred: genderPref
+    },
+    location: {
+      type: 'Point',
+      coordinates: [Number(longitude), Number(latitude)]
+    },
+    radius: Number(radius),
+    activities: activitiesObj
+  }
+  return newUserData
+}
+
 function getQueryData(user) {
   let {
     gender,
@@ -42,52 +92,6 @@ function getQueryData(user) {
     _id
   }
   return queryData
-}
-
-function configSignUpStateData(state) {
-  const {
-    email,
-    password,
-    firstName,
-    lastName,
-    imageUrl,
-    ageOwn,
-    agePrefMin,
-    agePrefMax,
-    genderOwn,
-    genderPref,
-    longitude,
-    latitude,
-    radius,
-    activity
-  } = state
-  const newUserData = {
-    email,
-    password,
-    firstName,
-    lastName,
-    image: imageUrl,
-    age: {
-      own: Number(ageOwn),
-      preferred: {
-        min: Number(agePrefMin),
-        max: Number(agePrefMax)
-      }
-    },
-    gender: {
-      own: genderOwn,
-      preferred: genderPref
-    },
-    location: {
-      type: 'Point',
-      coordinates: [Number(longitude), Number(latitude)]
-    },
-    radius: Number(radius),
-    activities: {
-      [activity]: true
-    }
-  }
-  return newUserData
 }
 
 async function generatePool(queryData) {
@@ -247,7 +251,7 @@ async function getToJudgeFromPool(user) {
       'firstName',
       'lastName',
       'activities',
-      'image'
+      'imageURLs'
     ]).exec()
     usersToJudge.push(currentUser)
   }

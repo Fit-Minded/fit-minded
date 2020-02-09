@@ -5,7 +5,9 @@ const {
   generatePool,
   configSignUpStateData
 } = require('../../script/routeUtil')
+const { createPusherUser } = require('../../script/chatUtil.js')
 module.exports = router
+router.use('/google', require('./google'))
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -33,8 +35,13 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
+    console.log('STATE AFTER SUMBIT', req.body)
     const newUserData = configSignUpStateData(req.body)
     const user = await User.create(newUserData)
+    const userId = String(user._id),
+      userName = `${user.fisrtName} ${user.lastName}`
+    const pusherResponse = createPusherUser(userId, userName)
+    console.log('created pusher user', pusherResponse)
     console.log(`Created User ${user.firstName} ${user.lastName}`)
     const queryData = getQueryData(user)
     const pool = await generatePool(queryData)
@@ -57,13 +64,10 @@ router.post('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/')
 })
-
 router.get('/me', (req, res) => {
   if (!req.user) {
-    console.log('hello')
     res.send({})
   } else {
-    console.log('Goodbye')
     const {
       age,
       gender,
@@ -72,7 +76,9 @@ router.get('/me', (req, res) => {
       firstName,
       lastName,
       activities,
-      image
+      imageURLs,
+      matches,
+      radius
     } = req.user
 
     const reduxUser = {
@@ -83,7 +89,9 @@ router.get('/me', (req, res) => {
       firstName,
       lastName,
       activities,
-      image
+      imageURLs,
+      matches,
+      radius
     }
     res.json(reduxUser)
   }

@@ -1,58 +1,58 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { auth } from '../store'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { auth } from '../store';
 
 class AuthForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       email: '',
       password: '""'
-    }
-    this.handleChange = this.handleChange.bind(this)
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value
-    })
+    });
   }
 
   render() {
-    const { name, displayName, handleSubmit, error } = this.props
+    const { name, displayName, handleSubmit, error, handleGoogle } = this.props;
     return (
-      <div id="authForm">
-        <h1 className="title">
+      <div id='authForm'>
+        <h1 className='title'>
           Fit<span>Minded</span>
         </h1>
-        <form onSubmit={handleSubmit} name={name} className="login-form">
+        <form onSubmit={handleSubmit} name={name} className='login-form'>
           <h1>{name.toUpperCase()}</h1>
           <div>
             <input
-              name="email"
-              type="text"
-              placeholder="✉️  Email"
+              name='email'
+              type='text'
+              placeholder='✉️  Email'
               onChange={this.handleChange}
             />
           </div>
           <br />
           <div>
             <input
-              name="password"
-              type="password"
-              placeholder="🔒 *******"
+              name='password'
+              type='password'
+              placeholder='🔒 *******'
               onChange={this.handleChange}
             />
           </div>
-          <div className="remember-chbx">
-            <input type="checkbox" name="remember-me" className="chbx-btn" />
+          <div className='remember-chbx'>
+            <input type='checkbox' name='remember-me' className='chbx-btn' />
             Remember Me
           </div>
           <br />
-          <div id="authSubmit">
+          <div id='authSubmit'>
             {displayName === 'Sign Up' ? (
               <Link
                 to={{
@@ -63,16 +63,17 @@ class AuthForm extends Component {
                   }
                 }}
               >
-                <button type="button">SIGN UP</button>
+                <button type='button'>SIGN UP</button>
               </Link>
             ) : (
-              <button type="submit">LOG IN</button>
+              <button type='submit'>LOGIN</button>
             )}
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
+        <a href='http://localhost:5000/auth/google'>Login with Google</a>
       </div>
-    )
+    );
   }
 }
 
@@ -81,28 +82,28 @@ const mapLogin = state => {
     name: 'login',
     displayName: 'Login',
     error: state.user.error
-  }
-}
+  };
+};
 
 const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
     error: state.user.error
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth({ email, password }, formName))
+      evt.preventDefault();
+      const formName = evt.target.name;
+      const email = evt.target.email.value;
+      const password = evt.target.password.value;
+      dispatch(auth({ email, password }, formName));
     }
-  }
-}
+  };
+};
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(mapLogin, mapDispatch)(AuthForm);
+export const Signup = connect(mapSignup, mapDispatch)(AuthForm);

@@ -1,37 +1,21 @@
 import React from 'react'
-import MessageList from './MessageList'
-import SendMessageForm from './SendMessageForm'
-import Title from '../Title'
+import { MessageList, SendMessageForm } from '../index'
 import Chatkit from '@pusher/chatkit-client'
-
-const instanceLocator = 'v1:us1:fb89b76a-014b-425c-9996-f0d8dbc1e571'
-const testToken =
-  'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/fb89b76a-014b-425c-9996-f0d8dbc1e571/token'
-const userId = '12'
-const roomId = '7b31bc3d-311d-4af4-be10-f272c9cbfed8'
-
-const DUMMY_DATA = [
-  {
-    senderId: 'perborgen',
-    text: "who'll win?"
-  },
-  {
-    senderId: 'janedoe',
-    text: "who'll win?"
-  }
-]
+import { connect } from 'react-redux'
+import { instanceLocator, testToken } from '../../herokuPusherCredentials'
 
 class ChatApp extends React.Component {
   constructor() {
     super()
     this.state = {
-      messages: DUMMY_DATA
+      messages: []
     }
+
     this.sendMessage = this.sendMessage.bind(this)
   }
 
   componentDidMount() {
-    console.log('roomId', roomId)
+    const userId = this.props.user._id
 
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
@@ -40,15 +24,16 @@ class ChatApp extends React.Component {
         url: testToken
       })
     })
-    console.log('chatManager', chatManager)
+
+    const { roomId } = this.props.match.params
 
     chatManager.connect().then(currentUser => {
-      console.log('HELLO from connect')
+      console.log('HELLO from connect', currentUser)
       this.currentUser = currentUser
       currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
-          onNewMessage: message => {
+          onMessage: message => {
             this.setState({
               messages: [...this.state.messages, message]
             })
@@ -57,8 +42,9 @@ class ChatApp extends React.Component {
       })
     })
   }
+
   sendMessage(text) {
-    console.log('SEND MESSAGE', this.currentUser)
+    const { roomId } = this.props.match.params
     this.currentUser.sendMessage({
       text: text,
       roomId: roomId
@@ -66,10 +52,11 @@ class ChatApp extends React.Component {
   }
 
   render() {
-    console.log('render', this.currentUser)
     return (
       <div className="chat-app">
-        <Title />
+        <div className="chat-app-title">
+          <h1>CHATROOM</h1>
+        </div>
         <MessageList messages={this.state.messages} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>
@@ -77,4 +64,10 @@ class ChatApp extends React.Component {
   }
 }
 
-export default ChatApp
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapState)(ChatApp)

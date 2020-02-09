@@ -11,7 +11,7 @@ class Navbar extends Component {
       <div>
         {isLoggedIn ? (
           <nav id="navBar">
-            <Link to="/home">
+            <Link to="/">
               <i className="fas fa-home"></i>
             </Link>
             <Link to="/likedMe">
@@ -26,7 +26,7 @@ class Navbar extends Component {
           </nav>
         ) : (
           <nav id="navBar">
-            <Link to="/login">
+            <Link to="/">
               <h2>Login</h2>
             </Link>
             <Link to="/signup">
