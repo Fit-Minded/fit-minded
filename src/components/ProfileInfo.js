@@ -29,8 +29,16 @@ const ProfileInfo = ({ user, viewType }) => {
       {activities.map((activity, index) => {
         return (
           <div className="activity" key={index}>
-            <h3>{activity}</h3>
-            <p>Experience Level: Medium</p>
+            <div className="activity-header">
+              <h3>{activity}</h3>
+              <h3>Intermediate</h3>
+            </div>
+            <div>
+              <p>
+                Placeholder description text about activity. The quick brown fox
+                jumps over the sleeping dog.
+              </p>
+            </div>
           </div>
         )
       })}

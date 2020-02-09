@@ -84,10 +84,11 @@ a {
   margin-bottom: 70px;
 }
 
-.sign-up-header {
+#sign-up-page .sign-up-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  padding: 10px 40px 10px 40px;
 }
 
 .sign-up-header i {
@@ -105,11 +106,16 @@ a {
   margin-bottom: 0px;
 }
 
+#sign-up-page label {
+  font-size: 20px;
+}
+
 #sign-up-page div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid var(--dark-gray);
-  padding: 10px 40px 10px 40px;
+  padding: 15px 40px 15px 40px;
 }
 
 #sign-up-page input {
@@ -118,6 +124,9 @@ a {
   border-radius: 5px;
   text-align: end;
   padding-right: 10px;
+  height: 30px;
+  width: 30vw;
+  font-size: 20px;
 }
 
 #sign-up-page input .input-slider {
@@ -133,6 +142,55 @@ a {
   width: 25vw;
   height: 25vw;
   border-radius: 10px;
+}
+
+#sign-up-page select {
+  font-size: 20px;
+  background: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#sign-up-page div.gender-radio {
+  border: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 10px;
+  width: 30vw;
+  padding-right: 0px;
+}
+
+#sign-up-page div.gender-radio input {
+  transform: scale(0.5);
+}
+
+#sign-up-page .sign-up-activity {
+  display: flex;
+  flex-direction: column;
+  background: var(--highlight-blue);
+  margin: 10px 30px 10px 30px;
+  border: none;
+  border-radius: 10px;
+}
+
+#sign-up-page .sign-up-activity div {
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#sign-up-page .sign-up-activity input {
+  width: 90%;
+  background: white;
+}
+
+.sign-up-activity h2 {
+  margin: 0px;
+  padding: 0px;
 }
 
 #sign-up-page .sign-up-submit {
@@ -225,9 +283,9 @@ input.chbx-btn {
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  position: fixed;
-  /* height: auto;
-  padding-bottom: 130px; */
+  /* position: fixed; */
+  height: auto;
+  padding-bottom: 130px;
 }
 
 .profile-view .profile-name {
@@ -264,6 +322,31 @@ input.chbx-btn {
   align-items: center;
   margin: 10px;
   padding: 0px 20px 0px 20px;
+}
+
+.profile-view .activity {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-view .activity > div {
+  /* margin: 10px; */
+}
+
+.profile-view .activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px;
+}
+
+.profile-view .activity h3 {
+  margin: 10px 0px 0px 0px;
+}
+
+.profile-view .activity p {
+  margin: 10px 0px 10px 0px;
 }
 
 /* PROFILE BUTTONS */
@@ -312,34 +395,30 @@ input.chbx-btn {
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
 
-/* MATCH LIST*/
+/* LIST VIEW */
 
-.no-likes {
-  height: 650px;
-  display: flex;
-  justify-content: center;
-}
-
-.match-list h1 {
+.list-view h1 {
   border-bottom: 1px solid grey;
   padding: 0px 0px 10px 20px;
   margin-bottom: 0px;
 }
 
-.single-match {
+.list-item {
   display: flex;
   justify-content: space-between;
   height: 70px;
   border-bottom: 1px solid grey;
-  padding: 10px;
+  padding: 10px 20px 10px 20px;
+  background: rgba(255, 255, 255, 0.406);
 }
 
-.match-list-picture {
+.list-item img {
   height: 70px;
+  width: 70px;
   border-radius: 50%;
 }
 
-.match-info {
+.list-item-info {
   display: flex;
   flex-direction: column;
   color: var(--black);
@@ -347,12 +426,12 @@ input.chbx-btn {
   justify-content: center;
 }
 
-.match-info h3,
-.match-info p {
+.list-item-info h3,
+.list-item-info p {
   margin: 3px;
 }
 
-.match-list i {
+.list-item i {
   font-size: 25px;
   color: var(--highlight-blue);
 }
@@ -434,6 +513,7 @@ input.chbx-btn {
 }
 
 .loading-spinner {
+  z-index: -1;
   position: fixed;
   font-size: 100px;
   margin: 20px;

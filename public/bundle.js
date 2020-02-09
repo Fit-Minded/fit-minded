@@ -80871,7 +80871,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -90768,13 +90768,12 @@ var LikedMeListItem = function LikedMeListItem(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/likedMe/".concat(index)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "single-match"
+    className: "list-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "match-list-picture",
     src: user.imageURLs[0],
     alt: "user-pic"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "match-info"
+    className: "list-item-info"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder conversation text.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-comment-dots"
   }))));
@@ -91043,13 +91042,12 @@ var MatchListItem = function MatchListItem(_ref) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/chat/".concat(roomId)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "single-match"
+    className: "list-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "match-list-picture",
     src: user.imageURLs[0],
     alt: "user-pic"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "match-info"
+    className: "list-item-info"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder conversation text.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-comment-dots"
   }))));
@@ -91180,7 +91178,7 @@ var ProfileButtons = function ProfileButtons(_ref) {
       handleDontMatch = _ref.handleDontMatch,
       logout = _ref.logout,
       viewType = _ref.viewType;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, viewType === '/' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, viewType === '/' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "button-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
@@ -91192,7 +91190,7 @@ var ProfileButtons = function ProfileButtons(_ref) {
     onClick: handleLike
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-thumbs-up"
-  }))), viewType === '/likedMe' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }))), viewType === '/likedMe/:index' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "button-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
@@ -91262,7 +91260,9 @@ var ProfileInfo = function ProfileInfo(_ref) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "activity",
       key: index
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Experience Level: Medium"));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "activity-header"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Intermediate")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder description text about activity. The quick brown fox jumps over the sleeping dog.")));
   }));
 };
 
@@ -91571,7 +91571,6 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var viewType = this.props.match.path;
-      console.log(viewType);
 
       if (viewType === '/signUpPage') {
         if (this.props.location.state) {
@@ -91637,11 +91636,9 @@ function (_Component) {
     }
   }, {
     key: "handleRadiusChange",
-    value: function handleRadiusChange(evt) {
-      // let miles = evt.x / 10
-      this.setState({
-        radius: evt.x
-      });
+    value: function handleRadiusChange(value) {// this.setState({
+      //   radius: evt.x
+      // })
     }
   }, {
     key: "handleActivityAdd",
@@ -91676,7 +91673,6 @@ function (_Component) {
     key: "render",
     value: function render() {
       var viewType = this.props.match.path;
-      console.log(this.state.radius);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "sign-up-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -91743,28 +91739,38 @@ function (_Component) {
         name: "lastName",
         value: this.state.lastName,
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "gender-own"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "genderOwn"
-      }, "Gender"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+      }, "Gender"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "genderOwn",
         value: this.state.genderOwn,
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Male"
+      }, "Male"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Female"
+      }, "Female"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "ageOwn"
       }, "Age"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "ageOwn",
         value: this.state.ageOwn,
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "gender-own"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "genderPref"
-      }, "Gender Preference"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+      }, "Gender Preference"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "genderPref",
         value: this.state.genderPref,
         onChange: this.handleChange
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Male"
+      }, "Male"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Female"
+      }, "Female"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "agePrefMin"
       }, "Age Pref Min"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -91780,26 +91786,29 @@ function (_Component) {
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "radius"
-      }, "Radius: ", this.state.radius, " Miles"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "slider-input",
-        type: "range",
-        min: "0",
-        max: "5",
-        value: this.state.radius,
-        onChange: this.handleChange,
-        step: "1"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Activities")), this.state.activities.map(function (activity, index) {
+      }, "Radius: ", this.state.radius, " Miles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Activities")), this.state.activities.map(function (activity, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: index
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Experience Level: Medium"));
+          key: index,
+          className: "sign-up-activity"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Experience Level:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          placeholder: "Add a description for this activity."
+        }));
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "activity"
-      }, "Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
+      }, "Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "currentActivity",
         value: this.state.currentActivity,
         onChange: this.handleChange
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Running"
+      }, "Running"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Lifting"
+      }, "Lifting"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Yoga"
+      }, "Yoga")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.handleActivityAdd
       }, "Add Activity")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

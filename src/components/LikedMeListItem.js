@@ -4,13 +4,9 @@ import { Link } from 'react-router-dom'
 const LikedMeListItem = ({ user, index }) => {
   return (
     <Link to={`/likedMe/${index}`}>
-      <div className="single-match">
-        <img
-          className="match-list-picture"
-          src={user.imageURLs[0]}
-          alt="user-pic"
-        />
-        <div className="match-info">
+      <div className="list-item">
+        <img src={user.imageURLs[0]} alt="user-pic" />
+        <div className="list-item-info">
           <h3>
             {user.firstName} {user.lastName.slice(0, 1)}.
           </h3>

@@ -3,30 +3,52 @@ const randomUsers = []
 function capFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
-function generateName() {
-  let name1 = [
+function generateName(gender) {
+  let firstNameMale = [
     'Marquis',
     'Samir',
     'Adrien',
-    'Joyce',
     'Pierce',
-    'Juliette',
     'Kelton',
     'Jacob',
     'Isiah',
-    'Lindsay',
-    'Kian',
-    'Jordyn',
     'Jaquan',
-    'Anya',
     'Wayne',
     'Khalil',
     'Adel',
     'Robert',
-    'Manami',
-    'Roy'
+    'Roy',
+    'Michael',
+    'Steven',
+    'Christopher',
+    'William',
+    'Ryan',
+    'Thomas',
+    'Edward',
+    'James',
+    'Jason',
+    'Kevin'
   ]
-  let name2 = [
+  let firstNameFemale = [
+    'Joyce',
+    'Juliette',
+    'Lindsay',
+    'Jordyn',
+    'Anya',
+    'Manami',
+    'Christine',
+    'Jessica',
+    'Sarah',
+    'Maria',
+    'Catherine',
+    'Samantha',
+    'Tina',
+    'Erica',
+    'Margaret',
+    'Meghan',
+    'Ashley'
+  ]
+  let lastName = [
     'Mills',
     'Mercer',
     'Reeves',
@@ -48,9 +70,14 @@ function generateName() {
     'Tessler',
     'Ueda'
   ]
-  let finalFirst = capFirst(name1[getRandomInt(name1.length)])
-  let finalLast = capFirst(name2[getRandomInt(name2.length)])
-  return [finalFirst, finalLast]
+  let firstName
+  if (gender === 'Male') {
+    firstName = capFirst(firstNameMale[getRandomInt(firstNameMale.length)])
+  } else {
+    firstName = capFirst(firstNameFemale[getRandomInt(firstNameFemale.length)])
+  }
+  let lastNameFinal = capFirst(lastName[getRandomInt(lastName.length)])
+  return [firstName, lastNameFinal]
 }
 
 function getRandomInt(max) {

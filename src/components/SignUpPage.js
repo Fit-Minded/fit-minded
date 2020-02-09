@@ -64,7 +64,6 @@ class SignUpPage extends Component {
 
   componentDidMount() {
     const viewType = this.props.match.path
-    console.log(viewType)
 
     if (viewType === '/signUpPage') {
       if (this.props.location.state) {
@@ -131,11 +130,10 @@ class SignUpPage extends Component {
     }
   }
 
-  handleRadiusChange(evt) {
-    // let miles = evt.x / 10
-    this.setState({
-      radius: evt.x
-    })
+  handleRadiusChange(value) {
+    // this.setState({
+    //   radius: evt.x
+    // })
   }
 
   handleActivityAdd(evt) {
@@ -167,7 +165,6 @@ class SignUpPage extends Component {
 
   render() {
     const viewType = this.props.match.path
-    console.log(this.state.radius)
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
@@ -233,14 +230,16 @@ class SignUpPage extends Component {
             />
           </div>
 
-          <div>
+          <div className="gender-own">
             <label htmlFor="genderOwn">Gender</label>
-            <input
-              type="text"
+            <select
               name="genderOwn"
               value={this.state.genderOwn}
               onChange={this.handleChange}
-            />
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
           <div>
             <label htmlFor="ageOwn">Age</label>
@@ -258,14 +257,16 @@ class SignUpPage extends Component {
           <div>
             <h2>My Preferences</h2>
           </div>
-          <div>
+          <div className="gender-own">
             <label htmlFor="genderPref">Gender Preference</label>
-            <input
-              type="text"
+            <select
               name="genderPref"
               value={this.state.genderPref}
               onChange={this.handleChange}
-            />
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
           <div>
             <label htmlFor="agePrefMin">Age Pref Min</label>
@@ -287,15 +288,15 @@ class SignUpPage extends Component {
           </div>
           <div>
             <label htmlFor="radius">Radius: {this.state.radius} Miles</label>
-            <input
+            {/* <input
               className="slider-input"
               type="range"
-              min="0"
-              max="5"
+              min="1"
+              max="10"
               value={this.state.radius}
-              onChange={this.handleChange}
-              step="1"
-            />
+              onChange={this.handleRadiusChange(this.value)}
+              step=".1"
+            /> */}
           </div>
           <div>
             <h2>My Activities</h2>
@@ -303,20 +304,35 @@ class SignUpPage extends Component {
 
           {this.state.activities.map((activity, index) => {
             return (
-              <div key={index}>
-                <h3>{activity}</h3>
-                <h3>Experience Level: Medium</h3>
+              <div key={index} className="sign-up-activity">
+                <div>
+                  <h2>{activity}</h2>
+                  <button type="button">X</button>
+                </div>
+                <div>
+                  <h3>Experience Level:</h3>
+                  <select>
+                    <option>Beginner</option>
+                  </select>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Add a description for this activity."
+                />
               </div>
             )
           })}
           <div>
             <label htmlFor="activity">Activity</label>
-            <input
-              type="text"
+            <select
               name="currentActivity"
               value={this.state.currentActivity}
               onChange={this.handleChange}
-            />
+            >
+              <option value="Running">Running</option>
+              <option value="Lifting">Lifting</option>
+              <option value="Yoga">Yoga</option>
+            </select>
             <button type="button" onClick={this.handleActivityAdd}>
               Add Activity
             </button>

@@ -9,7 +9,7 @@ const ProfileButtons = ({
   viewType
 }) => {
   return (
-    <div>
+    <>
       {viewType === '/' && (
         <div className="button-container">
           <button type="button" onClick={handleDislike}>
@@ -21,7 +21,7 @@ const ProfileButtons = ({
         </div>
       )}
 
-      {viewType === '/likedMe' && (
+      {viewType === '/likedMe/:index' && (
         <div className="button-container">
           <button type="button" onClick={handleDontMatch}>
             <i className="fas fa-thumbs-down"></i>
@@ -40,7 +40,7 @@ const ProfileButtons = ({
           <button type="button">PAUSE</button>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
