@@ -422,7 +422,18 @@ input.chbx-btn {
   color: white;
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
-
+#logout-btn {
+  width: 100%;
+}
+.edit-page-icon {
+  height: 35px;
+  width: 35px;
+  padding: 0px;
+  box-shadow: none;
+  margin-left: -5px;
+  margin-top: 15px;
+  border-radius: 5px;
+}
 /* LIST VIEW */
 
 .list-view h1 {

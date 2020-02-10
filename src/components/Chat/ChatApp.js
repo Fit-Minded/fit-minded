@@ -1,17 +1,17 @@
-import React from 'react'
-import { MessageList, SendMessageForm } from '../index'
-import Chatkit from '@pusher/chatkit-client'
-import { connect } from 'react-redux'
-import { instanceLocator, testToken } from '../../herokuPusherCredentials'
+import React from 'react';
+import { MessageList, SendMessageForm } from '../index';
+import Chatkit from '@pusher/chatkit-client';
+import { connect } from 'react-redux';
+import { instanceLocator, testToken } from '../../herokuPusherCredentials';
 
 class ChatApp extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       messages: []
-    }
+    };
 
-    this.sendMessage = this.sendMessage.bind(this)
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   componentDidMount() {
@@ -23,44 +23,43 @@ class ChatApp extends React.Component {
       tokenProvider: new Chatkit.TokenProvider({
         url: testToken
       })
-    })
+    });
 
-    const { roomId } = this.props.match.params
+    const { roomId } = this.props.match.params;
 
     chatManager.connect().then(currentUser => {
-      console.log('HELLO from connect', currentUser)
-      this.currentUser = currentUser
+      this.currentUser = currentUser;
       currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
           onMessage: message => {
             this.setState({
               messages: [...this.state.messages, message]
-            })
+            });
           }
         }
-      })
-    })
+      });
+    });
   }
 
   sendMessage(text) {
-    const { roomId } = this.props.match.params
+    const { roomId } = this.props.match.params;
     this.currentUser.sendMessage({
       text: text,
       roomId: roomId
-    })
+    });
   }
 
   render() {
     return (
-      <div className="chat-app">
-        <div className="chat-app-title">
+      <div className='chat-app'>
+        <div className='chat-app-title'>
           <h1>CHATROOM</h1>
         </div>
         <MessageList messages={this.state.messages} myId={this.props.me._id} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>
-    )
+    );
   }
 }
 
@@ -70,4 +69,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(ChatApp)
+export default connect(mapState)(ChatApp);
