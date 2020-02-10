@@ -6,7 +6,6 @@ const dbAddress =
     : 'mongodb://localhost:27017/fit-minded';
 
 const connect = () => {
-  console.log(dbAddress, 'the address is...........');
   return mongoose.connect(dbAddress, {
     useNewUrlParser: true,
     useUnifiedTopology: true

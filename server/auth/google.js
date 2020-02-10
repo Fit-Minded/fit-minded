@@ -30,12 +30,12 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   const strategy = new GoogleStrategy(
     googleConfig,
     (token, refreshToken, profile, done) => {
-      const googleId = profile.id;
+      // const googleId = profile.id;
       const email = profile.emails[0].value;
-      const firstName = profile.name.givenName;
-      const lastName = profile.name.familyName;
-      const address = 'default';
-      const phoneNumber = 'default';
+      // const firstName = profile.name.givenName;
+      // const lastName = profile.name.familyName;
+      // const address = 'default';
+      // const phoneNumber = 'default';
 
       User.find({ email: email })
         .exec()
@@ -54,7 +54,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   router.get(
     '/callback',
     passport.authenticate('google', {
-      successRedirect: 'http://localhost:3000/home',
+      successRedirect: 'http://localhost:5000/',
       failureRedirect: '/login'
     })
   );

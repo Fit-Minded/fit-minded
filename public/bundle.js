@@ -91178,7 +91178,7 @@ var ProfileButtons = function ProfileButtons(_ref) {
       handleDontMatch = _ref.handleDontMatch,
       logout = _ref.logout,
       viewType = _ref.viewType;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, viewType === '/' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, viewType === '/' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "button-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
@@ -91207,9 +91207,7 @@ var ProfileButtons = function ProfileButtons(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
     onClick: logout
-  }, "LOGOUT"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button"
-  }, "PAUSE")));
+  }, "LOGOUT")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ProfileButtons);
