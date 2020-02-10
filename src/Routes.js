@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
-import {
-  ListView,
-  SignUpPage,
-  ProfileView,
-  ChatApp,
-  LikedList
-} from './components';
+import { ListView, SignUpPage, ProfileView, ChatApp } from './components';
 import { me } from './store';
 
 class Routes extends Component {
