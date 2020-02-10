@@ -76,7 +76,6 @@ class ProfileView extends Component {
     const { user } = this.state;
     const { logout } = this.props;
     const viewType = this.props.match.path;
-    console.log(this.state);
 
     return (
       <div>

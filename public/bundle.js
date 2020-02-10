@@ -92460,7 +92460,6 @@ function (_React$Component) {
       });
       var roomId = this.props.match.params.roomId;
       chatManager.connect().then(function (currentUser) {
-        console.log('HELLO from connect', currentUser);
         _this2.currentUser = currentUser;
         currentUser.subscribeToRoom({
           roomId: roomId,
@@ -93137,6 +93136,7 @@ var ProfileButtons = function ProfileButtons(_ref) {
   }))), viewType === '/profile' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "logout-buttons"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    id: "logout-btn",
     type: "button",
     onClick: logout
   }, "LOGOUT")));
@@ -93176,7 +93176,6 @@ var ProfileInfo = function ProfileInfo(_ref) {
       imageURLs = user.imageURLs,
       neighborhood = user.neighborhood;
   var activityKeys = Object.keys(activities);
-  console.log(neighborhood);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "profile-view"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93301,7 +93300,6 @@ function (_Component) {
       var user = this.state.user;
       var logout = this.props.logout;
       var viewType = this.props.match.path;
-      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_4__["TransitionGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "loading-spinner"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93451,25 +93449,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 var defaultProfPic = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-var sliderStyles = {
-  track: {
-    backgroundColor: 'var(--medium-gray)',
-    width: 130,
-    padding: 0
-  },
-  active: {
-    backgroundColor: 'var(--highlight-blue)',
-    padding: 0,
-    marginLeft: -35
-  },
-  thumb: {
-    width: 20,
-    height: 20
-  },
-  disabled: {
-    opacity: 0.5
-  }
-};
 
 var SignUpPage =
 /*#__PURE__*/
@@ -93628,6 +93607,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var viewType = this.props.match.path;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "sign-up-page"
@@ -93756,9 +93737,12 @@ function (_Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: index,
           className: "sign-up-activity"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "edit-page-icon",
+          src: _this2.props.user.activities[activity].iconPath
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button"
-        }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Experience Level:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Experience:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Intermediate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Advanced"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
           placeholder: "Add a description for this activity."
         }));
@@ -93774,7 +93758,17 @@ function (_Component) {
         value: "Lifting"
       }, "Lifting"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Yoga"
-      }, "Yoga")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Yoga"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Swimming"
+      }, "Swimming"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "CrossFit"
+      }, "CrossFit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "RockClimbing"
+      }, "RockClimbing"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Cycling"
+      }, "Cycling"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Gymnastics"
+      }, "Gymnastics")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.handleActivityAdd
       }, "Add Activity")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
