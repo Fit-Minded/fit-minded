@@ -10,5 +10,6 @@ export { default as MapContainer } from './MapContainer'
 export { default as ChatApp } from './Chat/ChatApp'
 export { default as MessageList } from './Chat/MessageList'
 export { default as SendMessageForm } from './Chat/SendMessageForm'
+export { default as Carousel } from './Carousel'
 
 export { Login, Signup } from './AuthForm'
