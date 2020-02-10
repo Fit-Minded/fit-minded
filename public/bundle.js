@@ -90864,7 +90864,13 @@ function (_Component) {
           });
         })));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "No Matches Yet");
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "list-no-results"
+        }, viewType === '/matches' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "no-results-emojis"
+        }, "\uD83E\uDD37"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "No Matches Yet")), viewType === '/likedMe' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "no-results-emojis"
+        }, "\uD83E\uDD37"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "No Likes Yet")));
       }
     }
   }], [{
@@ -91239,8 +91245,10 @@ var ProfileInfo = function ProfileInfo(_ref) {
       age = user.age,
       gender = user.gender,
       activities = user.activities,
-      imageURLs = user.imageURLs;
-  activities = Object.keys(activities);
+      imageURLs = user.imageURLs,
+      neighborhood = user.neighborhood;
+  var activityKeys = Object.keys(activities);
+  console.log(neighborhood);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "profile-view"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -91254,13 +91262,13 @@ var ProfileInfo = function ProfileInfo(_ref) {
     alt: "profile-pic"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "profile-info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, age.own), " |", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, gender.own), " |", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Union Square")), activities.map(function (activity, index) {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, age.own), " |", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, gender.own), " |", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, neighborhood)), activityKeys.map(function (activityName, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "activity",
       key: index
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "activity-header"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Intermediate")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder description text about activity. The quick brown fox jumps over the sleeping dog.")));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activityName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, activities[activityName].experience)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder description text about activity. The quick brown fox jumps over the sleeping dog.")));
   }));
 };
 

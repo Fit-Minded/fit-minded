@@ -21,7 +21,8 @@ router.get('/toJudge', protect, async (req, res, next) => {
           'firstName',
           'lastName',
           'activities',
-          'imageURLs'
+          'imageURLs',
+          'neighborhood'
         ]).exec()
         usersToJudge.push(currentUser)
       }
@@ -44,7 +45,8 @@ router.get('/likedMe', protect, async (req, res, next) => {
         'firstName',
         'lastName',
         'activities',
-        'imageURLs'
+        'imageURLs',
+        'neighborhood'
       ]).exec()
       usersWhoLikedMe.push(currentUser)
     }
@@ -66,7 +68,8 @@ router.get('/matches', protect, async (req, res, next) => {
         'firstName',
         'lastName',
         'activities',
-        'imageURLs'
+        'imageURLs',
+        'neighborhood'
       ]).exec()
       matches.push(currentUser)
     }

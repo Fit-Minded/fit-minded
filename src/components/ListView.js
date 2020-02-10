@@ -70,7 +70,22 @@ class ListView extends Component {
         </div>
       )
     } else {
-      return <div>No Matches Yet</div>
+      return (
+        <div className="list-no-results">
+          {viewType === '/matches' && (
+            <div>
+              <h1 className="no-results-emojis">🤷</h1>
+              <h1>No Matches Yet</h1>
+            </div>
+          )}
+          {viewType === '/likedMe' && (
+            <div>
+              <h1 className="no-results-emojis">🤷</h1>
+              <h1>No Likes Yet</h1>
+            </div>
+          )}
+        </div>
+      )
     }
   }
 }

@@ -59,6 +59,10 @@ const user = new mongoose.Schema(
         required: true
       }
     },
+    neighborhood: {
+      type: String,
+      default: 'Chelsea'
+    },
     radius: {
       type: Number,
       required: true
