@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm'
-import { ListView, SignUpPage, ProfileView, ChatApp } from './components'
+import {
+  ListView,
+  SignUpPage,
+  ProfileView,
+  ChatApp,
+  MapContainer
+} from './components'
 import { me } from './store'
 
 class Routes extends Component {
@@ -24,6 +30,7 @@ class Routes extends Component {
             <Route exact path="/likedMe/:index" component={ProfileView} />
             <Route exact path="/profile" component={ProfileView} />
             <Route exact path="/profile/update" component={SignUpPage} />
+            <Route exact path="/profile/update/map" component={MapContainer} />
           </Switch>
         ) : (
           <Switch>

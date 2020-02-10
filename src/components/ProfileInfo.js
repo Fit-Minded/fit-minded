@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { CSSTransitions, TransitionGroup } from 'react-transition-group'
+import { Carousel } from './'
 
 const ProfileInfo = ({ user, viewType }) => {
   var {
@@ -23,29 +24,30 @@ const ProfileInfo = ({ user, viewType }) => {
 
         {viewType === '/profile' && (
           <Link to="/profile/update">
-            <i className="fas fa-user"></i>
+            <i className="fas fa-user" id="user-profile-icon"></i>
           </Link>
         )}
       </div>
 
-      <img src={imageURLs[0]} alt="profile-pic" />
+      <div id="carousel-div">
+        <Carousel imageURLs={imageURLs} />
+      </div>
 
-      <div className="profile-info">
+      <div className="profile-info" id="profile-view-div">
         <h3>{age.own}</h3> |<h3>{gender.own}</h3> |<h3>{neighborhood}</h3>
       </div>
 
       {activityKeys.map((activityName, index) => {
+        const currentActivity = activities[activityName]
         return (
-          <div className="activity" key={index}>
+          <div className="activity" key={index} id="profile-view-div">
             <div className="activity-header">
+              <img src={currentActivity.iconPath}></img>
               <h3>{activityName}</h3>
-              <h3>{activities[activityName].experience}</h3>
+              <h3>{currentActivity.experience}</h3>
             </div>
             <div>
-              <p>
-                Placeholder description text about activity. The quick brown fox
-                jumps over the sleeping dog.
-              </p>
+              <p>{currentActivity.description}</p>
             </div>
           </div>
         )

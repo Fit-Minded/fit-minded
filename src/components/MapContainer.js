@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Map, GoogleApiWrapper } from 'google-maps-react'
+import { Link } from 'react-router-dom'
 
 const mapStyles = {
-  height: '150px',
+  height: '400px',
+  width: '80vw',
   borderRadius: '10px',
-  left: '-5vw',
-  top: '-25px',
-  width: '80vw'
-  // position: 'realtive'
+  margin: '10vw'
 }
 
 class MapContainer extends Component {
@@ -27,13 +26,19 @@ class MapContainer extends Component {
 
   render() {
     return (
-      <Map
-        google={this.props.google}
-        onDragend={this.centerMoved}
-        zoom={12}
-        style={mapStyles}
-        initialCenter={{ lat: 40.71, lng: -73.995 }}
-      />
+      <div id="map-container">
+        <h1>Set My Location</h1>
+        <Map
+          google={this.props.google}
+          onDragend={this.centerMoved}
+          zoom={12}
+          style={mapStyles}
+          initialCenter={{ lat: 40.71, lng: -73.995 }}
+        />
+        <Link to="/profile/update">
+          <button type="button">Confirm</button>
+        </Link>
+      </div>
     )
   }
 }
