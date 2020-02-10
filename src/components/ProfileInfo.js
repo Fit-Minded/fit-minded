@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom'
 import { CSSTransitions, TransitionGroup } from 'react-transition-group'
 
 const ProfileInfo = ({ user, viewType }) => {
-  var { firstName, lastName, age, gender, activities, imageURLs } = user
-  activities = Object.keys(activities)
-
+  var {
+    firstName,
+    lastName,
+    age,
+    gender,
+    activities,
+    imageURLs,
+    neighborhood
+  } = user
+  const activityKeys = Object.keys(activities)
+  console.log(neighborhood)
   return (
     <div className="profile-view">
       <div className="profile-name">
@@ -23,15 +31,15 @@ const ProfileInfo = ({ user, viewType }) => {
       <img src={imageURLs[0]} alt="profile-pic" />
 
       <div className="profile-info">
-        <h3>{age.own}</h3> |<h3>{gender.own}</h3> |<h3>Union Square</h3>
+        <h3>{age.own}</h3> |<h3>{gender.own}</h3> |<h3>{neighborhood}</h3>
       </div>
 
-      {activities.map((activity, index) => {
+      {activityKeys.map((activityName, index) => {
         return (
           <div className="activity" key={index}>
             <div className="activity-header">
-              <h3>{activity}</h3>
-              <h3>Intermediate</h3>
+              <h3>{activityName}</h3>
+              <h3>{activities[activityName].experience}</h3>
             </div>
             <div>
               <p>

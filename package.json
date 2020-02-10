@@ -73,7 +73,7 @@
     "start": "npm run start-server",
     "dev": "NODE_ENV='development' npm run start-dev-server & NODE_ENV='development' npm run build-client-watch",
     "seed": "node script/seed.js",
-    "build": "node scripts/build.js",
+    "build-client": "webpack",
     "test": "node scripts/test.js"
   },
   "devDependencies": {

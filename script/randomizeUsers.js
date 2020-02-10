@@ -94,15 +94,48 @@ const negOrPos = {
   1: 1
 }
 
+const neighborhoods = {
+  0: 'Union Square',
+  1: 'Chelsea',
+  2: 'Greenwich Village',
+  3: 'Hudson Yards',
+  4: 'Williamsburg',
+  5: 'Green Point',
+  6: 'Harlem',
+  7: 'East Village',
+  8: 'Lower East Side',
+  9: 'Upper West Side',
+  10: 'Astoria'
+}
+
+const activities = {
+  0: 'Running',
+  1: 'Lifting',
+  2: 'Yoga',
+  3: 'CrossFit',
+  4: 'RockClimbing',
+  5: 'Cycling',
+  6: 'Swimming',
+  7: 'Gymnastics'
+}
+
+const experienceLevels = {
+  0: 'Beginner',
+  1: 'Intermediate',
+  2: 'Advanced'
+}
+
 const calcRandAct = () => {
-  let possibleActivites = ['Running', 'Lifting', 'Yoga']
-  let activities = {}
-  let numOfActivites = getRandomInt(4)
+  let userActivities = {}
+  let numOfActivites = getRandomInt(3)
   for (let i = 0; i <= numOfActivites; i++) {
-    let activityName = possibleActivites[getRandomInt(3)]
-    activities[activityName] = true
+    let activityName = activities[getRandomInt(8)]
+    userActivities[activityName] = {
+      experience: experienceLevels[getRandomInt(3)],
+      iconPath: `/ActivityIcons/${activityName}.png`
+    }
   }
-  return activities
+  return userActivities
 }
 
 for (let i = 0; i < 1000; i++) {
@@ -116,9 +149,10 @@ for (let i = 0; i < 1000; i++) {
     -73.995 +
     (getRandomInt(150) * negOrPos[getRandomInt(2)]) / 10000
   ).toFixed(3)
+  let gender = genders[getRandomInt(2)]
 
   let user = {
-    firstName: generateName()[0],
+    firstName: generateName(gender)[0],
     lastName: generateName()[1],
     imageURLs: [],
     email: `test${i}@test.com`,
@@ -138,6 +172,7 @@ for (let i = 0; i < 1000; i++) {
       type: 'Point',
       coordinates: [longitude, latitude]
     },
+    neighborhood: neighborhoods[getRandomInt(11)],
     radius: (getRandomInt(50) + 10) / 10,
     activities: calcRandAct()
     // lastLogin: new Date()

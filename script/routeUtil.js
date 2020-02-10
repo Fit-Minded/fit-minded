@@ -251,7 +251,8 @@ async function getToJudgeFromPool(user) {
       'firstName',
       'lastName',
       'activities',
-      'imageURLs'
+      'imageURLs',
+      'neighborhood'
     ]).exec()
     usersToJudge.push(currentUser)
   }

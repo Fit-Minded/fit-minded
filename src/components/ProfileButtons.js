@@ -9,7 +9,7 @@ const ProfileButtons = ({
   viewType
 }) => {
   return (
-    <>
+    <div>
       {viewType === '/' && (
         <div className="button-container">
           <button type="button" onClick={handleDislike}>
@@ -40,7 +40,7 @@ const ProfileButtons = ({
           <button type="button">PAUSE</button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
