@@ -1,5 +1,5 @@
-const User = require('../server/db/schemas/user')
-const { calcDistance } = require('./generalUtil')
+const User = require('../server/db/schemas/user');
+const { calcDistance } = require('./generalUtil');
 
 function configSignUpStateData(state) {
   const {
@@ -17,12 +17,12 @@ function configSignUpStateData(state) {
     latitude,
     radius,
     activities
-  } = state
+  } = state;
 
-  const activitiesObj = {}
-  activities.forEach(activity => (activitiesObj[activity] = true))
+  const activitiesObj = {};
+  activities.forEach(activity => (activitiesObj[activity] = true));
 
-  const imageURLsStrings = imageURLs.map(object => object.url)
+  const imageURLsStrings = imageURLs.map(object => object.url);
 
   const newUserData = {
     email,
@@ -47,8 +47,8 @@ function configSignUpStateData(state) {
     },
     radius: Number(radius),
     activities: activitiesObj
-  }
-  return newUserData
+  };
+  return newUserData;
 }
 
 function getQueryData(user) {
@@ -66,14 +66,14 @@ function getQueryData(user) {
     matches,
     toJudge,
     _id
-  } = user
+  } = user;
   const ownGender = gender.own,
-    prefGender = gender.preferred
+    prefGender = gender.preferred;
   const ownAge = age.own,
-    prefAge = [age.preferred.min, age.preferred.max]
-  const coordinates = location.coordinates
-  activities = Object.keys(activities)
-  radius = radius * 1609.34
+    prefAge = [age.preferred.min, age.preferred.max];
+  const coordinates = location.coordinates;
+  activities = Object.keys(activities);
+  radius = radius * 1609.34;
   const queryData = {
     ownGender,
     prefGender,
@@ -90,8 +90,8 @@ function getQueryData(user) {
     matches,
     toJudge,
     _id
-  }
-  return queryData
+  };
+  return queryData;
 }
 
 async function generatePool(queryData) {
@@ -111,9 +111,9 @@ async function generatePool(queryData) {
     matches,
     toJudge,
     _id
-  } = queryData
+  } = queryData;
 
-  let pool
+  let pool;
 
   // if lastLogin is not null we are REFRESHING the pool
   if (lastLogin) {
@@ -150,10 +150,10 @@ async function generatePool(queryData) {
           }
         }
       })
-      .exec()
+      .exec();
 
     pool = pool.filter(user => {
-      let userId = user._id
+      let userId = user._id;
       if (
         toJudge.includes(userId) ||
         liked.get(userId) ||
@@ -162,11 +162,11 @@ async function generatePool(queryData) {
         dislikedMe.get(userId) ||
         matches.get(userId)
       ) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
-    })
+    });
   } else {
     pool = await User.find({
       _id: {
@@ -195,7 +195,7 @@ async function generatePool(queryData) {
           }
         }
       }
-    }).exec()
+    }).exec();
   }
 
   pool = pool
@@ -208,41 +208,39 @@ async function generatePool(queryData) {
           user.location.coordinates[1],
           user.location.coordinates[0]
         )
-      )
+      );
     })
     .filter(user => {
       for (let i = 0; i < activities.length; i++) {
         if (user.activities[activities[i]]) {
-          return true
+          return true;
         }
       }
-      return false
-    })
+      return false;
+    });
 
-  // console.log(`Number of results: ${pool.length}`)
+  const idMap = {};
 
-  const idMap = {}
+  pool = pool.forEach(user => (idMap[user._id] = true));
 
-  pool = pool.forEach(user => (idMap[user._id] = true))
-
-  return idMap
+  return idMap;
 }
 
 async function getToJudgeFromPool(user) {
   let poolKeys = [],
-    usersToJudge = []
-  let count = 0
+    usersToJudge = [];
+  let count = 0;
   for (let [key, value] of user.pool) {
-    user.pool.delete(key)
-    poolKeys.push(key)
-    count++
+    user.pool.delete(key);
+    poolKeys.push(key);
+    count++;
     if (count === 10) {
-      break
+      break;
     }
   }
 
-  user.toJudge = poolKeys
-  await user.save()
+  user.toJudge = poolKeys;
+  await user.save();
 
   for (let i = 0; i < 10; i++) {
     let currentUser = await User.findById(poolKeys[i], [
@@ -253,10 +251,10 @@ async function getToJudgeFromPool(user) {
       'activities',
       'imageURLs',
       'neighborhood'
-    ]).exec()
-    usersToJudge.push(currentUser)
+    ]).exec();
+    usersToJudge.push(currentUser);
   }
-  return usersToJudge
+  return usersToJudge;
 }
 
 module.exports = {
@@ -264,4 +262,4 @@ module.exports = {
   generatePool,
   getToJudgeFromPool,
   configSignUpStateData
-}
+};
