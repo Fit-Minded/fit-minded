@@ -37,7 +37,6 @@ const ProfileButtons = ({
           <button type="button" onClick={logout}>
             LOGOUT
           </button>
-          <button type="button">PAUSE</button>
         </div>
       )}
     </div>

@@ -62,7 +62,12 @@
     "terser-webpack-plugin": "2.2.1",
     "ts-pnp": "1.1.5",
     "url-loader": "2.3.0",
+    "webpack-dev-server": "^3.10.3",
     "workbox-webpack-plugin": "4.3.1"
+  },
+  "engines": {
+    "node": "10.x",
+    "npm": "6.x"
   },
   "scripts": {
     "build-client-watch": "webpack -w",
@@ -73,8 +78,7 @@
     "start": "npm run start-server",
     "dev": "NODE_ENV='development' npm run start-dev-server & NODE_ENV='development' npm run build-client-watch",
     "seed": "node script/seed.js",
-    "build-client": "webpack",
-    "test": "node scripts/test.js"
+    "build-client": "webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
