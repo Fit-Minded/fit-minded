@@ -72,7 +72,6 @@ function getQueryData(user) {
   const ownAge = age.own,
     prefAge = [age.preferred.min, age.preferred.max]
   const coordinates = location.coordinates
-  activities = Object.keys(activities)
   radius = radius * 1609.34
   const queryData = {
     ownGender,
@@ -112,6 +111,8 @@ async function generatePool(queryData) {
     toJudge,
     _id
   } = queryData
+
+  const activityKeys = Object.keys(activities)
 
   let pool
 
@@ -199,27 +200,29 @@ async function generatePool(queryData) {
   }
 
   pool = pool
-    .filter(user => {
+    .filter(otherUser => {
       return (
-        user.radius >=
+        otherUser.radius >=
         calcDistance(
           40.725,
           -73.995,
-          user.location.coordinates[1],
-          user.location.coordinates[0]
+          otherUser.location.coordinates[1],
+          otherUser.location.coordinates[0]
         )
       )
     })
-    .filter(user => {
-      for (let i = 0; i < activities.length; i++) {
-        if (user.activities[activities[i]]) {
+    .filter(otherUser => {
+      for (let i = 0; i < activityKeys.length; i++) {
+        if (
+          otherUser.activities[activityKeys[i]] &&
+          otherUser.activities[activityKeys[i]].experience ===
+            activities[activityKeys[i]].experience
+        ) {
           return true
         }
       }
       return false
     })
-
-  // console.log(`Number of results: ${pool.length}`)
 
   const idMap = {}
 

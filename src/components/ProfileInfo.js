@@ -4,6 +4,7 @@ import { CSSTransitions, TransitionGroup } from 'react-transition-group'
 import { Carousel } from './'
 
 const ProfileInfo = ({ user, viewType }) => {
+  console.log(user)
   var {
     firstName,
     lastName,
@@ -14,7 +15,6 @@ const ProfileInfo = ({ user, viewType }) => {
     neighborhood
   } = user
   const activityKeys = Object.keys(activities)
-  console.log(neighborhood)
   return (
     <div className="profile-view">
       <div className="profile-name">

@@ -1,5 +1,6 @@
 import axios from 'axios'
-// import history from '../history';
+import history from '../history'
+import { me } from './user'
 
 const GOT_LIKED_ME = 'GOT_LIKED_ME'
 const GOT_TO_JUDGE = 'GOT_TO_JUDGE'
@@ -54,8 +55,12 @@ export const makeDecision = (decisionType, otherUserId) => async dispatch => {
     }
     if (decisionType === 'match' || decisionType === 'dontMatch') {
       dispatch(matchedOrDidntMatch())
+      dispatch(me())
+      history.push('/likedMe')
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export default function(state = defaultPool, action) {

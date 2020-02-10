@@ -92450,7 +92450,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var userId = this.props.user._id;
+      var userId = this.props.me._id;
       var chatManager = new _pusher_chatkit_client__WEBPACK_IMPORTED_MODULE_2___default.a.ChatManager({
         instanceLocator: _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__["instanceLocator"],
         userId: userId,
@@ -92491,7 +92491,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat-app-title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "CHATROOM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["MessageList"], {
-        messages: this.state.messages
+        messages: this.state.messages,
+        myId: this.props.me._id
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["SendMessageForm"], {
         sendMessage: this.sendMessage
       }));
@@ -92503,7 +92504,7 @@ function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    user: state.user
+    me: state.user
   };
 };
 
@@ -92556,14 +92557,30 @@ function (_React$Component) {
   _createClass(MessageList, [{
     key: "render",
     value: function render() {
+      var myId = this.props.myId;
+      var prevMesSenderId;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-list"
       }, this.props.messages.map(function (message) {
+        console.log(message);
         var senderName = message.userStore.users[message.senderId].name;
+        var messageClassName = 'single-message-from-them';
+
+        if (message.senderId === myId) {
+          messageClassName = 'single-message-from-me';
+        }
+
+        if (prevMesSenderId === message.senderId) {
+          var isSameUser = true;
+        } else {
+          var isSameUser = false;
+        }
+
+        prevMesSenderId = message.senderId;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: message.id,
-          className: "single-message"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: messageClassName
+        }, !isSameUser && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "message-sender"
         }, senderName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "message-text"
@@ -93168,6 +93185,7 @@ __webpack_require__.r(__webpack_exports__);
 var ProfileInfo = function ProfileInfo(_ref) {
   var user = _ref.user,
       viewType = _ref.viewType;
+  console.log(user);
   var firstName = user.firstName,
       lastName = user.lastName,
       age = user.age,
@@ -93176,7 +93194,6 @@ var ProfileInfo = function ProfileInfo(_ref) {
       imageURLs = user.imageURLs,
       neighborhood = user.neighborhood;
   var activityKeys = Object.keys(activities);
-  console.log(neighborhood);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "profile-view"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93301,7 +93318,6 @@ function (_Component) {
       var user = this.state.user;
       var logout = this.props.logout;
       var viewType = this.props.match.path;
-      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_transition_group__WEBPACK_IMPORTED_MODULE_4__["TransitionGroup"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "loading-spinner"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93338,15 +93354,11 @@ function (_Component) {
         };
       }
 
-      if (viewType.split('/')[0] === '/likedMe') {
-        var index = this.props.match.params.index;
+      if (viewType === '/likedMe/:index') {
+        var index = props.match.params.index;
 
         if (!props.likedMe.length && state.user) {
           props.getLikedMe();
-        }
-
-        if (props.likedMe) {
-          console.log(props.likedMe);
         }
 
         return {
@@ -94065,6 +94077,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "makeDecision", function() { return makeDecision; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../history */ "./src/history.js");
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user */ "./src/store/user.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -94083,7 +94097,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
- // import history from '../history';
+
+
 
 var GOT_LIKED_ME = 'GOT_LIKED_ME';
 var GOT_TO_JUDGE = 'GOT_TO_JUDGE';
@@ -94283,16 +94298,19 @@ var makeDecision = function makeDecision(decisionType, otherUserId) {
 
                 if (decisionType === 'match' || decisionType === 'dontMatch') {
                   dispatch(matchedOrDidntMatch());
+                  dispatch(Object(_user__WEBPACK_IMPORTED_MODULE_2__["me"])());
+                  _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/likedMe');
                 }
 
-                _context4.next = 9;
+                _context4.next = 10;
                 break;
 
               case 7:
                 _context4.prev = 7;
                 _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
 
-              case 9:
+              case 10:
               case "end":
                 return _context4.stop();
             }

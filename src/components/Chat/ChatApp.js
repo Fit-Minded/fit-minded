@@ -15,7 +15,7 @@ class ChatApp extends React.Component {
   }
 
   componentDidMount() {
-    const userId = this.props.user._id
+    const userId = this.props.me._id
 
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
@@ -57,7 +57,7 @@ class ChatApp extends React.Component {
         <div className="chat-app-title">
           <h1>CHATROOM</h1>
         </div>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} myId={this.props.me._id} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>
     )
@@ -66,7 +66,7 @@ class ChatApp extends React.Component {
 
 const mapState = state => {
   return {
-    user: state.user
+    me: state.user
   }
 }
 
