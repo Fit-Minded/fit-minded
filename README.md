@@ -60,3 +60,13 @@ Back-end: we decided to use Express, MongoDB, and Mongoose. The idea of using a 
 Front-end: we used React, and Redux.
 
 API's: we used the Pusher API that creates a chatroom for users who end up matching with each other. This is a chat API that helped streamline how our chatrooms are created and rendered. We also used the Google Maps API for users to set their location and determine the distance and radius of other users. This lets them set their distance preferences instead of filtering them all of the users regardless of their location.
+
+
+### Available Scripts
+
+In the project directory, you can run:
+
+### `npm run dev`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
