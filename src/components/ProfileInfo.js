@@ -4,6 +4,8 @@ import { CSSTransitions, TransitionGroup } from 'react-transition-group'
 import { Carousel } from './'
 
 const ProfileInfo = ({ user, viewType }) => {
+  console.log("user", user)
+
   var {
     firstName,
     lastName,

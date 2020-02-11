@@ -2,6 +2,7 @@ import React from 'react'
 
 class MessageList extends React.Component {
   render() {
+    console.log("this.props - messagelist", this.props)
     return (
       <div className="message-list">
         {this.props.messages.map(message => {

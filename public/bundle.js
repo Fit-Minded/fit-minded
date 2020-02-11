@@ -82712,7 +82712,7 @@ exports.Thumbs = _Thumbs2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92477,6 +92477,7 @@ function (_React$Component) {
   }, {
     key: "sendMessage",
     value: function sendMessage(text) {
+      console.log("this.currentUser", this.currentUser);
       var roomId = this.props.match.params.roomId;
       this.currentUser.sendMessage({
         text: text,
@@ -92556,6 +92557,7 @@ function (_React$Component) {
   _createClass(MessageList, [{
     key: "render",
     value: function render() {
+      console.log("this.props - messagelist", this.props);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-list"
       }, this.props.messages.map(function (message) {
@@ -93168,6 +93170,7 @@ __webpack_require__.r(__webpack_exports__);
 var ProfileInfo = function ProfileInfo(_ref) {
   var user = _ref.user,
       viewType = _ref.viewType;
+  console.log("user", user);
   var firstName = user.firstName,
       lastName = user.lastName,
       age = user.age,

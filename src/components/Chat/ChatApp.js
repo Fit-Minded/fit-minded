@@ -44,6 +44,7 @@ class ChatApp extends React.Component {
   }
 
   sendMessage(text) {
+    console.log("this.currentUser", this.currentUser)
     const { roomId } = this.props.match.params
     this.currentUser.sendMessage({
       text: text,
