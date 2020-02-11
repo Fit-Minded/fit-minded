@@ -151,7 +151,7 @@ const calcRandAct = () => {
   return userActivities
 }
 
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < 1000; i++) {
   let minAge = getRandomInt(15) + 18
   let maxAge = minAge + getRandomInt(15) + 1
   let latitude = (

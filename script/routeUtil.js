@@ -262,9 +262,21 @@ async function getToJudgeFromPool(user) {
   return usersToJudge
 }
 
+const activitiesInCommon = (user, otherUser) => {
+  var activities = []
+  var keys = Object.keys(user.activities)
+  for (let i = 0; i < keys.length; i++) {
+    if (otherUser.activities[keys[i]]) {
+      activities.push(keys[i])
+    }
+  }
+  return activities
+}
+
 module.exports = {
   getQueryData,
   generatePool,
   getToJudgeFromPool,
-  configSignUpStateData
+  configSignUpStateData,
+  activitiesInCommon
 }
