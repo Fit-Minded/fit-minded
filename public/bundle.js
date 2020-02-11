@@ -92484,6 +92484,10 @@ function (_Component) {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["ChatApp"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
+        path: "/chat/:roomId/map",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["MapContainer"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
         path: "/likedMe",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["ListView"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
@@ -92792,6 +92796,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../herokuPusherCredentials */ "./src/herokuPusherCredentials.js");
 /* harmony import */ var _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -92817,6 +92822,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -92882,11 +92888,26 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var roomId = this.props.match.params.roomId;
+      var activities = this.props.location.state.matchObject.activities;
+      var longitude = this.props.location.state.matchObject.location[0],
+          latitude = this.props.location.state.matchObject.location[1];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat-app"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat-app-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "CHATROOM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["MessageList"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "CHATROOM"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+        to: {
+          pathname: "/chat/".concat(roomId, "/map"),
+          state: {
+            latitude: latitude,
+            longitude: longitude,
+            activities: activities
+          }
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-map-marked-alt"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["MessageList"], {
         messages: this.state.messages,
         myId: this.props.me._id
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_index__WEBPACK_IMPORTED_MODULE_1__["SendMessageForm"], {
@@ -93281,6 +93302,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! google-maps-react */ "./node_modules/google-maps-react/dist/index.js");
 /* harmony import */ var google_maps_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(google_maps_react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _SignUpPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SignUpPage */ "./src/components/SignUpPage.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -93299,14 +93321,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/*global google*/
+
 
 
 
 var mapStyles = {
-  height: '400px',
-  width: '80vw',
-  borderRadius: '10px',
-  margin: '10vw'
+  height: '100%',
+  width: '100vw'
 };
 
 var MapContainer =
@@ -93314,44 +93338,162 @@ var MapContainer =
 function (_Component) {
   _inherits(MapContainer, _Component);
 
-  function MapContainer(props) {
+  function MapContainer(_props) {
     var _this;
 
     _classCallCheck(this, MapContainer);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MapContainer).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MapContainer).call(this, _props));
+
+    _defineProperty(_assertThisInitialized(_this), "onMarkerClick", function (props, marker, e) {
+      _this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        showingInfoWindow: true
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onMapClicked", function (props) {
+      if (_this.state.showingInfoWindow) {
+        _this.setState({
+          showingInfoWindow: false,
+          activeMarker: null
+        });
+      }
+    });
+
+    _this.state = {
+      latitude: 0,
+      longitude: 0,
+      places: [],
+      selectedPlace: {},
+      activeMarker: {},
+      showingInfoWindow: false
+    };
+    _this.fetchPlaces = _this.fetchPlaces.bind(_assertThisInitialized(_this));
     _this.centerMoved = _this.centerMoved.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(MapContainer, [{
+    key: "fetchPlaces",
+    value: function fetchPlaces(mapProps, map) {
+      var _this2 = this;
+
+      var google = mapProps.google,
+          activities = mapProps.activities,
+          initialCenter = mapProps.initialCenter;
+      var lat = initialCenter.lat,
+          lng = initialCenter.lng;
+      var service = new google.maps.places.PlacesService(map);
+      console.log(lat, lng);
+      var request = {
+        location: new google.maps.LatLng(lat, lng),
+        radius: '4000',
+        query: activities[0]
+      };
+
+      var callback = function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          var places = [];
+
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            places.push(place);
+          }
+
+          _this2.setState({
+            places: places
+          });
+        }
+      };
+
+      service.textSearch(request, callback);
+    }
+  }, {
     key: "centerMoved",
     value: function centerMoved(mapProps, map) {
-      var handleMapMove = this.props.handleMapMove;
       var center = map.getCenter().toJSON();
       var longitude = Number(center.lng.toFixed(3));
       var latitude = Number(center.lat.toFixed(3));
-      handleMapMove(longitude, latitude);
+      this.setState({
+        latitude: latitude,
+        longitude: longitude
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "map-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Set My Location"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Map"], {
-        google: this.props.google,
-        onDragend: this.centerMoved,
-        zoom: 12,
-        style: mapStyles,
-        initialCenter: {
-          lat: 40.71,
-          lng: -73.995
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-        to: "/profile/update"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button"
-      }, "Confirm")));
+      var _this3 = this;
+
+      var _this$props$location$ = this.props.location.state,
+          latitude = _this$props$location$.latitude,
+          longitude = _this$props$location$.longitude;
+      console.log(latitude, longitude);
+      var viewType = this.props.match.path;
+
+      if (viewType === '/profile/update/map') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "map-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-map-pin"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Map"], {
+          google: this.props.google,
+          onDragend: this.centerMoved,
+          zoom: 14,
+          style: mapStyles,
+          initialCenter: {
+            lat: latitude,
+            lng: longitude
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: {
+            pathname: '/profile/update',
+            state: {
+              latitude: this.state.latitude,
+              longitude: this.state.longitude
+            }
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "Confirm")));
+      }
+
+      if (viewType === '/chat/:roomId/map') {
+        var activities = this.props.location.state.activities;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "map-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-map-pin"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Map"], {
+          google: this.props.google,
+          onReady: this.fetchPlaces,
+          activities: activities,
+          zoom: 14,
+          style: mapStyles,
+          keyword: this.state.keyword,
+          initialCenter: {
+            lat: latitude,
+            lng: longitude
+          },
+          onClick: this.onMapClicked
+        }, this.state.places.map(function (place, index) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Marker"], {
+            key: index,
+            name: place.name,
+            address: place.formatted_address,
+            position: {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng()
+            },
+            animation: google.maps.Animation.DROP,
+            onClick: _this3.onMarkerClick
+          });
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["InfoWindow"], {
+          marker: this.state.activeMarker,
+          visible: this.state.showingInfoWindow
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.state.selectedPlace.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.selectedPlace.address)))));
+      }
     }
   }]);
 
@@ -93383,9 +93525,15 @@ var MatchListItem = function MatchListItem(_ref) {
   var user = _ref.user,
       me = _ref.me;
   var otherUserId = user._id;
-  var roomId = me.matches[otherUserId];
+  var roomId = me.matches[otherUserId].roomId;
+  var matchObject = me.matches[otherUserId];
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/chat/".concat(roomId)
+    to: {
+      pathname: "/chat/".concat(roomId),
+      state: {
+        matchObject: matchObject
+      }
+    }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "list-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -93442,6 +93590,12 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+var badgeStyles = {
+  right: '-15px',
+  background: '#7232bd',
+  color: 'var(--light-gray)',
+  borderRadius: '50%'
+};
 
 var Navbar =
 /*#__PURE__*/
@@ -93468,14 +93622,16 @@ function (_Component) {
         to: "/likedMe"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
         count: 4,
-        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE
+        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
+        style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-smile"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
         count: 8,
-        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].ROTATE_Y
+        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].ROTATE_Y,
+        style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-link"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -93592,7 +93748,6 @@ __webpack_require__.r(__webpack_exports__);
 var ProfileInfo = function ProfileInfo(_ref) {
   var user = _ref.user,
       viewType = _ref.viewType;
-  console.log(user);
   var firstName = user.firstName,
       lastName = user.lastName,
       age = user.age,
@@ -93906,7 +94061,6 @@ function (_Component) {
     _this.setImagePreview = _this.setImagePreview.bind(_assertThisInitialized(_this));
     _this.handleActivityAdd = _this.handleActivityAdd.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
-    _this.handleMapMove = _this.handleMapMove.bind(_assertThisInitialized(_this));
     _this.handleRadiusChange = _this.handleRadiusChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -93953,12 +94107,25 @@ function (_Component) {
           agePrefMax: age.preferred.max,
           genderOwn: gender.own,
           genderPref: gender.preferred,
-          longitude: location.coordinates[0],
-          latitude: location.coordinates[1],
           radius: radius,
           currentActivity: '',
           activities: activities
         });
+
+        if (this.props.location.state) {
+          var _this$props$location$2 = this.props.location.state,
+              latitude = _this$props$location$2.latitude,
+              longitude = _this$props$location$2.longitude;
+          this.setState({
+            latitude: latitude,
+            longitude: longitude
+          });
+        } else {
+          this.setState({
+            longitude: location.coordinates[0],
+            latitude: location.coordinates[1]
+          });
+        }
       }
     }
   }, {
@@ -94010,14 +94177,6 @@ function (_Component) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
-    key: "handleMapMove",
-    value: function handleMapMove(longitude, latitude) {
-      this.setState({
-        longitude: longitude,
-        latitude: latitude
-      });
-    }
-  }, {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
       evt.preventDefault();
@@ -94031,6 +94190,7 @@ function (_Component) {
       var _this2 = this;
 
       var viewType = this.props.match.path;
+      console.log(this.state.latitude);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "sign-up-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -94117,8 +94277,14 @@ function (_Component) {
         value: this.state.ageOwn,
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "My Location"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
-        to: "/profile/update/map"
-      }, "Set Location")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        to: {
+          pathname: '/profile/update/map',
+          state: {
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
+          }
+        }
+      }, "Set my Location")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "gender-own"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "genderPref"
