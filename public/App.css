@@ -137,18 +137,21 @@ a {
   text-align: center;
 }
 
-#sign-up-page div.gender-radio {
+#sign-up-page .radius-increment-buttons {
   border: none;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 10px;
-  width: 30vw;
-  padding-right: 0px;
+  padding: 0px;
+  height: 30px;
+  margin-right: -10px;
 }
 
-#sign-up-page div.gender-radio input {
-  transform: scale(0.5);
+#sign-up-page .radius-increment-buttons button {
+  background: var(--black);
+  width: 22px;
+  margin: 0px 12px 0px 12px;
+  border: none;
+  color: var(--light-gray);
+  font-weight: 900;
+  font-size: 15px;
 }
 
 #sign-up-page .sign-up-activity {
@@ -170,9 +173,47 @@ a {
   padding: 0px;
 }
 
-#sign-up-page .sign-up-activity input {
-  width: 90%;
-  background: white;
+#sign-up-page .sign-up-activity img {
+  padding: 0px;
+  margin-top: 0px;
+}
+
+#sign-up-page .sign-up-activity p {
+  padding: 0px;
+  margin: 0px;
+}
+
+#sign-up-page .add-activity-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#sign-up-page .remove-activity {
+  background: var(--black);
+  width: 22px;
+  border: none;
+  color: var(--light-gray);
+  font-weight: 900;
+  font-size: 15px;
+}
+
+#sign-up-page .add-activity-form input {
+  width: 80vw;
+  text-align: center;
+}
+
+#sign-up-page .add-activity-form select {
+  width: 40vw;
+  text-align: right;
+}
+
+#sign-up-page .add-activity-form div {
+  border: none;
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
 }
 
 .sign-up-activity h2 {
@@ -183,6 +224,14 @@ a {
 #sign-up-page .sign-up-submit {
   display: flex;
   justify-content: center;
+}
+
+#sign-up-page .add-activity-button {
+  justify-self: center;
+  height: 30px;
+  width: 120px;
+  font-size: 15px;
+  margin: 20px;
 }
 
 .sign-up-submit button {
@@ -327,6 +376,7 @@ input.chbx-btn {
   border: none;
   background: transparent;
   height: 100%;
+  max-height: 250px;
   width: 100%;
 }
 
@@ -505,12 +555,23 @@ input.chbx-btn {
 
 .chat-app-title {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   position: fixed;
   background: var(--dark-gray);
   width: 100vw;
   height: 60px;
+}
+
+.chat-app-title img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.chat-app-title i {
+  color: var(--highlight-blue);
+  font-size: 30px;
 }
 
 .message-list {

@@ -92518,6 +92518,10 @@ function (_Component) {
         exact: true,
         path: "/signUpPage",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["SignUpPage"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
+        path: "/signUpPage/map",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["MapContainer"]
       })));
     }
   }]);
@@ -92889,6 +92893,7 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var roomId = this.props.match.params.roomId;
+      var user = this.props.location.state.user;
       var activities = this.props.location.state.matchObject.activities;
       var longitude = this.props.location.state.matchObject.location[0],
           latitude = this.props.location.state.matchObject.location[1];
@@ -92896,7 +92901,9 @@ function (_React$Component) {
         className: "chat-app"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat-app-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "CHATROOM"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: user.imageURLs[0]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, user.firstName, " ", user.lastName.slice(0, 1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
         to: {
           pathname: "/chat/".concat(roomId, "/map"),
           state: {
@@ -92979,7 +92986,6 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-list"
       }, this.props.messages.map(function (message) {
-        console.log(message);
         var senderName = message.userStore.users[message.senderId].name;
         var messageClassName = 'single-message-from-them';
 
@@ -93305,6 +93311,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SignUpPage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SignUpPage */ "./src/components/SignUpPage.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -93363,8 +93373,8 @@ function (_Component) {
     });
 
     _this.state = {
-      latitude: 0,
-      longitude: 0,
+      latitude: 40.725,
+      longitude: -73.995,
       places: [],
       selectedPlace: {},
       activeMarker: {},
@@ -93386,10 +93396,10 @@ function (_Component) {
       var lat = initialCenter.lat,
           lng = initialCenter.lng;
       var service = new google.maps.places.PlacesService(map);
-      console.log(lat, lng);
       var request = {
         location: new google.maps.LatLng(lat, lng),
         radius: '4000',
+        fields: ['url'],
         query: activities[0]
       };
 
@@ -93426,13 +93436,13 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var _this$props$location$ = this.props.location.state,
-          latitude = _this$props$location$.latitude,
-          longitude = _this$props$location$.longitude;
-      console.log(latitude, longitude);
+      var stateFromForm = this.props.location.state;
+      var latitude = stateFromForm.latitude,
+          longitude = stateFromForm.longitude;
       var viewType = this.props.match.path;
+      console.log(viewType.slice(0, viewType.length - 4));
 
-      if (viewType === '/profile/update/map') {
+      if (viewType === '/profile/update/map' || viewType === '/signUpPage/map') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "map-container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93448,11 +93458,11 @@ function (_Component) {
           }
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
           to: {
-            pathname: '/profile/update',
-            state: {
+            pathname: viewType.slice(0, viewType.length - 4),
+            state: _objectSpread({}, stateFromForm, {
               latitude: this.state.latitude,
               longitude: this.state.longitude
-            }
+            })
           }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button"
@@ -93478,6 +93488,7 @@ function (_Component) {
           },
           onClick: this.onMapClicked
         }, this.state.places.map(function (place, index) {
+          console.log(place);
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Marker"], {
             key: index,
             name: place.name,
@@ -93531,7 +93542,8 @@ var MatchListItem = function MatchListItem(_ref) {
     to: {
       pathname: "/chat/".concat(roomId),
       state: {
-        matchObject: matchObject
+        matchObject: matchObject,
+        user: user
       }
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93634,7 +93646,11 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
+<<<<<<< HEAD
+        count: 8,
+=======
         count: MatchesNum,
+>>>>>>> d8f7df05d61d77a9850aba993701d491e9eec002
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93994,14 +94010,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -94054,14 +94062,17 @@ function (_Component) {
       imageFiles: [],
       imageURLs: [],
       ageOwn: 0,
-      agePrefMin: 0,
-      agePrefMax: 0,
-      genderOwn: '',
-      genderPref: '',
+      agePrefMin: 18,
+      agePrefMax: 99,
+      genderOwn: 'Female',
+      genderPref: 'Male',
       longitude: -74.0,
       latitude: 40.735,
       radius: 0,
-      currentActivity: '',
+      currentActivity: 'Running',
+      currentActivityExperience: 'Intermediate',
+      currentActivityDescription: '',
+      // iconPath: `/ActivityIcons/${}.png`
       activities: []
     };
     _this.setImagePreview = _this.setImagePreview.bind(_assertThisInitialized(_this));
@@ -94076,18 +94087,7 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var viewType = this.props.match.path;
-
-      if (viewType === '/signUpPage') {
-        if (this.props.location.state) {
-          var _this$props$location$ = this.props.location.state,
-              email = _this$props$location$.email,
-              password = _this$props$location$.password;
-          this.setState(_objectSpread({}, this.state, {
-            email: email,
-            password: password
-          }));
-        }
-      }
+      var stateFromProps = this.props.location.state;
 
       if (viewType === '/profile/update') {
         var user = this.props.user;
@@ -94099,7 +94099,6 @@ function (_Component) {
             activities = user.activities,
             imageURLs = user.imageURLs,
             radius = user.radius;
-        activities = Object.keys(activities);
         this.setState({
           firstName: firstName,
           lastName: lastName,
@@ -94115,23 +94114,14 @@ function (_Component) {
           genderPref: gender.preferred,
           radius: radius,
           currentActivity: '',
-          activities: activities
+          activities: activities,
+          longitude: location.coordinates[0],
+          latitude: location.coordinates[1]
         });
+      }
 
-        if (this.props.location.state) {
-          var _this$props$location$2 = this.props.location.state,
-              latitude = _this$props$location$2.latitude,
-              longitude = _this$props$location$2.longitude;
-          this.setState({
-            latitude: latitude,
-            longitude: longitude
-          });
-        } else {
-          this.setState({
-            longitude: location.coordinates[0],
-            latitude: location.coordinates[1]
-          });
-        }
+      if (stateFromProps) {
+        this.setState(_objectSpread({}, stateFromProps));
       }
     }
   }, {
@@ -94172,9 +94162,21 @@ function (_Component) {
   }, {
     key: "handleActivityAdd",
     value: function handleActivityAdd(evt) {
+      var _this$state = this.state,
+          currentActivity = _this$state.currentActivity,
+          currentActivityExperience = _this$state.currentActivityExperience,
+          currentActivityDescription = _this$state.currentActivityDescription;
+      var newActivity = {
+        name: currentActivity,
+        experience: currentActivityExperience,
+        description: currentActivityDescription,
+        iconPath: "/ActivityIcons/".concat(currentActivity, ".png")
+      };
       this.setState({
-        activities: [].concat(_toConsumableArray(this.state.activities), [this.state.currentActivity]),
-        currentActivity: ''
+        activities: _objectSpread({}, this.state.activities, _defineProperty({}, currentActivity, newActivity)),
+        currentActivity: 'Running',
+        currentActivityExperience: 'Intermediate',
+        currentActivityDescription: ''
       });
     }
   }, {
@@ -94196,7 +94198,8 @@ function (_Component) {
       var _this2 = this;
 
       var viewType = this.props.match.path;
-      console.log(this.state.latitude);
+      var activityKeys = Object.keys(this.state.activities);
+      console.log(this.state);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "sign-up-page"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -94272,10 +94275,10 @@ function (_Component) {
         value: this.state.genderOwn,
         onChange: this.handleChange
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Male"
-      }, "Male"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Female"
-      }, "Female"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, "Female"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Male"
+      }, "Male"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "ageOwn"
       }, "Age"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -94284,13 +94287,10 @@ function (_Component) {
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "My Location"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
         to: {
-          pathname: '/profile/update/map',
-          state: {
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
-          }
+          pathname: "".concat(viewType, "/map"),
+          state: _objectSpread({}, this.state)
         }
-      }, "Set my Location")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Update Location")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Preferences")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "gender-own"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "genderPref"
@@ -94318,7 +94318,9 @@ function (_Component) {
         onChange: this.handleChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "radius"
-      }, "Distance:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Distance:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "radius-increment-buttons"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         name: "minus",
         onClick: this.handleRadiusChange
@@ -94326,22 +94328,24 @@ function (_Component) {
         type: "button",
         name: "plus",
         onClick: this.handleRadiusChange
-      }, "+"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Activities")), this.state.activities.map(function (activity, index) {
+      }, "+"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "My Activities")), activityKeys.map(function (activity, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: index,
           className: "sign-up-activity"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, activity), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           className: "edit-page-icon",
-          src: _this2.props.user.activities[activity].iconPath
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
-        }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Experience:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Intermediate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Advanced"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          type: "text",
-          placeholder: "Add a description for this activity."
-        }));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "activity"
-      }, "Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+          src: _this2.state.activities[activity].iconPath
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, _this2.state.activities[activity].name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          className: "remove-activity"
+        }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "agePrefMin"
+        }, "Experience"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, _this2.state.activities[activity].experience)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, _this2.state.activities[activity].description)));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add Activity")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "add-activity-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "agePrefMin"
+      }, "Select Activity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "currentActivity",
         value: this.state.currentActivity,
         onChange: this.handleChange
@@ -94361,9 +94365,22 @@ function (_Component) {
         value: "Cycling"
       }, "Cycling"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Gymnastics"
-      }, "Gymnastics")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Gymnastics"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "agePrefMin"
+      }, "Experience"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "currentActivityExperience",
+        value: this.state.currentActivityExperience,
+        onChange: this.handleChange
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Intermediate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Advanced"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "currentActivityDescription",
+        value: this.state.currentActivityDescription,
+        placeholder: "Add description here...",
+        onChange: this.handleChange
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
-        onClick: this.handleActivityAdd
+        onClick: this.handleActivityAdd,
+        className: "add-activity-button"
       }, "Add Activity")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "sign-up-submit"
       }, viewType === '/signUpPage' && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

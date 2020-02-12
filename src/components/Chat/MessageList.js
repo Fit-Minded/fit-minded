@@ -7,7 +7,6 @@ class MessageList extends React.Component {
     return (
       <div className="message-list">
         {this.props.messages.map(message => {
-          console.log(message)
           const senderName = message.userStore.users[message.senderId].name
           let messageClassName = 'single-message-from-them'
           if (message.senderId === myId) {

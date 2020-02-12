@@ -53,13 +53,17 @@ class ChatApp extends React.Component {
 
   render() {
     const { roomId } = this.props.match.params
+    const { user } = this.props.location.state
     const { activities } = this.props.location.state.matchObject
     const longitude = this.props.location.state.matchObject.location[0],
       latitude = this.props.location.state.matchObject.location[1]
     return (
       <div className="chat-app">
         <div className="chat-app-title">
-          <h1>CHATROOM</h1>
+          <img src={user.imageURLs[0]}></img>
+          <h1>
+            {user.firstName} {user.lastName.slice(0, 1)}
+          </h1>
           <Link
             to={{
               pathname: `/chat/${roomId}/map`,

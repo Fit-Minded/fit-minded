@@ -23,14 +23,17 @@ class SignUpPage extends Component {
       imageFiles: [],
       imageURLs: [],
       ageOwn: 0,
-      agePrefMin: 0,
-      agePrefMax: 0,
-      genderOwn: '',
-      genderPref: '',
+      agePrefMin: 18,
+      agePrefMax: 99,
+      genderOwn: 'Female',
+      genderPref: 'Male',
       longitude: -74.0,
       latitude: 40.735,
       radius: 0,
-      currentActivity: '',
+      currentActivity: 'Running',
+      currentActivityExperience: 'Intermediate',
+      currentActivityDescription: '',
+      // iconPath: `/ActivityIcons/${}.png`
       activities: []
     }
 
@@ -43,17 +46,7 @@ class SignUpPage extends Component {
 
   componentDidMount() {
     const viewType = this.props.match.path
-
-    if (viewType === '/signUpPage') {
-      if (this.props.location.state) {
-        const { email, password } = this.props.location.state
-        this.setState({
-          ...this.state,
-          email,
-          password
-        })
-      }
-    }
+    const stateFromProps = this.props.location.state
 
     if (viewType === '/profile/update') {
       const { user } = this.props
@@ -67,7 +60,6 @@ class SignUpPage extends Component {
         imageURLs,
         radius
       } = user
-      activities = Object.keys(activities)
       this.setState({
         firstName: firstName,
         lastName: lastName,
@@ -83,21 +75,16 @@ class SignUpPage extends Component {
         genderPref: gender.preferred,
         radius: radius,
         currentActivity: '',
-        activities: activities
+        activities: activities,
+        longitude: location.coordinates[0],
+        latitude: location.coordinates[1]
       })
+    }
 
-      if (this.props.location.state) {
-        const { latitude, longitude } = this.props.location.state
-        this.setState({
-          latitude,
-          longitude
-        })
-      } else {
-        this.setState({
-          longitude: location.coordinates[0],
-          latitude: location.coordinates[1]
-        })
-      }
+    if (stateFromProps) {
+      this.setState({
+        ...stateFromProps
+      })
     }
   }
 
@@ -135,9 +122,25 @@ class SignUpPage extends Component {
   }
 
   handleActivityAdd(evt) {
+    const {
+      currentActivity,
+      currentActivityExperience,
+      currentActivityDescription
+    } = this.state
+    const newActivity = {
+      name: currentActivity,
+      experience: currentActivityExperience,
+      description: currentActivityDescription,
+      iconPath: `/ActivityIcons/${currentActivity}.png`
+    }
     this.setState({
-      activities: [...this.state.activities, this.state.currentActivity],
-      currentActivity: ''
+      activities: {
+        ...this.state.activities,
+        [currentActivity]: newActivity
+      },
+      currentActivity: 'Running',
+      currentActivityExperience: 'Intermediate',
+      currentActivityDescription: ''
     })
   }
 
@@ -156,7 +159,8 @@ class SignUpPage extends Component {
 
   render() {
     const viewType = this.props.match.path
-    console.log(this.state.latitude)
+    const activityKeys = Object.keys(this.state.activities)
+    console.log(this.state)
     return (
       <div id="sign-up-page">
         <form name="signup" onSubmit={this.handleSubmit}>
@@ -229,8 +233,8 @@ class SignUpPage extends Component {
               value={this.state.genderOwn}
               onChange={this.handleChange}
             >
-              <option value="Male">Male</option>
               <option value="Female">Female</option>
+              <option value="Male">Male</option>
             </select>
           </div>
           <div>
@@ -246,14 +250,13 @@ class SignUpPage extends Component {
             <label>My Location</label>
             <Link
               to={{
-                pathname: '/profile/update/map',
+                pathname: `${viewType}/map`,
                 state: {
-                  latitude: this.state.latitude,
-                  longitude: this.state.longitude
+                  ...this.state
                 }
               }}
             >
-              Set my Location
+              Update Location
             </Link>
           </div>
           <div>
@@ -290,7 +293,7 @@ class SignUpPage extends Component {
           </div>
           <div>
             <label htmlFor="radius">Distance:</label>
-            <div>
+            <div className="radius-increment-buttons">
               <button
                 type="button"
                 name="minus"
@@ -311,52 +314,81 @@ class SignUpPage extends Component {
           <div>
             <h2>My Activities</h2>
           </div>
-          {this.state.activities.map((activity, index) => {
+          {activityKeys.map((activity, index) => {
             return (
               <div key={index} className="sign-up-activity">
                 <div>
-                  <h2>{activity}</h2>
                   <img
                     className="edit-page-icon"
-                    src={this.props.user.activities[activity].iconPath}
+                    src={this.state.activities[activity].iconPath}
                   />
-                  <button type="button">X</button>
+                  <h2>{this.state.activities[activity].name}</h2>
+                  <button type="button" className="remove-activity">
+                    X
+                  </button>
                 </div>
                 <div>
-                  <h3>Experience:</h3>
-                  <select>
-                    <option>Beginner</option>
-                    <option>Intermediate</option>
-                    <option>Advanced</option>
-                  </select>
+                  <label htmlFor="agePrefMin">Experience</label>
+                  <h3>{this.state.activities[activity].experience}</h3>
                 </div>
-                <input
-                  type="text"
-                  placeholder="Add a description for this activity."
-                />
+                <div>
+                  <p>{this.state.activities[activity].description}</p>
+                </div>
               </div>
             )
           })}
           <div>
-            <label htmlFor="activity">Activity</label>
-            <select
-              name="currentActivity"
-              value={this.state.currentActivity}
-              onChange={this.handleChange}
+            <h2>Add Activity</h2>
+          </div>
+          <div className="add-activity-form">
+            <div>
+              <label htmlFor="agePrefMin">Select Activity</label>
+              <select
+                name="currentActivity"
+                value={this.state.currentActivity}
+                onChange={this.handleChange}
+              >
+                <option value="Running">Running</option>
+                <option value="Lifting">Lifting</option>
+                <option value="Yoga">Yoga</option>
+                <option value="Swimming">Swimming</option>
+                <option value="CrossFit">CrossFit</option>
+                <option value="RockClimbing">RockClimbing</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Gymnastics">Gymnastics</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="agePrefMin">Experience</label>
+              <select
+                name="currentActivityExperience"
+                value={this.state.currentActivityExperience}
+                onChange={this.handleChange}
+              >
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+            </div>
+            <div>
+              <input
+                type="text"
+                name="currentActivityDescription"
+                value={this.state.currentActivityDescription}
+                placeholder="Add description here..."
+                onChange={this.handleChange}
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={this.handleActivityAdd}
+              className="add-activity-button"
             >
-              <option value="Running">Running</option>
-              <option value="Lifting">Lifting</option>
-              <option value="Yoga">Yoga</option>
-              <option value="Swimming">Swimming</option>
-              <option value="CrossFit">CrossFit</option>
-              <option value="RockClimbing">RockClimbing</option>
-              <option value="Cycling">Cycling</option>
-              <option value="Gymnastics">Gymnastics</option>
-            </select>
-            <button type="button" onClick={this.handleActivityAdd}>
               Add Activity
             </button>
           </div>
+
           <div className="sign-up-submit">
             {viewType === '/signUpPage' && (
               <button type="submit">Create Profile</button>
