@@ -2,7 +2,7 @@ const passport = require('passport');
 const router = require('express').Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../db/schemas/user');
-const secrets = require('../../secrets');
+const secrets = require('../../src/secrets');
 module.exports = router;
 
 /**
