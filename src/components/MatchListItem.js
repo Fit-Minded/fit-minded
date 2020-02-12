@@ -10,7 +10,8 @@ const MatchListItem = ({ user, me }) => {
       to={{
         pathname: `/chat/${roomId}`,
         state: {
-          matchObject
+          matchObject,
+          user
         }
       }}
     >

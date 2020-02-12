@@ -143,6 +143,7 @@ const calcRandAct = () => {
     let activityNumber = getRandomInt(8)
     let activityName = activities[activityNumber]
     userActivities[activityName] = {
+      name: activityName,
       experience: experienceLevels[getRandomInt(3)],
       iconPath: `/ActivityIcons/${activityName}.png`,
       description: activityText[activityNumber]

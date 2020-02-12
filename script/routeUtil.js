@@ -19,9 +19,6 @@ function configSignUpStateData(state) {
     activities
   } = state
 
-  const activitiesObj = {}
-  activities.forEach(activity => (activitiesObj[activity] = true))
-
   const imageURLsStrings = imageURLs.map(object => object.url)
 
   const newUserData = {
@@ -46,7 +43,7 @@ function configSignUpStateData(state) {
       coordinates: [Number(longitude), Number(latitude)]
     },
     radius: Number(radius),
-    activities: activitiesObj
+    activities
   }
   return newUserData
 }

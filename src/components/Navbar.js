@@ -34,7 +34,7 @@ class Navbar extends Component {
             <Link to="/matches">
               <NotificationBadge
                 count={8}
-                effect={Effect.ROTATE_Y}
+                effect={Effect.SCALE}
                 style={badgeStyles}
               />
               <i className="fas fa-link"></i>

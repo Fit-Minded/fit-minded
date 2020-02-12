@@ -14,8 +14,8 @@ class MapContainer extends Component {
     super(props)
 
     this.state = {
-      latitude: 0,
-      longitude: 0,
+      latitude: 40.725,
+      longitude: -73.995,
       places: [],
       selectedPlace: {},
       activeMarker: {},
@@ -31,11 +31,10 @@ class MapContainer extends Component {
     const { lat, lng } = initialCenter
     const service = new google.maps.places.PlacesService(map)
 
-    console.log(lat, lng)
-
     var request = {
       location: new google.maps.LatLng(lat, lng),
       radius: '4000',
+      fields: ['url'],
       query: activities[0]
     }
 
@@ -83,10 +82,13 @@ class MapContainer extends Component {
   }
 
   render() {
-    const { latitude, longitude } = this.props.location.state
-    console.log(latitude, longitude)
+    const stateFromForm = this.props.location.state
+    const { latitude, longitude } = stateFromForm
     const viewType = this.props.match.path
-    if (viewType === '/profile/update/map') {
+
+    console.log(viewType.slice(0, viewType.length - 4))
+
+    if (viewType === '/profile/update/map' || viewType === '/signUpPage/map') {
       return (
         <div id="map-container">
           <i className="fas fa-map-pin"></i>
@@ -99,8 +101,9 @@ class MapContainer extends Component {
           />
           <Link
             to={{
-              pathname: '/profile/update',
+              pathname: viewType.slice(0, viewType.length - 4),
               state: {
+                ...stateFromForm,
                 latitude: this.state.latitude,
                 longitude: this.state.longitude
               }
@@ -127,6 +130,7 @@ class MapContainer extends Component {
             onClick={this.onMapClicked}
           >
             {this.state.places.map((place, index) => {
+              console.log(place)
               return (
                 <Marker
                   key={index}
