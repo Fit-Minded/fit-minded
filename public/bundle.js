@@ -92664,8 +92664,8 @@ function (_Component) {
       }, "SIGN UP")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "LOGIN")), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "http://localhost:5000/auth/google"
-      }, "Login with Google"));
+        href: "/auth/google"
+      }, "Login Or Signup with Google"));
     }
   }]);
 
