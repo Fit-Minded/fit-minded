@@ -93624,6 +93624,11 @@ function (_Component) {
     key: "render",
     value: function render() {
       var isLoggedIn = this.props.isLoggedIn;
+      var _this$props$user = this.props.user,
+          matches = _this$props$user.matches,
+          likedMe = _this$props$user.likedMe;
+      var likedMeNum = likedMe ? Object.keys(likedMe).length : 0;
+      var MatchesNum = matches ? Object.keys(matches).length : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, isLoggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         id: "navBar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -93633,7 +93638,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/likedMe"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        count: 4,
+        count: likedMeNum,
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93641,7 +93646,11 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
+<<<<<<< HEAD
         count: 8,
+=======
+        count: MatchesNum,
+>>>>>>> d8f7df05d61d77a9850aba993701d491e9eec002
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93665,7 +93674,8 @@ function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    isLoggedIn: !!state.user._id
+    isLoggedIn: !!state.user._id,
+    user: state.user
   };
 };
 

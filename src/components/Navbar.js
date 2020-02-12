@@ -15,6 +15,9 @@ const badgeStyles = {
 class Navbar extends Component {
   render() {
     const { isLoggedIn } = this.props
+    const { matches, likedMe } = this.props.user
+    var likedMeNum = likedMe ? Object.keys(likedMe).length : 0
+    var MatchesNum = matches ? Object.keys(matches).length : 0
 
     return (
       <div>
@@ -25,7 +28,7 @@ class Navbar extends Component {
             </Link>
             <Link to="/likedMe">
               <NotificationBadge
-                count={4}
+                count={likedMeNum}
                 effect={Effect.SCALE}
                 style={badgeStyles}
               />
@@ -33,7 +36,7 @@ class Navbar extends Component {
             </Link>
             <Link to="/matches">
               <NotificationBadge
-                count={8}
+                count={MatchesNum}
                 effect={Effect.SCALE}
                 style={badgeStyles}
               />
@@ -60,7 +63,8 @@ class Navbar extends Component {
 
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user._id
+    isLoggedIn: !!state.user._id,
+    user: state.user
   }
 }
 
