@@ -83109,7 +83109,7 @@ exports.Thumbs = _Thumbs2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92879,7 +92879,6 @@ function (_React$Component) {
   }, {
     key: "sendMessage",
     value: function sendMessage(text) {
-      console.log("this.currentUser", this.currentUser);
       var roomId = this.props.match.params.roomId;
       this.currentUser.sendMessage({
         text: text,
@@ -92975,12 +92974,8 @@ function (_React$Component) {
   _createClass(MessageList, [{
     key: "render",
     value: function render() {
-<<<<<<< HEAD
-      console.log("this.props - messagelist", this.props);
-=======
       var myId = this.props.myId;
       var prevMesSenderId;
->>>>>>> 50ee944f319a9e13f79f835730e1fbfef2f28945
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "message-list"
       }, this.props.messages.map(function (message) {
@@ -93617,6 +93612,11 @@ function (_Component) {
     key: "render",
     value: function render() {
       var isLoggedIn = this.props.isLoggedIn;
+      var _this$props$user = this.props.user,
+          matches = _this$props$user.matches,
+          likedMe = _this$props$user.likedMe;
+      var likedMeNum = likedMe ? Object.keys(likedMe).length : 0;
+      var MatchesNum = matches ? Object.keys(matches).length : 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, isLoggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         id: "navBar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -93626,7 +93626,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/likedMe"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        count: 4,
+        count: likedMeNum,
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93634,8 +93634,8 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        count: 8,
-        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].ROTATE_Y,
+        count: MatchesNum,
+        effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-link"
@@ -93658,7 +93658,8 @@ function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    isLoggedIn: !!state.user._id
+    isLoggedIn: !!state.user._id,
+    user: state.user
   };
 };
 
@@ -93753,14 +93754,6 @@ __webpack_require__.r(__webpack_exports__);
 var ProfileInfo = function ProfileInfo(_ref) {
   var user = _ref.user,
       viewType = _ref.viewType;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  console.log("user", user);
-=======
-  console.log(user);
->>>>>>> 50ee944f319a9e13f79f835730e1fbfef2f28945
-=======
->>>>>>> master
   var firstName = user.firstName,
       lastName = user.lastName,
       age = user.age,
