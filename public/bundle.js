@@ -83109,7 +83109,7 @@ exports.Thumbs = _Thumbs2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93646,11 +93646,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
-<<<<<<< HEAD
-        count: 8,
-=======
         count: MatchesNum,
->>>>>>> d8f7df05d61d77a9850aba993701d491e9eec002
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
