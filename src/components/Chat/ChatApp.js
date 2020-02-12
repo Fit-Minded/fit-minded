@@ -1,17 +1,18 @@
-import React from 'react';
-import { MessageList, SendMessageForm } from '../index';
-import Chatkit from '@pusher/chatkit-client';
-import { connect } from 'react-redux';
-import { instanceLocator, testToken } from '../../herokuPusherCredentials';
+import React from 'react'
+import { MessageList, SendMessageForm } from '../index'
+import Chatkit from '@pusher/chatkit-client'
+import { connect } from 'react-redux'
+import { instanceLocator, testToken } from '../../herokuPusherCredentials'
+import { Link } from 'react-router-dom'
 
 class ChatApp extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       messages: []
-    };
+    }
 
-    this.sendMessage = this.sendMessage.bind(this);
+    this.sendMessage = this.sendMessage.bind(this)
   }
 
   componentDidMount() {
@@ -23,43 +24,59 @@ class ChatApp extends React.Component {
       tokenProvider: new Chatkit.TokenProvider({
         url: testToken
       })
-    });
+    })
 
-    const { roomId } = this.props.match.params;
+    const { roomId } = this.props.match.params
 
     chatManager.connect().then(currentUser => {
-      this.currentUser = currentUser;
+      this.currentUser = currentUser
       currentUser.subscribeToRoom({
         roomId: roomId,
         hooks: {
           onMessage: message => {
             this.setState({
               messages: [...this.state.messages, message]
-            });
+            })
           }
         }
-      });
-    });
+      })
+    })
   }
 
   sendMessage(text) {
-    const { roomId } = this.props.match.params;
+    const { roomId } = this.props.match.params
     this.currentUser.sendMessage({
       text: text,
       roomId: roomId
-    });
+    })
   }
 
   render() {
+    const { roomId } = this.props.match.params
+    const { activities } = this.props.location.state.matchObject
+    const longitude = this.props.location.state.matchObject.location[0],
+      latitude = this.props.location.state.matchObject.location[1]
     return (
-      <div className='chat-app'>
-        <div className='chat-app-title'>
+      <div className="chat-app">
+        <div className="chat-app-title">
           <h1>CHATROOM</h1>
+          <Link
+            to={{
+              pathname: `/chat/${roomId}/map`,
+              state: {
+                latitude,
+                longitude,
+                activities
+              }
+            }}
+          >
+            <i className="fas fa-map-marked-alt"></i>
+          </Link>
         </div>
         <MessageList messages={this.state.messages} myId={this.props.me._id} />
         <SendMessageForm sendMessage={this.sendMessage} />
       </div>
-    );
+    )
   }
 }
 
@@ -69,4 +86,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(ChatApp);
+export default connect(mapState)(ChatApp)

@@ -6,6 +6,7 @@ const {
 } = require('../../script/chatUtil.js')
 const { makeId } = require('../../script/generalUtil')
 const { protect } = require('./securityUtils')
+const { activitiesInCommon } = require('../../script/routeUtil')
 
 module.exports = router
 
@@ -46,13 +47,19 @@ router.put('/', protect, async (req, res, next) => {
       const roomId = makeId(8)
       const userName = `${user.firstName} ${user.lastName}`
       const otherUserName = `${otherUser.firstName} ${otherUser.lastName}`
+      const activities = activitiesInCommon(user, otherUser)
+      const matchObject = {
+        roomId,
+        activities,
+        location: user.location.coordinates
+      }
       await createPusherUser(userId, userName)
       await createPusherUser(otherUserId, otherUserName)
       await createPusherRoom(roomId, userId, otherUserId)
       user.likedMe.delete(otherUserId)
-      user.matches.set(otherUserId, roomId)
+      user.matches.set(otherUserId, matchObject)
       otherUser.liked.delete(userId)
-      otherUser.matches.set(userId, roomId)
+      otherUser.matches.set(userId, matchObject)
     }
     if (decisionType === 'dontMatch') {
       user.likedMe.delete(otherUserId)

@@ -26,6 +26,7 @@ class Routes extends Component {
             <Route exact path="/" component={ProfileView} />
             <Route exact path="/matches" component={ListView} />
             <Route exact path="/chat/:roomId" component={ChatApp} />
+            <Route exact path="/chat/:roomId/map" component={MapContainer} />
             <Route exact path="/likedMe" component={ListView} />
             <Route exact path="/likedMe/:index" component={ProfileView} />
             <Route exact path="/profile" component={ProfileView} />

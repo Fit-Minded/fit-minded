@@ -45,7 +45,6 @@ a {
   justify-content: space-around;
   align-items: center;
   background-color: var(--black);
-  color: var(--light-gray);
   height: 60px;
   bottom: 0px;
   width: 100vw;
@@ -194,8 +193,14 @@ a {
   margin: 20px;
 }
 
-#map-container {
-  height: 75vh;
+#map-container i {
+  position: fixed;
+  z-index: 1;
+  top: 45vh;
+  left: 50vw;
+  margin-left: -10px;
+  font-size: 40px;
+  color: var(--black);
 }
 
 #map-container h1 {
@@ -212,6 +217,9 @@ a {
   bottom: 90px;
   left: 50%;
   margin-left: -50px;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
 }
 
 /* LOGIN - SIGNUP */

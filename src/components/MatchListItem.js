@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom'
 
 const MatchListItem = ({ user, me }) => {
   const otherUserId = user._id
-  const roomId = me.matches[otherUserId]
+  const roomId = me.matches[otherUserId].roomId
+  const matchObject = me.matches[otherUserId]
   return (
-    <Link to={`/chat/${roomId}`}>
+    <Link
+      to={{
+        pathname: `/chat/${roomId}`,
+        state: {
+          matchObject
+        }
+      }}
+    >
       <div className="list-item">
         <img src={user.imageURLs[0]} alt="user-pic" />
         <div className="list-item-info">
