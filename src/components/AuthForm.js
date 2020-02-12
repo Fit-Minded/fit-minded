@@ -71,7 +71,7 @@ class AuthForm extends Component {
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
-        <a href='/auth/google'>Login with Google</a>
+        <a href='/auth/google'> with Google</a>
       </div>
     );
   }
