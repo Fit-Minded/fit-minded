@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const LikedMeListItem = ({ user, index }) => {
+  const otherUserActivities = Object.keys(user.activities)
   return (
     <Link to={`/likedMe/${index}`}>
       <div className="list-item">
@@ -10,7 +11,17 @@ const LikedMeListItem = ({ user, index }) => {
           <h3>
             {user.firstName} {user.lastName.slice(0, 1)}.
           </h3>
-          <p>Placeholder conversation text.</p>
+          <div>
+            {otherUserActivities.map((activity, index) => {
+              return (
+                <img
+                  src={`/ActivityIcons/${activity}.png`}
+                  key={index}
+                  className="list-view-icons"
+                />
+              )
+            })}
+          </div>
         </div>
         <div>
           <i className="fas fa-comment-dots"></i>

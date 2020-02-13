@@ -86,8 +86,6 @@ class MapContainer extends Component {
     const { latitude, longitude } = stateFromForm
     const viewType = this.props.match.path
 
-    console.log(viewType.slice(0, viewType.length - 4))
-
     if (viewType === '/profile/update/map' || viewType === '/signUpPage/map') {
       return (
         <div id="map-container">
@@ -116,6 +114,7 @@ class MapContainer extends Component {
     }
     if (viewType === '/chat/:roomId/map') {
       const { activities } = this.props.location.state
+      console.log(this.props.location)
       return (
         <div id="map-container">
           <i className="fas fa-map-pin"></i>
@@ -130,7 +129,6 @@ class MapContainer extends Component {
             onClick={this.onMapClicked}
           >
             {this.state.places.map((place, index) => {
-              console.log(place)
               return (
                 <Marker
                   key={index}
@@ -155,17 +153,45 @@ class MapContainer extends Component {
               </div>
             </InfoWindow>
           </Map>
-          {/* <Link
-            to={{
-              pathname: '/profile/update',
-              state: {
-                latitude: this.state.latitude,
-                longitude: this.state.longitude
-              }
-            }}
-          >
-            <button type="button">Confirm</button>
-          </Link> */}
+          {this.state.showingInfoWindow ? (
+            <Link
+              to={{
+                pathname: this.props.location.pathname.slice(
+                  0,
+                  viewType.length - 3
+                ),
+                state: {
+                  user: this.props.location.state.user,
+                  activities: this.props.location.state.activities,
+                  latitude: this.props.location.state.latitude,
+                  longitude: this.props.location.state.longitude,
+                  selectedPlace: {
+                    name: this.state.selectedPlace.name,
+                    address: this.state.selectedPlace.address
+                  }
+                }
+              }}
+            >
+              <button type="button">Share</button>
+            </Link>
+          ) : (
+            <Link
+              to={{
+                pathname: this.props.location.pathname.slice(
+                  0,
+                  viewType.length - 3
+                ),
+                state: {
+                  user: this.props.location.state.user,
+                  activities: this.props.location.state.activities,
+                  latitude: this.props.location.state.latitude,
+                  longitude: this.props.location.state.longitude
+                }
+              }}
+            >
+              <button type="button">Chat</button>
+            </Link>
+          )}
         </div>
       )
     }
