@@ -1,7 +1,7 @@
-const randomUsers = []
+const randomUsers = [];
 
 function capFirst(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 function generateName(gender) {
   let firstNameMale = [
@@ -28,7 +28,7 @@ function generateName(gender) {
     'James',
     'Jason',
     'Kevin'
-  ]
+  ];
   let firstNameFemale = [
     'Joyce',
     'Juliette',
@@ -47,7 +47,7 @@ function generateName(gender) {
     'Margaret',
     'Meghan',
     'Ashley'
-  ]
+  ];
   let lastName = [
     'Mills',
     'Mercer',
@@ -69,30 +69,30 @@ function generateName(gender) {
     'Jabbar',
     'Tessler',
     'Ueda'
-  ]
-  let firstName
+  ];
+  let firstName;
   if (gender === 'Male') {
-    firstName = capFirst(firstNameMale[getRandomInt(firstNameMale.length)])
+    firstName = capFirst(firstNameMale[getRandomInt(firstNameMale.length)]);
   } else {
-    firstName = capFirst(firstNameFemale[getRandomInt(firstNameFemale.length)])
+    firstName = capFirst(firstNameFemale[getRandomInt(firstNameFemale.length)]);
   }
-  let lastNameFinal = capFirst(lastName[getRandomInt(lastName.length)])
-  return [firstName, lastNameFinal]
+  let lastNameFinal = capFirst(lastName[getRandomInt(lastName.length)]);
+  return [firstName, lastNameFinal];
 }
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max))
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 const genders = {
   0: 'Male',
   1: 'Female'
-}
+};
 
 const negOrPos = {
   0: -1,
   1: 1
-}
+};
 
 const neighborhoods = {
   0: 'Union Square',
@@ -106,7 +106,7 @@ const neighborhoods = {
   8: 'Lower East Side',
   9: 'Upper West Side',
   10: 'Astoria'
-}
+};
 
 const activities = {
   0: 'RockClimbing',
@@ -117,13 +117,13 @@ const activities = {
   5: 'Running',
   6: 'Swimming',
   7: 'Lifting'
-}
+};
 
 const experienceLevels = {
   0: 'Beginner',
   1: 'Intermediate',
   2: 'Advanced'
-}
+};
 
 let activityText = [
   'Currently climbing 2-3 times a week. Mostly bouldering, and starting to dip my feet into more structured progression.',
@@ -134,36 +134,36 @@ let activityText = [
   'I am doing C25K at the moment too which is going slowly but nicely. I have always hated running but am really enjoying it this time round.',
   'Currently swimming 4-5 days a week. Mostly indoor during the winter',
   'My favorite olympic lifts are the clean and jerk and the military press. I also enjoy deadlifting.'
-]
+];
 
 const calcRandAct = () => {
-  let userActivities = {}
-  let numOfActivites = getRandomInt(3)
+  let userActivities = {};
+  let numOfActivites = getRandomInt(3);
   for (let i = 0; i <= numOfActivites; i++) {
-    let activityNumber = getRandomInt(8)
-    let activityName = activities[activityNumber]
+    let activityNumber = getRandomInt(8);
+    let activityName = activities[activityNumber];
     userActivities[activityName] = {
       name: activityName,
       experience: experienceLevels[getRandomInt(3)],
       iconPath: `/ActivityIcons/${activityName}.png`,
       description: activityText[activityNumber]
-    }
+    };
   }
-  return userActivities
-}
+  return userActivities;
+};
 
-for (let i = 0; i < 1500; i++) {
-  let minAge = getRandomInt(15) + 18
-  let maxAge = minAge + getRandomInt(15) + 1
+for (let i = 0; i < 4500; i++) {
+  let minAge = getRandomInt(15) + 18;
+  let maxAge = minAge + getRandomInt(15) + 1;
   let latitude = (
     40.725 +
     (getRandomInt(150) * negOrPos[getRandomInt(2)]) / 10000
-  ).toFixed(3)
+  ).toFixed(3);
   let longitude = (
     -73.995 +
     (getRandomInt(150) * negOrPos[getRandomInt(2)]) / 10000
-  ).toFixed(3)
-  let gender = genders[getRandomInt(2)]
+  ).toFixed(3);
+  let gender = genders[getRandomInt(2)];
 
   let user = {
     firstName: generateName(gender)[0],
@@ -190,14 +190,14 @@ for (let i = 0; i < 1500; i++) {
     radius: getRandomInt(10) + 1,
     activities: calcRandAct()
     // lastLogin: new Date()
-  }
+  };
 
   if (user.gender.own === 'Male') {
     user.imageURLs = [
       `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`,
       `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`,
       `/userPhotos/male/0${getRandomInt(5) + 1}.jpg`
-    ]
+    ];
   }
 
   if (user.gender.own === 'Female') {
@@ -205,10 +205,10 @@ for (let i = 0; i < 1500; i++) {
       `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`,
       `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`,
       `/userPhotos/female/0${getRandomInt(5) + 1}.jpg`
-    ]
+    ];
   }
 
-  randomUsers.push(user)
+  randomUsers.push(user);
 }
 
-module.exports = randomUsers
+module.exports = randomUsers;
