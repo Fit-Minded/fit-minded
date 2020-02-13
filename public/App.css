@@ -463,18 +463,18 @@ input.chbx-btn {
 
 .logout-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background: transparent;
   box-shadow: none;
-  width: 80vw;
-  padding: 15px 10vw 0px 10vw;
-  position: fixed;
+  width: 40vw;
+  margin: -40px 0px 20px 0px;
+  padding: 15px 30vw 0px 30vw;
+  position: relative;
   bottom: 85px;
 }
 
 .logout-buttons button {
   height: 40px;
-  width: 35vw;
   font-weight: 900;
   font-size: 18px;
   color: white;
@@ -513,6 +513,13 @@ input.chbx-btn {
   height: 70px;
   width: 70px;
   border-radius: 50%;
+}
+
+.list-item .list-view-icons {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  margin: 0px 10px 0px 10px;
 }
 
 .list-item-info {

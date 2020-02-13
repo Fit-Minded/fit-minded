@@ -83109,7 +83109,7 @@ exports.Thumbs = _Thumbs2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92858,6 +92858,9 @@ function (_React$Component) {
       var _this2 = this;
 
       var userId = this.props.me._id;
+      var roomId = this.props.match.params.roomId;
+      console.log('PUSHER', _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__["instanceLocator"], _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__["testToken"]);
+      console.log(userId, roomId);
       var chatManager = new _pusher_chatkit_client__WEBPACK_IMPORTED_MODULE_2___default.a.ChatManager({
         instanceLocator: _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__["instanceLocator"],
         userId: userId,
@@ -92865,7 +92868,6 @@ function (_React$Component) {
           url: _herokuPusherCredentials__WEBPACK_IMPORTED_MODULE_4__["testToken"]
         })
       });
-      var roomId = this.props.match.params.roomId;
       chatManager.connect().then(function (currentUser) {
         _this2.currentUser = currentUser;
         currentUser.subscribeToRoom({
@@ -92878,6 +92880,18 @@ function (_React$Component) {
             }
           }
         });
+
+        if (_this2.props.location.state.selectedPlace) {
+          var _this2$props$location = _this2.props.location.state.selectedPlace,
+              name = _this2$props$location.name,
+              address = _this2$props$location.address;
+          address = address.split(',')[0];
+          var text = "Lets check out ".concat(name, "! The address is ").concat(address, ".");
+          currentUser.sendMessage({
+            text: text,
+            roomId: roomId
+          });
+        }
       });
     }
   }, {
@@ -92893,10 +92907,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var roomId = this.props.match.params.roomId;
-      var user = this.props.location.state.user;
-      var activities = this.props.location.state.matchObject.activities;
-      var longitude = this.props.location.state.matchObject.location[0],
-          latitude = this.props.location.state.matchObject.location[1];
+      var _this$props$location$ = this.props.location.state,
+          user = _this$props$location$.user,
+          activities = _this$props$location$.activities,
+          longitude = _this$props$location$.longitude,
+          latitude = _this$props$location$.latitude;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat-app"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -92909,7 +92924,8 @@ function (_React$Component) {
           state: {
             latitude: latitude,
             longitude: longitude,
-            activities: activities
+            activities: activities,
+            user: user
           }
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93125,6 +93141,7 @@ __webpack_require__.r(__webpack_exports__);
 var LikedMeListItem = function LikedMeListItem(_ref) {
   var user = _ref.user,
       index = _ref.index;
+  var otherUserActivities = Object.keys(user.activities);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/likedMe/".concat(index)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93134,7 +93151,13 @@ var LikedMeListItem = function LikedMeListItem(_ref) {
     alt: "user-pic"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "list-item-info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder conversation text.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, otherUserActivities.map(function (activity, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: "/ActivityIcons/".concat(activity, ".png"),
+      key: index,
+      className: "list-view-icons"
+    });
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-comment-dots"
   }))));
 };
@@ -93440,7 +93463,6 @@ function (_Component) {
       var latitude = stateFromForm.latitude,
           longitude = stateFromForm.longitude;
       var viewType = this.props.match.path;
-      console.log(viewType.slice(0, viewType.length - 4));
 
       if (viewType === '/profile/update/map' || viewType === '/signUpPage/map') {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93471,6 +93493,7 @@ function (_Component) {
 
       if (viewType === '/chat/:roomId/map') {
         var activities = this.props.location.state.activities;
+        console.log(this.props.location);
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           id: "map-container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -93488,7 +93511,6 @@ function (_Component) {
           },
           onClick: this.onMapClicked
         }, this.state.places.map(function (place, index) {
-          console.log(place);
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["Marker"], {
             key: index,
             name: place.name,
@@ -93503,7 +93525,35 @@ function (_Component) {
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(google_maps_react__WEBPACK_IMPORTED_MODULE_1__["InfoWindow"], {
           marker: this.state.activeMarker,
           visible: this.state.showingInfoWindow
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.state.selectedPlace.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.selectedPlace.address)))));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.state.selectedPlace.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.selectedPlace.address)))), this.state.showingInfoWindow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: {
+            pathname: this.props.location.pathname.slice(0, viewType.length - 3),
+            state: {
+              user: this.props.location.state.user,
+              activities: this.props.location.state.activities,
+              latitude: this.props.location.state.latitude,
+              longitude: this.props.location.state.longitude,
+              selectedPlace: {
+                name: this.state.selectedPlace.name,
+                address: this.state.selectedPlace.address
+              }
+            }
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "Share")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: {
+            pathname: this.props.location.pathname.slice(0, viewType.length - 3),
+            state: {
+              user: this.props.location.state.user,
+              activities: this.props.location.state.activities,
+              latitude: this.props.location.state.latitude,
+              longitude: this.props.location.state.longitude
+            }
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "Chat")));
       }
     }
   }]);
@@ -93536,26 +93586,42 @@ var MatchListItem = function MatchListItem(_ref) {
   var user = _ref.user,
       me = _ref.me;
   var otherUserId = user._id;
-  var roomId = me.matches[otherUserId].roomId;
-  var matchObject = me.matches[otherUserId];
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: {
-      pathname: "/chat/".concat(roomId),
-      state: {
-        matchObject: matchObject,
-        user: user
+  var otherUserActivities = Object.keys(user.activities);
+
+  if (me.matches[otherUserId]) {
+    var roomId = me.matches[otherUserId].roomId;
+    var matchObject = me.matches[otherUserId];
+    var location = matchObject.location,
+        activities = matchObject.activities;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      to: {
+        pathname: "/chat/".concat(roomId),
+        state: {
+          activities: activities,
+          longitude: location[0],
+          latitude: location[1],
+          user: user
+        }
       }
-    }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "list-item"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: user.imageURLs[0],
-    alt: "user-pic"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "list-item-info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Placeholder conversation text.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-comment-dots"
-  }))));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "list-item"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: user.imageURLs[0],
+      alt: "user-pic"
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "list-item-info"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, user.firstName, " ", user.lastName.slice(0, 1), "."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, otherUserActivities.map(function (activity, index) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/ActivityIcons/".concat(activity, ".png"),
+        key: index,
+        className: "list-view-icons"
+      });
+    }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "fas fa-comment-dots"
+    }))));
+  } else {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (MatchListItem);
@@ -93646,11 +93712,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/matches"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_notification_badge__WEBPACK_IMPORTED_MODULE_4___default.a, {
-<<<<<<< HEAD
-        count: 8,
-=======
         count: MatchesNum,
->>>>>>> d8f7df05d61d77a9850aba993701d491e9eec002
         effect: react_notification_badge__WEBPACK_IMPORTED_MODULE_4__["Effect"].SCALE,
         style: badgeStyles
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {

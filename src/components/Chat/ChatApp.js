@@ -17,6 +17,10 @@ class ChatApp extends React.Component {
 
   componentDidMount() {
     const userId = this.props.me._id
+    const { roomId } = this.props.match.params
+
+    console.log('PUSHER', instanceLocator, testToken)
+    console.log(userId, roomId)
 
     const chatManager = new Chatkit.ChatManager({
       instanceLocator: instanceLocator,
@@ -25,8 +29,6 @@ class ChatApp extends React.Component {
         url: testToken
       })
     })
-
-    const { roomId } = this.props.match.params
 
     chatManager.connect().then(currentUser => {
       this.currentUser = currentUser
@@ -40,6 +42,15 @@ class ChatApp extends React.Component {
           }
         }
       })
+      if (this.props.location.state.selectedPlace) {
+        let { name, address } = this.props.location.state.selectedPlace
+        address = address.split(',')[0]
+        const text = `Lets check out ${name}! The address is ${address}.`
+        currentUser.sendMessage({
+          text: text,
+          roomId: roomId
+        })
+      }
     })
   }
 
@@ -53,10 +64,8 @@ class ChatApp extends React.Component {
 
   render() {
     const { roomId } = this.props.match.params
-    const { user } = this.props.location.state
-    const { activities } = this.props.location.state.matchObject
-    const longitude = this.props.location.state.matchObject.location[0],
-      latitude = this.props.location.state.matchObject.location[1]
+    const { user, activities, longitude, latitude } = this.props.location.state
+
     return (
       <div className="chat-app">
         <div className="chat-app-title">
@@ -70,7 +79,8 @@ class ChatApp extends React.Component {
               state: {
                 latitude,
                 longitude,
-                activities
+                activities,
+                user
               }
             }}
           >

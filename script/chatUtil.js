@@ -20,6 +20,13 @@ const deleteAllPusherUsers = async () => {
   })
 }
 
+// const deleteAllPusherRooms = async () => {
+//   const allUsers = await chatKit.getUsers({ limit: 100 })
+//   console.log(allUsers[0])
+// }
+
+// deleteAllPusherRooms()
+
 const createPusherRoom = async (roomId, creatorId, otherUserId) => {
   await chatKit
     .createRoom({
