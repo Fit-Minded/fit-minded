@@ -94433,12 +94433,14 @@ function (_Component) {
         name: "currentActivityExperience",
         value: this.state.currentActivityExperience,
         onChange: this.handleChange
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Intermediate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Advanced"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Beginner"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Intermediate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", null, "Advanced"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         type: "text",
         name: "currentActivityDescription",
         value: this.state.currentActivityDescription,
         placeholder: "Add description here...",
-        onChange: this.handleChange
+        onChange: this.handleChange,
+        className: "add-activity-input",
+        rows: 4
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         onClick: this.handleActivityAdd,

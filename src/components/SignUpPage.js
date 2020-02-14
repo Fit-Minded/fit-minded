@@ -371,12 +371,14 @@ class SignUpPage extends Component {
               </select>
             </div>
             <div>
-              <input
+              <textarea
                 type="text"
                 name="currentActivityDescription"
                 value={this.state.currentActivityDescription}
                 placeholder="Add description here..."
                 onChange={this.handleChange}
+                className="add-activity-input"
+                rows={4}
               />
             </div>
 

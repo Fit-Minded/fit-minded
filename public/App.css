@@ -18,7 +18,7 @@ body {
   margin: 0px;
   color: var(--black);
   background-image: linear-gradient(var(--dark-gray), var(--light-gray));
-  background-size: 100vw 90vh;
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -48,6 +48,7 @@ a {
   height: 60px;
   bottom: 0px;
   width: 100vw;
+  max-width: 700px;
   z-index: 1;
 }
 
@@ -71,7 +72,16 @@ a {
 #sign-up-page {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 70px;
+  width: 100vw;
+}
+
+#sign-up-page form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #sign-up-page .sign-up-header {
@@ -106,6 +116,8 @@ a {
   align-items: center;
   border-bottom: 1px solid var(--dark-gray);
   padding: 15px 40px 15px 40px;
+  width: 100%;
+  max-width: 620px;
 }
 
 #sign-up-page input {
@@ -116,6 +128,7 @@ a {
   padding-right: 10px;
   height: 30px;
   width: 30vw;
+  max-width: 200px;
   font-size: 20px;
 }
 
@@ -127,7 +140,10 @@ a {
 #sign-up-pictures img {
   width: 25vw;
   height: 25vw;
+  max-width: 190px;
+  max-height: 190px;
   border-radius: 10px;
+  box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
 }
 
 #sign-up-page select {
@@ -135,6 +151,7 @@ a {
   background: white;
   border-radius: 5px;
   text-align: center;
+  max-width: 200px;
 }
 
 #sign-up-page .radius-increment-buttons {
@@ -142,6 +159,8 @@ a {
   padding: 0px;
   height: 30px;
   margin-right: -10px;
+  width: 40vw;
+  max-width: 230px;
 }
 
 #sign-up-page .radius-increment-buttons button {
@@ -156,9 +175,10 @@ a {
 
 #sign-up-page .sign-up-activity {
   display: flex;
+  width: 80%;
   flex-direction: column;
   background: var(--light-gray);
-  margin: 20px 30px 20px 30px;
+  margin: 0px 0px 20px 0px;
   border: none;
   border-radius: 10px;
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
@@ -167,10 +187,9 @@ a {
 #sign-up-page .sign-up-activity div {
   display: flex;
   justify-content: space-between;
-  width: 70vw;
-  border: none;
   margin: 0px;
   padding: 0px;
+  border: none;
 }
 
 #sign-up-page .sign-up-activity img {
@@ -199,9 +218,12 @@ a {
   font-size: 15px;
 }
 
-#sign-up-page .add-activity-form input {
-  width: 80vw;
+#sign-up-page .add-activity-form textarea {
+  width: 100%;
   text-align: center;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px;
 }
 
 #sign-up-page .add-activity-form select {
@@ -274,7 +296,6 @@ a {
 /* LOGIN - SIGNUP */
 
 #authForm {
-  background-image: linear-gradient(var(--dark-gray), var(--light-gray));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -300,6 +321,7 @@ a {
   justify-content: center;
   align-items: center;
   width: 100vw;
+  max-width: 700px;
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
@@ -312,6 +334,8 @@ a {
 .login-form input {
   height: 40px;
   width: 50vw;
+  max-width: 400px;
+
   background-color: var(--light-gray);
   font-size: 17px;
   border-radius: 10px;
@@ -320,6 +344,7 @@ a {
 
 .login-form button {
   width: 30vw;
+  max-width: 300px;
   height: 42px;
   border-radius: 10px;
   margin-top: 20px;
@@ -333,6 +358,7 @@ a {
   justify-content: space-between;
   align-items: center;
   width: 40vw;
+  max-width: 300px;
   margin-top: 20px;
 }
 
@@ -351,7 +377,7 @@ input.chbx-btn {
   height: auto;
   padding-bottom: 130px;
   background-image: linear-gradient(var(--dark-gray), var(--light-gray));
-  background-size: 100vw 90vh;
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -364,6 +390,7 @@ input.chbx-btn {
   display: flex;
   justify-content: space-between;
   width: 80vw;
+  max-width: 500px;
 }
 
 .profile-name i {
@@ -376,8 +403,9 @@ input.chbx-btn {
   border: none;
   background: transparent;
   height: 100%;
-  max-height: 250px;
+  max-height: 300px;
   width: 100%;
+  max-width: 500px;
 }
 
 #profile-view-div {
@@ -385,6 +413,7 @@ input.chbx-btn {
   background: var(--light-gray);
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
   width: 70vw;
+  max-width: 460px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -400,6 +429,7 @@ input.chbx-btn {
   border-radius: 10px;
   box-shadow: rgba(1, 6, 36, 0.201) 3px 3px 5px;
   width: 80vw;
+  max-width: 500px;
   margin: 10px;
   padding: 0px;
 }
@@ -443,6 +473,7 @@ input.chbx-btn {
   background: transparent;
   box-shadow: none;
   width: 80vw;
+  max-width: 650px;
   position: fixed;
   bottom: 75px;
   margin: 0px;
@@ -475,6 +506,7 @@ input.chbx-btn {
 
 .logout-buttons button {
   height: 40px;
+  max-width: 300px;
   font-weight: 900;
   font-size: 18px;
   color: white;
@@ -494,6 +526,14 @@ input.chbx-btn {
 }
 /* LIST VIEW */
 
+.list-view {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 0px;
+  margin: 0px;
+}
+
 .list-view h1 {
   border-bottom: 1px solid grey;
   padding: 0px 0px 10px 20px;
@@ -503,9 +543,11 @@ input.chbx-btn {
 .list-item {
   display: flex;
   justify-content: space-between;
+  max-width: 670px;
   height: 70px;
   border-bottom: 1px solid grey;
   padding: 10px 20px 10px 20px;
+  margin: 0px;
   background: rgba(255, 255, 255, 0.406);
 }
 
@@ -567,6 +609,8 @@ input.chbx-btn {
   position: fixed;
   background: var(--dark-gray);
   width: 100vw;
+  max-width: 700px;
+
   height: 60px;
 }
 
@@ -581,25 +625,61 @@ input.chbx-btn {
   font-size: 30px;
 }
 
+@media only screen and (min-width: 700px) {
+  #navBar {
+    left: 50%;
+    margin-left: -350px;
+  }
+
+  .button-container {
+    left: 50vw;
+    margin-left: -325px;
+    padding: 0px;
+  }
+
+  .list-view {
+    align-items: center;
+  }
+
+  .chat-app {
+    align-items: center;
+  }
+
+  .send-message-form input {
+    max-width: 680px;
+    left: 50vw;
+    margin-left: -350px;
+  }
+
+  .message-list > * {
+    width: 700px;
+  }
+}
+
 .message-list {
-  background: var(--light-gray);
+  background: white;
   margin-top: 60px;
   margin-bottom: 120px;
   overflow: auto;
+  height: 80vh;
 }
 
 .single-message-from-me {
   text-align: end;
-  padding: 10px;
+  padding: 0px 10px 0px 10px;
   font-size: 20px;
+  margin: 0px;
 }
 
 .single-message-from-me .message-sender {
   font-weight: 900;
+  margin: 5px;
 }
 
 .single-message-from-me .message-text {
-  padding-right: 20px;
+  padding: 5px 20px 5px 20px;
+  margin: 5px;
+  border-radius: 5px;
 }
 
 .single-message-from-them {
@@ -613,7 +693,7 @@ input.chbx-btn {
 }
 
 .single-message-from-them .message-text {
-  padding-left: 20px;
+  padding: 0px 20px 0px 20px;
 }
 
 .send-message-form input {
@@ -623,7 +703,8 @@ input.chbx-btn {
   bottom: 60px;
   background: lightblue;
   font-size: 20px;
-  padding-left: 20px;
+  padding: 0px 20px 0px 0px;
+  text-align: center;
 }
 
 /* ANIMATIONS */
@@ -754,50 +835,6 @@ input.chbx-btn {
   top: 50%;
   margin-top: -13px;
   font-size: 18px;
-}
-.carousel .thumbs-wrapper {
-  margin: 20px;
-  overflow: hidden;
-}
-.carousel .thumbs {
-  -webkit-transition: all 0.15s ease-in;
-  -moz-transition: all 0.15s ease-in;
-  -ms-transition: all 0.15s ease-in;
-  -o-transition: all 0.15s ease-in;
-  transition: all 0.15s ease-in;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  position: relative;
-  list-style: none;
-  white-space: nowrap;
-}
-.carousel .thumb {
-  -webkit-transition: border 0.15s ease-in;
-  -moz-transition: border 0.15s ease-in;
-  -ms-transition: border 0.15s ease-in;
-  -o-transition: border 0.15s ease-in;
-  transition: border 0.15s ease-in;
-  display: inline-block;
-  width: 80px;
-  margin-right: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  border: 3px solid #fff;
-  padding: 2px;
-}
-.carousel .thumb:focus {
-  border: 3px solid #ccc;
-  outline: none;
-}
-.carousel .thumb.selected,
-.carousel .thumb:hover {
-  border: 3px solid #333;
-}
-.carousel .thumb img {
-  vertical-align: top;
 }
 .carousel.carousel-slider {
   position: relative;
