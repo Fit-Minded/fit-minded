@@ -92665,7 +92665,7 @@ function (_Component) {
         type: "submit"
       }, "LOGIN")), error && error.response && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, " ", error.response.data, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "/auth/google"
-      }, "Login Or Signup with Google"));
+      }, "Login or Signup with Google"));
     }
   }]);
 
